@@ -33,6 +33,13 @@ public class Common {
     public final static Integer CREATE_REMOVE_ORDER = 105;
     public final static Integer CHART = 106;
     
+    public final static String PROTOCOL_VERSION = "1.0";
+    public final static int ERROR_USER_WAS_NOT_FOUND = 200;
+    public final static int ERROR_USER_ALREADY_CONNECTED = 201;
+    public final static int ERROR_PASSWORD_ERROR = 202;
+    public final static int ERROR_WRONG_PROTOCOL_VERSION = 203;
+    public final static int ERROR_LOGIN_INFORMATION = 204;
+
 	public static TabHost tabHost;
 
 	public static class ApiException extends Exception {
