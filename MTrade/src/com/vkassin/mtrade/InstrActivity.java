@@ -126,11 +126,4 @@ public class InstrActivity extends Activity {
       thrd = null;
     }
    
-//    private void sendText() {
-//      String text = "test text";
-//      try {
-//        out.write(text + "\n");
-//        out.flush();
-//      } catch (IOException e) {}
-//    }
 }
