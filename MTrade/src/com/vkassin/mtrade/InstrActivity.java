@@ -1,14 +1,10 @@
 package com.vkassin.mtrade;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.InputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.Calendar;
-import java.util.HashMap;
 
 import org.json.JSONObject;
 
@@ -21,8 +17,6 @@ public class InstrActivity extends Activity {
 	private static final String TAG = "MTrade.InstrActivity"; 
 	
 	private Socket sock;
-	private BufferedReader r;
-	private BufferedWriter out;
 	private Thread thrd;
 	  
     public void onCreate(Bundle savedInstanceState) {
@@ -30,40 +24,55 @@ public class InstrActivity extends Activity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.main);
         
-//        JSONObject json = new JSONObject();
-//        try{
-//        json.put("time", Calendar.getInstance().getTimeInMillis());
-//        json.put("objType", new Integer(Common.INSTRUMENT));
-//        
-//        }
-//        catch(Exception e){
-//            e.printStackTrace();
-//            Log.(TAG, "Error! Cannot Estabilish Connection", e);
-//        }
     }
 
-    public HashMap<String, Object> getLogin() {
+    public JSONObject getLogin() {
     	
-        HashMap<String, Object> msg;
-        msg = new HashMap<String, Object>();
+      JSONObject msg = new JSONObject();
+      try{
         msg.put("objType", Common.LOGIN);
         msg.put("time", Calendar.getInstance().getTimeInMillis());
         msg.put("version", Common.PROTOCOL_VERSION);
         msg.put("password", "1");
         msg.put("login", "CE007");
-        return msg;
-     }
+    
+      }
+      catch(Exception e){
+          e.printStackTrace();
+          Log.e(TAG, "Error! Cannot create JSON login objext", e);
+      }
+      return msg;
 
-    public void writeDelimitedTo(OutputStream outStream, HashMap<String, Object> msg) throws Exception {
+    }
+
+    private void writeJSONMsg(JSONObject msg) throws Exception {
     	
-        ObjectMapper mapper = new ObjectMapper();
-        byte[] array = mapper.writeValueAsBytes(msg);
+        byte[] array = msg.toString().getBytes();
         ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
         buff.putInt(array.length);
         buff.put(array);
-        outStream.write(buff.array());
+       	sock.getOutputStream().write(buff.array());
+    }
+    
+    private static byte[] readMsg(InputStream inStream, int remainingToRead) throws IOException{
+        byte[] buffer = new byte[remainingToRead];
+        while (remainingToRead != 0) {
+           int len = inStream.read(buffer, buffer.length - remainingToRead, remainingToRead);
+           remainingToRead -= len;
+        }
+        return buffer;
      }
 
+    private JSONObject readJSONMsg() throws Exception {
+    	
+        ByteBuffer buff = ByteBuffer.allocate(4);
+        buff.put(readMsg(sock.getInputStream(), 4));
+        buff.position(0);
+        int pkgSize = buff.getInt();
+        String s = new String(readMsg(sock.getInputStream(), pkgSize));
+        return new JSONObject(s);
+    }
+        
     @Override
     public void onResume() {
     	
@@ -74,29 +83,32 @@ public class InstrActivity extends Activity {
         sock = new Socket("212.19.144.126", 9800);
         //sock = new Socket("192.168.186.129", 9800);
 
-        r = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(sock
-            .getOutputStream()));
+//        r = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+//        out = new BufferedWriter(new OutputStreamWriter(sock
+//            .getOutputStream()));
    
+        writeJSONMsg(getLogin());
+        
         thrd = new Thread(new Runnable() {
           public void run() {
             while (!Thread.interrupted()) {
               try {
-                final String data = r.readLine();
+                final JSONObject data = readJSONMsg();
                 if (data != null)
                   runOnUiThread(new Runnable() {
 //                    @Override
                     public void run() {
                       // do something in ui thread with the data var
+                    	Log.i(TAG, "readMsg: " + data);
                     }
                   });
    
-              } catch (IOException e) { }
+              } catch (Exception e) { }
             }
           }
         });
         thrd.start();
-      } catch (IOException ioe) { }
+      } catch (Exception ioe) { }
     }
    
     @Override
