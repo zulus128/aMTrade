@@ -1,6 +1,6 @@
 package com.vkassin.mtrade;
 
-import android.widget.TabHost;
+import android.widget.TabHost;//
 
 public class Common {
 
