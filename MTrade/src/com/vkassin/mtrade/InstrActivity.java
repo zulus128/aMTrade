@@ -6,7 +6,10 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -15,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class InstrActivity extends Activity {
@@ -25,12 +29,16 @@ public class InstrActivity extends Activity {
 	private Thread thrd;
 	private ListView list;
 	private InstrsAdapter adapter;
+	private ProgressBar pb;
 	
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instrs);
         
+        pb = (ProgressBar)findViewById(R.id.ProgressBar01);
+//		pb.setVisibility(View.VISIBLE);
+
         list = (ListView)this.findViewById(R.id.InstrList);
     	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<RSSItem>());
     	list.setAdapter(adapter);
@@ -57,11 +65,31 @@ public class InstrActivity extends Activity {
       }
       catch(Exception e){
           e.printStackTrace();
-          Log.e(TAG, "Error! Cannot create JSON login objext", e);
+          Log.e(TAG, "Error! Cannot create JSON login object", e);
       }
       return msg;
 
     }
+
+    public JSONObject getSubscription(ArrayList<Integer> arr) {
+    	
+        JSONObject msg = new JSONObject();
+        try{
+          msg.put("objType", Common.SUBSCRIBE);
+          msg.put("time", Calendar.getInstance().getTimeInMillis());
+          msg.put("version", Common.PROTOCOL_VERSION);
+          JSONArray jsonA = new JSONArray(arr);
+          msg.put("subscribe_array", jsonA);
+      
+          Log.i(TAG, "subscr = "+msg);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Log.e(TAG, "Error! Cannot create JSON login object", e);
+        }
+        return msg;
+
+      }
 
     private void writeJSONMsg(JSONObject msg) throws Exception {
     	
@@ -118,6 +146,55 @@ public class InstrActivity extends Activity {
                     public void run() {
                       // do something in ui thread with the data var
                     	Log.i(TAG, "readMsg: " + data);
+                    	try {
+                    		
+							int t = data.getInt("objType");
+                    		Log.i(TAG, "objType: " + t);
+							
+                    		if( t == Common.LOGIN) {
+                    		
+    							int s = data.getInt("status");
+//    							Log.i(TAG, "Logion status: " + s);
+                    			if(s == 0)
+                        			pb.setVisibility(View.VISIBLE);
+                    			else
+                    				pb.setVisibility(View.GONE);
+
+                    		}
+                    		
+                    		if( t == Common.INSTRUMENT) {
+                    			
+                    			ArrayList<RSSItem> result = new ArrayList<RSSItem>();
+                    			ArrayList<Integer> idresult = new ArrayList<Integer>();
+                    			
+                    			Iterator<String> keys = data.keys();
+//                    			String k = "0";
+                    			while( keys.hasNext() ){
+                    				String key = (String)keys.next();
+//                    				Log.i(TAG, "key = " + key);
+//                    				k = key;
+                    				if(!key.equals("time") && !key.equals("objType")) {
+                    					
+                    					result.add(new RSSItem(Integer.parseInt(key), data.getJSONObject(key)));
+                    					idresult.add(new Integer(key));
+                    				}
+                    			}
+                    			
+                    			writeJSONMsg(getSubscription(idresult));
+                    			
+                	        	adapter.setItems(result);
+                				adapter.notifyDataSetChanged();
+							}
+							
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							Log.e(TAG, "JSONException problem!!!");
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
                     }
                   });
    

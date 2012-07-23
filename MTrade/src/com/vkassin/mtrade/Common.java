@@ -26,6 +26,8 @@ public class Common {
     public final static Integer CREATE_REMOVE_ORDER = 105;
     public final static Integer CHART = 106;
     
+    public final static Integer SUBSCRIBE = 107;
+
     public final static String PROTOCOL_VERSION = "1.0";
     public final static int ERROR_USER_WAS_NOT_FOUND = 200;
     public final static int ERROR_USER_ALREADY_CONNECTED = 201;

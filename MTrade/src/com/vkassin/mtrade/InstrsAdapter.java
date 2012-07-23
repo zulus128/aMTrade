@@ -28,13 +28,13 @@ public class InstrsAdapter extends ArrayAdapter<RSSItem> {
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	layout.addView(vi.inflate(resourceId, null));
     	
-//    	RSSItem item = getItems().get(position);
-//    	if (item != null) {
+    	RSSItem item = getItems().get(position);
+    	if (item != null) {
 
     		TextView title = (TextView) layout.findViewById(R.id.InstrName);
-    		title.setText("USDKZT");
+    		title.setText(item.symbol);
     		
-//    	}
+    	}
     	
     	return layout;
     }
