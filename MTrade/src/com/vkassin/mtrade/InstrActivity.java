@@ -4,13 +4,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class InstrActivity extends Activity {
 
@@ -18,11 +26,24 @@ public class InstrActivity extends Activity {
 	
 	private Socket sock;
 	private Thread thrd;
-	  
+	private ListView list;
+	private InstrsAdapter adapter;
+	
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.main);
+        setContentView(R.layout.instrs);
+        
+        list = (ListView)this.findViewById(R.id.InstrList);
+    	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<RSSItem>());
+    	list.setAdapter(adapter);
+    	
+    	list.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
+			}
+		});
         
     }
 
