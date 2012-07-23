@@ -3,7 +3,6 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

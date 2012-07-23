@@ -9,6 +9,8 @@ public class Common {
 //	private static String sUserAgent = null;
 //    private static byte[] sBuffer = new byte[4096];   
 
+	public enum item_type { IT_NONE, IT_INSTR };
+
     public final static Integer HEARTBEAT = 10;
     public final static Integer LOGIN = 11;
     public final static Integer LOGOUT = 12;
