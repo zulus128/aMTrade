@@ -10,7 +10,10 @@ public class Common {
 //    private static byte[] sBuffer = new byte[4096];   
 
 	public enum item_type { IT_NONE, IT_INSTR };
-
+	 
+	public final static Integer NO_ERRORS = 0;
+	public final static Integer INITIAL_LOADING_COMPLITE = 1;
+     
     public final static Integer HEARTBEAT = 10;
     public final static Integer LOGIN = 11;
     public final static Integer LOGOUT = 12;
