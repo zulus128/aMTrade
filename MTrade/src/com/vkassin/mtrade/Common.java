@@ -77,6 +77,17 @@ public class Common {
 			old.update(obj);
 	}
 	
+	public static void validateFavourites() {
+	
+		Iterator<String> setIterator = .iterator();
+		while (setIterator.hasNext()) {
+		    SomeClass currentElement = setIterator.next();
+		    if (setOfElementsToRemove(currentElement).size() > 0) {
+		        setIterator.remove();
+		    }
+		}
+	}
+	
 	public static void saveFavrList(ArrayList<Integer> list) {
 		
 		FileOutputStream fos;
