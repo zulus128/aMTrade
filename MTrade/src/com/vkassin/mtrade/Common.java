@@ -11,6 +11,9 @@ import java.util.AbstractSequentialList;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -55,13 +58,10 @@ public class Common {
 	public static TabHost tabHost;
 
 	public static Context app_ctx;
-	private static final String ILIST_FNAME = "instr_list";
+	private static final String FLIST_FNAME = "favr_list";
 	
 	private static HashMap<String, RSSItem> instrList;
-	
-//	private static AbstractSequentialList<String> favrList;
-
-	private static AbstractSet<String> favrList;
+	private static HashSet<String> favrList;
 
 	public static void clearInstrList() {
 	
@@ -79,23 +79,28 @@ public class Common {
 	
 	public static void validateFavourites() {
 	
-		Iterator<String> setIterator = .iterator();
+		Iterator<String> setIterator = favrList.iterator();
 		while (setIterator.hasNext()) {
-		    SomeClass currentElement = setIterator.next();
-		    if (setOfElementsToRemove(currentElement).size() > 0) {
+		    String currentElement = setIterator.next();
+		    if (instrList.get(currentElement) == null) {
 		        setIterator.remove();
 		    }
 		}
 	}
 	
-	public static void saveFavrList(ArrayList<Integer> list) {
+	public static HashSet<String> getFavrList() {
+		
+		return favrList;
+	}
+	
+	public static void saveFavrList() {
 		
 		FileOutputStream fos;
 		try {
 			
-			fos = app_ctx.openFileOutput(ILIST_FNAME, Context.MODE_PRIVATE);
+			fos = app_ctx.openFileOutput(FLIST_FNAME, Context.MODE_PRIVATE);
 			ObjectOutputStream os = new ObjectOutputStream(fos);
-			os.writeObject(list);
+			os.writeObject(favrList);
 			os.close();
 			fos.close();
 			
@@ -113,23 +118,23 @@ public class Common {
 
 	}
 	
-	public static void loadFavr() {
+	public static void loadFavrList() {
 	   
 	FileInputStream fileInputStream;
 	try {
 		
-		fileInputStream = app_ctx.openFileInput(FAV_FNAME);
+		fileInputStream = app_ctx.openFileInput(FLIST_FNAME);
 		ObjectInputStream oInputStream = new ObjectInputStream(fileInputStream);
 		Object one = oInputStream.readObject();
-		favourites = (ArrayList<RSSItem>) one;
+		favrList = (HashSet<String>) one;
 		oInputStream.close();
 		fileInputStream.close();
 		
 	} catch (FileNotFoundException e) {
 		
 		//e.printStackTrace();
-  	   Log.i(TAG, "creates blank. no file " + FAV_FNAME);
- 	   favourites = new ArrayList<RSSItem>();
+  	   Log.i(TAG, "creates blank. no file " + FLIST_FNAME);
+ 	   favrList = new HashSet<String>();
  	   
 	} catch (StreamCorruptedException e) {
 		// TODO Auto-generated catch block

@@ -78,26 +78,6 @@ public class InstrActivity extends Activity {
 
     }
 
-    public JSONObject getSubscription(ArrayList<Integer> arr) {
-    	
-        JSONObject msg = new JSONObject();
-        try{
-          msg.put("objType", Common.SUBSCRIBE);
-          msg.put("time", Calendar.getInstance().getTimeInMillis());
-          msg.put("version", Common.PROTOCOL_VERSION);
-          JSONArray jsonA = new JSONArray(arr);
-          msg.put("subscribe_array", jsonA);
-      
-          Log.i(TAG, "subscr = "+msg);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-            Log.e(TAG, "Error! Cannot create JSON login object", e);
-        }
-        return msg;
-
-      }
-
     private void writeJSONMsg(JSONObject msg) throws Exception {
     	
         byte[] array = msg.toString().getBytes();
@@ -126,14 +106,28 @@ public class InstrActivity extends Activity {
         return new JSONObject(s);
     }
         
-    @Override
-    public void onResume() {
-    	
-      super.onResume();
-      Log.i(TAG, "onResume");
+    private void sendSubscription() throws Exception {
+
+        JSONObject msg = new JSONObject();
+        try{
+          msg.put("objType", Common.SUBSCRIBE);
+          msg.put("time", Calendar.getInstance().getTimeInMillis());
+          msg.put("version", Common.PROTOCOL_VERSION);
+          JSONArray jsonA = new JSONArray(Common.getFavrList());
+          msg.put("subscribe_array", jsonA);
+      
+          Log.i(TAG, "subscr = "+msg);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Log.e(TAG, "Error! Cannot create JSON login object", e);
+        }
+
+        writeJSONMsg(msg);
+
     }
     
-    public void refresh() {
+    private void refresh() {
     	
       try {
 
@@ -162,8 +156,10 @@ public class InstrActivity extends Activity {
                     		
     							int s = data.getInt("status");
 //    							Log.i(TAG, "Logion status: " + s);
-                    			if(s == 0)
+                    			if(s == 0) {
                         			pb.setVisibility(View.VISIBLE);
+                        			Common.loadFavrList();
+                    			}
                     			else {
                     				
                     				pb.setVisibility(View.GONE);
@@ -223,7 +219,22 @@ public class InstrActivity extends Activity {
     }
    
     @Override
+    public void onResume() {
+    	
+      super.onResume();
+      Log.i(TAG, "onResume");
+    }
+    
+    @Override
+    public void onStop() {
+    
+    	super.onStop();
+    	Common.saveFavrList();
+    }
+    
+    @Override
     public void onDestroy() {
+    	
       super.onDestroy();
       if (thrd != null)
         thrd.interrupt();
