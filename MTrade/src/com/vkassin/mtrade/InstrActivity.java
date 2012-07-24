@@ -164,8 +164,12 @@ public class InstrActivity extends Activity {
 //    							Log.i(TAG, "Logion status: " + s);
                     			if(s == 0)
                         			pb.setVisibility(View.VISIBLE);
-                    			else
+                    			else {
+                    				
                     				pb.setVisibility(View.GONE);
+                    				Common.validateFavourites();
+                    				sendSubscription();
+                    			}
 
                     		}
                     		
