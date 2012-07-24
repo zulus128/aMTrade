@@ -13,8 +13,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -221,4 +225,24 @@ public class InstrActivity extends Activity {
       thrd = null;
     }
    
+    
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.instrsmenu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch (item.getItemId()) {
+	        case R.id.menuselect: 
+	        	
+	               Intent intent = new Intent(this, SelectListView.class);
+	               startActivityForResult(intent, 0);
+	               break;
+	    }
+	    return true;
+	}
 }
