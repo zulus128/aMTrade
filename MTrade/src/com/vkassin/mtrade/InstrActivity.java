@@ -53,7 +53,10 @@ public class InstrActivity extends Activity {
 				
 			}
 		});
-        
+     
+    	Common.clearInstrList();
+    	
+    	refresh();
     }
 
     public JSONObject getLogin() {
@@ -127,16 +130,16 @@ public class InstrActivity extends Activity {
     public void onResume() {
     	
       super.onResume();
-      
+      Log.i(TAG, "onResume");
+    }
+    
+    public void refresh() {
+    	
       try {
 
         sock = new Socket("212.19.144.126", 9800);
         //sock = new Socket("192.168.186.129", 9800);
 
-//        r = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-//        out = new BufferedWriter(new OutputStreamWriter(sock
-//            .getOutputStream()));
-   
         writeJSONMsg(getLogin());
         
         thrd = new Thread(new Runnable() {
@@ -168,8 +171,8 @@ public class InstrActivity extends Activity {
                     		
                     		if( t == Common.INSTRUMENT) {
                     			
-                    			ArrayList<RSSItem> result = new ArrayList<RSSItem>();
-                    			ArrayList<Integer> idresult = new ArrayList<Integer>();
+//                    			ArrayList<RSSItem> result = new ArrayList<RSSItem>();
+//                    			ArrayList<Integer> idresult = new ArrayList<Integer>();
                     			
                     			Iterator<String> keys = data.keys();
 //                    			String k = "0";
@@ -179,14 +182,19 @@ public class InstrActivity extends Activity {
 //                    				k = key;
                     				if(!key.equals("time") && !key.equals("objType")) {
                     					
-                    					result.add(new RSSItem(Integer.parseInt(key), data.getJSONObject(key)));
-                    					idresult.add(new Integer(key));
+//                    					result.add(new RSSItem(Integer.parseInt(key), data.getJSONObject(key)));
+                    					
+                    					Common.addToInstrList(key, data.getJSONObject(key));
+                    					
+//                    					idresult.add(new Integer(key));
                     				}
                     			}
                     			
-                    			writeJSONMsg(getSubscription(idresult));
+//                    			writeJSONMsg(getSubscription(idresult));
                     			
-                	        	adapter.setItems(result);
+//                    			Common.saveInstrList(idresult);
+                    			
+//                	        	adapter.setItems(result);
                 				adapter.notifyDataSetChanged();
 							}
 							
@@ -202,17 +210,17 @@ public class InstrActivity extends Activity {
                     }
                   });
    
-              } catch (Exception e) { }
+              } catch (Exception e) { e.printStackTrace();}
             }
           }
         });
         thrd.start();
-      } catch (Exception ioe) { }
+      } catch (Exception ioe) { ioe.printStackTrace();}
     }
    
     @Override
-    public void onPause() {
-      super.onPause();
+    public void onDestroy() {
+      super.onDestroy();
       if (thrd != null)
         thrd.interrupt();
       try {

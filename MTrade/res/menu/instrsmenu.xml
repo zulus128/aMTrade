@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuselect" android:titleCondensed="Выбрать" android:title="Выбрать" android:icon="@android:drawable/ic_popup_sync"></item>
+    <item android:id="@+id/menuselect" android:titleCondensed="@string/SelectInstrs" android:title="@string/SelectInstrs" android:icon="@android:drawable/ic_menu_edit"></item>
     
 </menu>

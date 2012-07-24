@@ -1,6 +1,23 @@
 package com.vkassin.mtrade;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.StreamCorruptedException;
+import java.util.AbstractSequentialList;
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONObject;
+
+import android.content.Context;
+import android.util.Log;
 import android.widget.TabHost;//
+import android.widget.Toast;
 
 public class Common {
 
@@ -37,5 +54,83 @@ public class Common {
 
 	public static TabHost tabHost;
 
+	public static Context app_ctx;
+	private static final String ILIST_FNAME = "instr_list";
+	
+	private static HashMap<String, RSSItem> instrList;
+	
+//	private static AbstractSequentialList<String> favrList;
 
+	private static AbstractSet<String> favrList;
+
+	public static void clearInstrList() {
+	
+		instrList.clear();
+	}
+
+	public static void addToInstrList(String key, JSONObject obj) {
+		
+		RSSItem old = instrList.get(key);
+		if(old == null)
+			instrList.put(key, new RSSItem(key, obj));
+		else
+			old.update(obj);
+	}
+	
+	public static void saveFavrList(ArrayList<Integer> list) {
+		
+		FileOutputStream fos;
+		try {
+			
+			fos = app_ctx.openFileOutput(ILIST_FNAME, Context.MODE_PRIVATE);
+			ObjectOutputStream os = new ObjectOutputStream(fos);
+			os.writeObject(list);
+			os.close();
+			fos.close();
+			
+		} catch (FileNotFoundException e) {
+
+			Toast.makeText(app_ctx, "Файл не записан " + e.toString(), Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			Toast.makeText(app_ctx, "Файл не записан: " + e.toString(), Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
+		
+		Toast.makeText(app_ctx, "Сохранен список инструментов", Toast.LENGTH_SHORT).show();
+
+	}
+	
+	public static void loadFavr() {
+	   
+	FileInputStream fileInputStream;
+	try {
+		
+		fileInputStream = app_ctx.openFileInput(FAV_FNAME);
+		ObjectInputStream oInputStream = new ObjectInputStream(fileInputStream);
+		Object one = oInputStream.readObject();
+		favourites = (ArrayList<RSSItem>) one;
+		oInputStream.close();
+		fileInputStream.close();
+		
+	} catch (FileNotFoundException e) {
+		
+		//e.printStackTrace();
+  	   Log.i(TAG, "creates blank. no file " + FAV_FNAME);
+ 	   favourites = new ArrayList<RSSItem>();
+ 	   
+	} catch (StreamCorruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	//return favourites;
+	}
 }

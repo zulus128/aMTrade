@@ -6,7 +6,6 @@ package com.vkassin.mtrade;
 
 	import org.xmlpull.v1.XmlPullParserException;
 
-	import android.app.Activity;
 	import android.app.ListActivity;
 	import android.os.Bundle;
 	import android.view.View;
@@ -32,25 +31,25 @@ package com.vkassin.mtrade;
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.simple);
 
-			Button btnSave = (Button) findViewById(R.id.btnSave);
-			btnSave.setOnClickListener(new OnClickListener() {
-
-				public void onClick(View v) {
-
-					Toast.makeText(getApplicationContext(),
-							" You clicked Save button", Toast.LENGTH_SHORT).show();
-
-					SaveSelections();
-				}
-			});
+//			Button btnSave = (Button) findViewById(R.id.btnSave);
+//			btnSave.setOnClickListener(new OnClickListener() {
+//
+//				public void onClick(View v) {
+//
+//					Toast.makeText(getApplicationContext(),
+//							" You clicked Save button", Toast.LENGTH_SHORT).show();
+//
+//					SaveSelections();
+//				}
+//			});
 
 			Button btnClear = (Button) findViewById(R.id.btnClear);
 			btnClear.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
 
-					Toast.makeText(getApplicationContext(),
-							" You clicked Clear button", Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(),
+//							" You clicked Clear button", Toast.LENGTH_SHORT).show();
 
 					ClearSelections();
 				}
@@ -154,31 +153,31 @@ package com.vkassin.mtrade;
 			return savedItems;
 		}
 
-		private ArrayList<String> PrepareListFromXml() {
-			ArrayList<String> todoItems = new ArrayList<String>();
-			XmlResourceParser todolistXml = getResources().getXml(R.xml.todolist);
-
-			int eventType = -1;
-			while (eventType != XmlResourceParser.END_DOCUMENT) {
-				if (eventType == XmlResourceParser.START_TAG) {
-
-					String strNode = todolistXml.getName();
-					if (strNode.equals("item")) {
-						todoItems.add(todolistXml.getAttributeValue(null, "title"));
-					}
-				}
-
-				try {
-					eventType = todolistXml.next();
-				} catch (XmlPullParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-
-			return todoItems;
-		}
+//		private ArrayList<String> PrepareListFromXml() {
+//			ArrayList<String> todoItems = new ArrayList<String>();
+//			XmlResourceParser todolistXml = getResources().getXml(R.xml.todolist);
+//
+//			int eventType = -1;
+//			while (eventType != XmlResourceParser.END_DOCUMENT) {
+//				if (eventType == XmlResourceParser.START_TAG) {
+//
+//					String strNode = todolistXml.getName();
+//					if (strNode.equals("item")) {
+//						todoItems.add(todolistXml.getAttributeValue(null, "title"));
+//					}
+//				}
+//
+//				try {
+//					eventType = todolistXml.next();
+//				} catch (XmlPullParserException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//
+//			return todoItems;
+//		}
 	}
