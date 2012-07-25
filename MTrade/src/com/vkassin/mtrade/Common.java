@@ -60,7 +60,7 @@ public class Common {
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
 	
-	private static HashMap<String, RSSItem> instrList;
+	private static HashMap<String, RSSItem> instrList = new HashMap<String, RSSItem>();
 	private static HashSet<String> favrList;
 
 	public static void clearInstrList() {
@@ -79,12 +79,14 @@ public class Common {
 	
 	public static void validateFavourites() {
 	
-		Iterator<String> setIterator = favrList.iterator();
+		    Iterator<String> setIterator = favrList.iterator();
 		while (setIterator.hasNext()) {
 		    String currentElement = setIterator.next();
 		    if (instrList.get(currentElement) == null) {
 		        setIterator.remove();
 		    }
+		    else
+		    	instrList.get(currentElement).favourite = true;
 		}
 	}
 	

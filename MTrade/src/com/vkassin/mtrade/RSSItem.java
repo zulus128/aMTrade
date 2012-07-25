@@ -21,6 +21,8 @@ public class RSSItem implements Serializable {
 	public Double min;
 	public Double max;
 
+	public boolean favourite;
+	
 	public RSSItem(String i, JSONObject obj) {
 		
 		this.id = i;
