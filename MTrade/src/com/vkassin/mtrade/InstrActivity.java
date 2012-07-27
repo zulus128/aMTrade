@@ -158,6 +158,7 @@ public class InstrActivity extends Activity {
 //    							Log.i(TAG, "Logion status: " + s);
                     			if(s == 0) {
                         			pb.setVisibility(View.VISIBLE);
+                        			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
                     			}
                     			else {
@@ -165,6 +166,10 @@ public class InstrActivity extends Activity {
                     				pb.setVisibility(View.GONE);
                     				Common.validateFavourites();
                     				sendSubscription();
+                    				adapter.setItems(Common.getFavInstrs());
+                    				adapter.notifyDataSetChanged();
+                        			Common.FIRSTLOAD_FINISHED = true;
+
                     			}
 
                     		}
@@ -223,19 +228,38 @@ public class InstrActivity extends Activity {
     	
       super.onResume();
       Log.i(TAG, "onResume");
+      
+		
+      if(Common.FIRSTLOAD_FINISHED) {
+      Common.validateFavourites();
+		try {
+			sendSubscription();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		adapter.setItems(Common.getFavInstrs());
+		adapter.notifyDataSetChanged();
+      }
+      
     }
     
     @Override
     public void onStop() {
     
     	super.onStop();
-    	Common.saveFavrList();
+//    	Common.saveFavrList();
     }
     
     @Override
     public void onDestroy() {
     	
       super.onDestroy();
+
+  	Common.saveFavrList();
+
+      
       if (thrd != null)
         thrd.interrupt();
       try {

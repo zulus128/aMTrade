@@ -60,39 +60,75 @@ public class Common {
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
 	
-	private static HashMap<String, RSSItem> instrList = new HashMap<String, RSSItem>();
+	private static HashMap<String, RSSItem> instrMap = new HashMap<String, RSSItem>();
 	private static HashSet<String> favrList;
 
+    public static boolean FIRSTLOAD_FINISHED = false;
+
+    public static ArrayList<RSSItem> getFavInstrs() {
+		
+		ArrayList<RSSItem> a = new ArrayList<RSSItem>();
+		Iterator<String> itr = instrMap.keySet().iterator();
+		while (itr.hasNext()) {
+			
+			String key = itr.next();
+			if(instrMap.get(key).favourite == true)
+				a.add(instrMap.get(key));
+		}
+		
+		return a;
+	}
+	
+	public static ArrayList<String> getInstrNameArray() {
+	
+		ArrayList<String> a = new ArrayList<String>();
+		Iterator<String> itr = instrMap.keySet().iterator();
+			while (itr.hasNext()) {
+				
+				String key = itr.next();
+				a.add(instrMap.get(key).symbol);
+			}
+			
+		return a;
+	}
+	
 	public static void clearInstrList() {
 	
-		instrList.clear();
+		instrMap.clear();
 	}
 
 	public static void addToInstrList(String key, JSONObject obj) {
 		
-		RSSItem old = instrList.get(key);
+		RSSItem old = instrMap.get(key);
 		if(old == null)
-			instrList.put(key, new RSSItem(key, obj));
+			instrMap.put(key, new RSSItem(key, obj));
 		else
 			old.update(obj);
 	}
 	
 	public static void validateFavourites() {
 	
+		loadFavrList();
+		
 		    Iterator<String> setIterator = favrList.iterator();
 		while (setIterator.hasNext()) {
 		    String currentElement = setIterator.next();
-		    if (instrList.get(currentElement) == null) {
+		    if (instrMap.get(currentElement) == null) {
 		        setIterator.remove();
 		    }
 		    else
-		    	instrList.get(currentElement).favourite = true;
+		    	instrMap.get(currentElement).favourite = true;
 		}
 	}
 	
 	public static HashSet<String> getFavrList() {
 		
 		return favrList;
+	}
+
+	public static void setFavrList(HashSet<String> a) {
+		
+		favrList = a;
 	}
 	
 	public static void saveFavrList() {
