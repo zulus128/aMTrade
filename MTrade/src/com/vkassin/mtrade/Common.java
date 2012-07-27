@@ -10,6 +10,7 @@ import java.io.StreamCorruptedException;
 import java.util.AbstractSequentialList;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -61,7 +62,7 @@ public class Common {
 	private static final String FLIST_FNAME = "favr_list";
 	
 	private static HashMap<String, RSSItem> instrMap = new HashMap<String, RSSItem>();
-	private static HashSet<String> favrList;
+	private static HashSet<String> favrList = new HashSet<String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
 
@@ -77,6 +78,11 @@ public class Common {
 		}
 		
 		return a;
+	}
+
+    public static ArrayList<RSSItem> getAllInstrs() {
+		
+		return new ArrayList<RSSItem>(instrMap.values());
 	}
 	
 	public static ArrayList<String> getInstrNameArray() {
@@ -108,13 +114,21 @@ public class Common {
 	
 	public static void validateFavourites() {
 	
-		loadFavrList();
+//		loadFavrList();
 		
-		    Iterator<String> setIterator = favrList.iterator();
+		Iterator<String> itr = instrMap.keySet().iterator();
+			while (itr.hasNext()) {
+				String key = itr.next();
+				instrMap.get(key).favourite = false;
+			}
+
+			Iterator<String> setIterator = favrList.iterator();
 		while (setIterator.hasNext()) {
 		    String currentElement = setIterator.next();
+		    Log.w(TAG, "cur = "+currentElement);
 		    if (instrMap.get(currentElement) == null) {
 		        setIterator.remove();
+		        Log.w(TAG, "removed");
 		    }
 		    else
 		    	instrMap.get(currentElement).favourite = true;

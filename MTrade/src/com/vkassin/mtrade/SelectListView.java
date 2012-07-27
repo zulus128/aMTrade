@@ -3,7 +3,9 @@ package com.vkassin.mtrade;
 	import java.io.IOException;
 	import java.util.ArrayList;
 	import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 
 	import org.xmlpull.v1.XmlPullParserException;
 
@@ -23,7 +25,7 @@ import android.content.res.XmlResourceParser;
 
 		private String[] lv_arr = {};
 		private ListView mainListView = null;
-		
+		private ArrayList<RSSItem> listTODO;
 		private static final String TAG = "MTrade.SelectListView"; 
 
 //		final String SETTING_TODOLIST = "todolist";
@@ -61,17 +63,27 @@ import android.content.res.XmlResourceParser;
 			});
 
 			// Prepare an ArrayList of todo items
-			ArrayList<String> listTODO = Common.getInstrNameArray();//PrepareListFromXml();
+			listTODO = Common.getAllInstrs();//PrepareListFromXml();
 
 			this.mainListView = getListView();
 
 			mainListView.setCacheColorHint(0);
 
 			// Bind the data with the list
-			lv_arr = (String[]) listTODO.toArray(new String[0]);
+			
+			ArrayList<String> a = new ArrayList<String>();
+			Iterator<RSSItem> itr = listTODO.iterator();
+				while (itr.hasNext()){
+					RSSItem k = itr.next();
+					a.add(k.symbol);
+				}
+				
+			lv_arr = (String[])a.toArray(new String[0]);
 			mainListView.setAdapter(new ArrayAdapter<String>(SelectListView.this,
 					android.R.layout.simple_list_item_multiple_choice, lv_arr));
 
+//			mainListView.setAdapter(new SelectAdapter(SelectListView.this, android.R.layout.simple_list_item_multiple_choice, listTODO));
+			
 			mainListView.setItemsCanFocus(false);
 			mainListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -120,10 +132,14 @@ import android.content.res.XmlResourceParser;
 				for (int i = 0; i < count; i++) {
 					String currentItem = (String) this.mainListView.getAdapter()
 							.getItem(i);
-					if (Common.getFavrList().contains(currentItem)) {
-						this.mainListView.setItemChecked(i, true);
+//					if (Common.getFavrList().contains(currentItem)) {
+//						this.mainListView.setItemChecked(i, true);
+//					}
+					if(listTODO.get(i).favourite) {
+							this.mainListView.setItemChecked(i, true);
+					Log.i(TAG, "checked "+i);
 					}
-
+					
 				}
 
 //			}
@@ -136,9 +152,12 @@ import android.content.res.XmlResourceParser;
 			
 			for (int i = 0; i < count; i++)
 				if (this.mainListView.isItemChecked(i)) 
-					a.add(this.mainListView.getItemAtPosition(i).toString());
+					//a.add(this.mainListView.getItemAtPosition(i).toString());
+					a.add(listTODO.get(i).id);
 		
 			Common.setFavrList(a);
+			
+			Log.w(TAG, "favr = " + Common.getFavrList());
 			
 		
 		//			// save the selections in the shared preference in private mode for the user

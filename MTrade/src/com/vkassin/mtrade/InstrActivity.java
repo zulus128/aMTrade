@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -108,12 +109,16 @@ public class InstrActivity extends Activity {
         
     private void sendSubscription() throws Exception {
 
+    	
+		Log.w(TAG, "favr1 = " + Common.getFavrList());
+
         JSONObject msg = new JSONObject();
         try{
           msg.put("objType", Common.SUBSCRIBE);
           msg.put("time", Calendar.getInstance().getTimeInMillis());
           msg.put("version", Common.PROTOCOL_VERSION);
-          JSONArray jsonA = new JSONArray(Common.getFavrList());
+          HashSet<String> t = Common.getFavrList();
+          JSONArray jsonA = new JSONArray(t);
           msg.put("subscribe_array", jsonA);
       
           Log.i(TAG, "subscr = "+msg);
@@ -229,9 +234,14 @@ public class InstrActivity extends Activity {
       super.onResume();
       Log.i(TAG, "onResume");
       
-		
       if(Common.FIRSTLOAD_FINISHED) {
+    	  
+//  		Log.w(TAG, "favr2 = " + Common.getFavrList());
+
       Common.validateFavourites();
+      
+//		Log.w(TAG, "favr3 = " + Common.getFavrList());
+
 		try {
 			sendSubscription();
 		} catch (Exception e) {
