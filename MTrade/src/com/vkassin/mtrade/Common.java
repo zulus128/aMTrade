@@ -46,7 +46,7 @@ public class Common {
     public final static Integer TRANSIT_ORDER = 104;
     public final static Integer CREATE_REMOVE_ORDER = 105;
     public final static Integer CHART = 106;
-    
+    	
     public final static Integer SUBSCRIBE = 107;
 
     public final static String PROTOCOL_VERSION = "1.0";

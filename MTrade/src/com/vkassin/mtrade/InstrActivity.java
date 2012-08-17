@@ -67,8 +67,10 @@ public class InstrActivity extends Activity {
         msg.put("objType", Common.LOGIN);
         msg.put("time", Calendar.getInstance().getTimeInMillis());
         msg.put("version", Common.PROTOCOL_VERSION);
+//        msg.put("password", "1");
+//        msg.put("login", "CE007");
         msg.put("password", "1");
-        msg.put("login", "CE007");
+        msg.put("login", "133b06");
     
       }
       catch(Exception e){
@@ -136,8 +138,9 @@ public class InstrActivity extends Activity {
     	
       try {
 
-        sock = new Socket("212.19.144.126", 9800);
+//        sock = new Socket("212.19.144.126", 9800);
         //sock = new Socket("192.168.186.129", 9800);
+        sock = new Socket("192.168.111.12", 9800);
 
         writeJSONMsg(getLogin());
         
@@ -151,12 +154,19 @@ public class InstrActivity extends Activity {
 //                    @Override
                     public void run() {
                       // do something in ui thread with the data var
-                    	Log.i(TAG, "readMsg: " + data);
+//                    	Log.i(TAG, "readMsg: " + data);
                     	try {
                     		
 							int t = data.getInt("objType");
-                    		Log.i(TAG, "objType: " + t);
-							
+							if(t != Common.HEARTBEAT) {
+
+								Log.i(TAG, "objType: " + t);
+								Log.i(TAG, "readMsg: " + data);
+								
+							}
+							else
+								writeJSONMsg(data);
+
                     		if( t == Common.LOGIN) {
                     		
     							int s = data.getInt("status");
