@@ -61,14 +61,14 @@ public class Common {
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
 	
-	private static HashMap<String, RSSItem> instrMap = new HashMap<String, RSSItem>();
+	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
 	private static HashSet<String> favrList = new HashSet<String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
 
-    public static ArrayList<RSSItem> getFavInstrs() {
+    public static ArrayList<Instrument> getFavInstrs() {
 		
-		ArrayList<RSSItem> a = new ArrayList<RSSItem>();
+		ArrayList<Instrument> a = new ArrayList<Instrument>();
 		Iterator<String> itr = instrMap.keySet().iterator();
 		while (itr.hasNext()) {
 			
@@ -80,9 +80,9 @@ public class Common {
 		return a;
 	}
 
-    public static ArrayList<RSSItem> getAllInstrs() {
+    public static ArrayList<Instrument> getAllInstrs() {
 		
-		return new ArrayList<RSSItem>(instrMap.values());
+		return new ArrayList<Instrument>(instrMap.values());
 	}
 	
 	public static ArrayList<String> getInstrNameArray() {
@@ -105,9 +105,9 @@ public class Common {
 
 	public static void addToInstrList(String key, JSONObject obj) {
 		
-		RSSItem old = instrMap.get(key);
+		Instrument old = instrMap.get(key);
 		if(old == null)
-			instrMap.put(key, new RSSItem(key, obj));
+			instrMap.put(key, new Instrument(key, obj));
 		else
 			old.update(obj);
 	}

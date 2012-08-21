@@ -13,9 +13,9 @@
 	    android:background="#ffffff"
 	    android:cacheColorHint="@android:color/transparent"
 	    android:choiceMode="singleChoice"
-	    android:footerDividersEnabled="false"
+	    android:footerDividersEnabled="true"
 	    android:headerDividersEnabled="false"
-	    android:listSelector="@android:color/transparent" >
+	    android:listSelector="#2B60DE" >
 
 	</ListView>
 	

@@ -1,15 +1,11 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.util.Log;
 
-import com.vkassin.mtrade.Common.item_type;
-
-public class RSSItem implements Serializable {
+public class Instrument implements Serializable {
 
 	private static final long serialVersionUID = 22L;
 	private static final String TAG = "MTrade.RSSItem"; 
@@ -26,7 +22,7 @@ public class RSSItem implements Serializable {
 
 	public boolean favourite;
 	
-	public RSSItem(String i, JSONObject obj) {
+	public Instrument(String i, JSONObject obj) {
 		
 		this.id = i;
 		

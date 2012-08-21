@@ -10,12 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class InstrsAdapter extends ArrayAdapter<RSSItem> {
-	private ArrayList<RSSItem> items;
+public class InstrsAdapter extends ArrayAdapter<Instrument> {
+	private ArrayList<Instrument> items;
 	private Context ctx;
 	private int resourceId;
 	
-	public InstrsAdapter(Context context, int resourceId, ArrayList<RSSItem> objects) {
+	public InstrsAdapter(Context context, int resourceId, ArrayList<Instrument> objects) {
 		super(context, resourceId, objects);
 		this.items = objects;
 		this.ctx = context;
@@ -28,7 +28,7 @@ public class InstrsAdapter extends ArrayAdapter<RSSItem> {
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	layout.addView(vi.inflate(resourceId, null));
     	
-    	RSSItem item = getItems().get(position);
+    	Instrument item = getItems().get(position);
     	if (item != null) {
 
     		TextView title = (TextView) layout.findViewById(R.id.InstrName);
@@ -44,16 +44,16 @@ public class InstrsAdapter extends ArrayAdapter<RSSItem> {
     	return layout;
     }
 
-	public void setItems(ArrayList<RSSItem> objects) {
+	public void setItems(ArrayList<Instrument> objects) {
 		this.items.clear();
 		this.items.addAll(objects);
 	}
 	
-	public void addItems(ArrayList<RSSItem> objects) {
+	public void addItems(ArrayList<Instrument> objects) {
 		this.items.addAll(objects);
 	}
 
-	public ArrayList<RSSItem> getItems() {
+	public ArrayList<Instrument> getItems() {
 		return items;
 	}
 }

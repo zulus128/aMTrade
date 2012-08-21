@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 		private String[] lv_arr = {};
 		private ListView mainListView = null;
-		private ArrayList<RSSItem> listInstr;
+		private ArrayList<Instrument> listInstr;
 		private static final String TAG = "MTrade.SelectListView"; 
 
 //		final String SETTING_TODOLIST = "todolist";
@@ -27,7 +27,7 @@ import android.widget.ListView;
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.simple);
+			setContentView(R.layout.select_instr);
 
 //			Button btnSave = (Button) findViewById(R.id.btnSave);
 //			btnSave.setOnClickListener(new OnClickListener() {
@@ -63,9 +63,9 @@ import android.widget.ListView;
 			// Bind the data with the list
 			
 			ArrayList<String> a = new ArrayList<String>();
-			Iterator<RSSItem> itr = listInstr.iterator();
+			Iterator<Instrument> itr = listInstr.iterator();
 				while (itr.hasNext()){
-					RSSItem k = itr.next();
+					Instrument k = itr.next();
 					a.add(k.symbol);
 				}
 				

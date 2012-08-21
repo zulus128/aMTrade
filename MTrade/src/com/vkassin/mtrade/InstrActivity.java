@@ -17,28 +17,38 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class InstrActivity extends Activity {
 
 	private static final String TAG = "MTrade.InstrActivity"; 
-	
+
+	private static final int CONTEXTMENU_PUTORDER = 1;
+	private int selectedRowId;
+
 	private Socket sock;
 	private Thread thrd;
 	private ListView list;
 	private InstrsAdapter adapter;
 	private ProgressBar pb;
+	private Button customDialog_Dismiss;
 	
     public void onCreate(Bundle savedInstanceState) {
     	
@@ -49,15 +59,17 @@ public class InstrActivity extends Activity {
 //		pb.setVisibility(View.VISIBLE);
 
         list = (ListView)this.findViewById(R.id.InstrList);
-    	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<RSSItem>());
+    	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<Instrument>());
     	list.setAdapter(adapter);
-    	
-    	list.setOnItemClickListener(new OnItemClickListener() {
-			
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				
-			}
-		});
+		
+    	registerForContextMenu(list);
+		
+//    	list.setOnItemClickListener(new OnItemClickListener() {
+//			
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+//				
+//			}
+//		});
      
     	Common.clearInstrList();
     	
@@ -192,34 +204,23 @@ public class InstrActivity extends Activity {
                     			}
 
                     		}
-                    		
+                    		else
                     		if( t == Common.INSTRUMENT) {
                     			
-//                    			ArrayList<RSSItem> result = new ArrayList<RSSItem>();
-//                    			ArrayList<Integer> idresult = new ArrayList<Integer>();
-                    			
                     			Iterator<String> keys = data.keys();
-//                    			String k = "0";
                     			while( keys.hasNext() ){
                     				String key = (String)keys.next();
-//                    				Log.i(TAG, "key = " + key);
-//                    				k = key;
                     				if(!key.equals("time") && !key.equals("objType")) {
-                    					
-//                    					result.add(new RSSItem(Integer.parseInt(key), data.getJSONObject(key)));
-                    					
                     					Common.addToInstrList(key, data.getJSONObject(key));
-                    					
-//                    					idresult.add(new Integer(key));
                     				}
                     			}
-                    			
-//                    			writeJSONMsg(getSubscription(idresult));
-                    			
-//                    			Common.saveInstrList(idresult);
-                    			
-//                	        	adapter.setItems(result);
                 				adapter.notifyDataSetChanged();
+							}
+                    		else
+                    		if( t == Common.TRADEACCOUNT) {
+                    			
+                    			Common.addToAccountList();
+                    			
 							}
 							
 						} catch (JSONException e) {
@@ -316,40 +317,85 @@ public class InstrActivity extends Activity {
 	            startActivityForResult(intent, 0);
 	            break;
 	               
-	        case R.id.menuorder: 
-	        	
-	        	Context mContext = getApplicationContext();
-	        	Dialog dialog = new Dialog(mContext);
-
-	        	dialog.setContentView(R.layout.order_dialog);
-	        	dialog.setTitle("Order Dialog");
-
-	        	TextView text = (TextView) dialog.findViewById(R.id.ordertext);
-	        	text.setText("Hello, this is a custom dialog!");
-//	        	ImageView image = (ImageView) dialog.findViewById(R.id.orderimage);
-//	        	image.setImageResource(R.drawable.android);
-
-	        	dialog.show();
-	        	
-//	        	AlertDialog.Builder builder;
-//	        	AlertDialog alertDialog;
-//
-//	        	Context mContext = getApplicationContext();
-//	        	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-//	        	View layout = inflater.inflate(R.layout.order_dialog,
-//	        	                               (ViewGroup) findViewById(R.id.layout_root));
-//
-//	        	TextView text = (TextView) layout.findViewById(R.id.ordertext);
-//	        	text.setText("Hello, this is a custom dialog!");
-////	        	ImageView image = (ImageView) layout.findViewById(R.id.image);
-////	        	image.setImageResource(R.drawable.android);
-//
-//	        	builder = new AlertDialog.Builder(mContext);
-//	        	builder.setView(layout);
-//	        	alertDialog = builder.create();
-	        	
-	        	break;
+//	        case R.id.menuorder: 
+//	        	break;
 	    }
 	    return true;
 	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
+		
+	    AdapterView.AdapterContextMenuInfo info =
+            (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+	    selectedRowId = (int)info.id;
+    
+//	    Log.i(TAG, "selectedRowId = "+selectedRowId);
+	    
+		menu.setHeaderTitle(R.string.MenuTitle);  
+	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
+	    
+		super.onCreateContextMenu(menu, v, menuInfo);  
+
+	}  
+	
+   @Override  
+   public boolean onContextItemSelected(MenuItem item) {  
+		   
+	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
+
+	    	final Instrument it = adapter.getItem(selectedRowId);
+		    	
+	    	final Dialog dialog = new Dialog(this);
+        	dialog.setContentView(R.layout.order_dialog);
+        	dialog.setTitle(R.string.OrderDialogTitle);
+
+        	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
+        	itext.setText(it.symbol);
+
+        	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
+        	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
+        	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
+
+        	customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
+        	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
+        		 public void onClick(View arg0) {
+        			 
+        		       JSONObject msg = new JSONObject();
+        		       try{
+        		    	   
+        		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
+        		         msg.put("time", Calendar.getInstance().getTimeInMillis());
+        		         msg.put("version", Common.PROTOCOL_VERSION);
+        		         msg.put("instrumId", it.id);
+        		         msg.put("qty", pricetxt.getText());
+        		         msg.put("price", quanttxt.getText());
+        		         msg.put("ordType", 1);
+        		         msg.put("side", bu0.isChecked()?0:1);
+        		         
+        		     
+        		         writeJSONMsg(msg);
+
+        		       }
+        		       catch(Exception e){
+        		    	   
+        		           e.printStackTrace();
+        		           Log.e(TAG, "Error! Cannot create JSON order object", e);
+        		       }
+        		       
+        			 dialog.dismiss(); 
+        		 }
+        		    
+        	});
+        	
+        	dialog.show();
+	    }
+
+	    return true;  
+   }  
+
+//   private void putOrder(Instrument it) {
+//   }
+
 }
