@@ -34,6 +34,11 @@ public class InstrsAdapter extends ArrayAdapter<RSSItem> {
     		TextView title = (TextView) layout.findViewById(R.id.InstrName);
     		title.setText(item.symbol);
     		
+    		TextView bid = (TextView) layout.findViewById(R.id.InstrBid);
+    		bid.setText(item.bid.toString());
+
+    		TextView ask = (TextView) layout.findViewById(R.id.InstrAsk);
+    		ask.setText(item.ask.toString());
     	}
     	
     	return layout;

@@ -2,5 +2,6 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menuselect" android:titleCondensed="@string/SelectInstrs" android:title="@string/SelectInstrs" android:icon="@android:drawable/ic_menu_edit"></item>
+    <item android:id="@+id/menuorder" android:titleCondensed="@string/PutOrder" android:title="@string/PutOrder" android:icon="@android:drawable/ic_menu_add"></item>
     
 </menu>

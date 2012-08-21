@@ -14,6 +14,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +24,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.TextView;
 
 public class InstrActivity extends Activity {
 
@@ -184,7 +188,7 @@ public class InstrActivity extends Activity {
                     				adapter.setItems(Common.getFavInstrs());
                     				adapter.notifyDataSetChanged();
                         			Common.FIRSTLOAD_FINISHED = true;
-
+                        			onResume();
                     			}
 
                     		}
@@ -253,7 +257,9 @@ public class InstrActivity extends Activity {
 //		Log.w(TAG, "favr3 = " + Common.getFavrList());
 
 		try {
+			
 			sendSubscription();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -306,9 +312,43 @@ public class InstrActivity extends Activity {
 		switch (item.getItemId()) {
 	        case R.id.menuselect: 
 	        	
-	               Intent intent = new Intent(this, SelectListView.class);
-	               startActivityForResult(intent, 0);
-	               break;
+	        	Intent intent = new Intent(this, SelectListView.class);
+	            startActivityForResult(intent, 0);
+	            break;
+	               
+	        case R.id.menuorder: 
+	        	
+	        	Context mContext = getApplicationContext();
+	        	Dialog dialog = new Dialog(mContext);
+
+	        	dialog.setContentView(R.layout.order_dialog);
+	        	dialog.setTitle("Order Dialog");
+
+	        	TextView text = (TextView) dialog.findViewById(R.id.ordertext);
+	        	text.setText("Hello, this is a custom dialog!");
+//	        	ImageView image = (ImageView) dialog.findViewById(R.id.orderimage);
+//	        	image.setImageResource(R.drawable.android);
+
+	        	dialog.show();
+	        	
+//	        	AlertDialog.Builder builder;
+//	        	AlertDialog alertDialog;
+//
+//	        	Context mContext = getApplicationContext();
+//	        	LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+//	        	View layout = inflater.inflate(R.layout.order_dialog,
+//	        	                               (ViewGroup) findViewById(R.id.layout_root));
+//
+//	        	TextView text = (TextView) layout.findViewById(R.id.ordertext);
+//	        	text.setText("Hello, this is a custom dialog!");
+////	        	ImageView image = (ImageView) layout.findViewById(R.id.image);
+////	        	image.setImageResource(R.drawable.android);
+//
+//	        	builder = new AlertDialog.Builder(mContext);
+//	        	builder.setView(layout);
+//	        	alertDialog = builder.create();
+	        	
+	        	break;
 	    }
 	    return true;
 	}

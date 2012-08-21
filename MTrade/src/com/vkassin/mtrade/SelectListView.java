@@ -1,31 +1,22 @@
 package com.vkassin.mtrade;
 
-	import java.io.IOException;
-	import java.util.ArrayList;
-	import java.util.Arrays;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-
-	import org.xmlpull.v1.XmlPullParserException;
-
-	import android.app.ListActivity;
-	import android.os.Bundle;
+import android.app.ListActivity;
+import android.os.Bundle;
 import android.util.Log;
-	import android.view.View;
-	import android.view.View.OnClickListener;
-	import android.widget.ArrayAdapter;
-	import android.widget.Button;
-	import android.widget.ListView;
-	import android.widget.Toast;
-	import android.content.*;
-import android.content.res.XmlResourceParser;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 	public class SelectListView extends ListActivity {
 
 		private String[] lv_arr = {};
 		private ListView mainListView = null;
-		private ArrayList<RSSItem> listTODO;
+		private ArrayList<RSSItem> listInstr;
 		private static final String TAG = "MTrade.SelectListView"; 
 
 //		final String SETTING_TODOLIST = "todolist";
@@ -63,7 +54,7 @@ import android.content.res.XmlResourceParser;
 			});
 
 			// Prepare an ArrayList of todo items
-			listTODO = Common.getAllInstrs();//PrepareListFromXml();
+			listInstr = Common.getAllInstrs();//PrepareListFromXml();
 
 			this.mainListView = getListView();
 
@@ -72,7 +63,7 @@ import android.content.res.XmlResourceParser;
 			// Bind the data with the list
 			
 			ArrayList<String> a = new ArrayList<String>();
-			Iterator<RSSItem> itr = listTODO.iterator();
+			Iterator<RSSItem> itr = listInstr.iterator();
 				while (itr.hasNext()){
 					RSSItem k = itr.next();
 					a.add(k.symbol);
@@ -135,7 +126,7 @@ import android.content.res.XmlResourceParser;
 //					if (Common.getFavrList().contains(currentItem)) {
 //						this.mainListView.setItemChecked(i, true);
 //					}
-					if(listTODO.get(i).favourite) {
+					if(listInstr.get(i).favourite) {
 							this.mainListView.setItemChecked(i, true);
 					Log.i(TAG, "checked "+i);
 					}
@@ -153,7 +144,7 @@ import android.content.res.XmlResourceParser;
 			for (int i = 0; i < count; i++)
 				if (this.mainListView.isItemChecked(i)) 
 					//a.add(this.mainListView.getItemAtPosition(i).toString());
-					a.add(listTODO.get(i).id);
+					a.add(listInstr.get(i).id);
 		
 			Common.setFavrList(a);
 			

@@ -14,12 +14,15 @@ public class RSSItem implements Serializable {
 	private static final long serialVersionUID = 22L;
 	private static final String TAG = "MTrade.RSSItem"; 
 
-	public String id;
-	public String symbol;
-	public String description;
+	public String id = "";
+	public String symbol = "";
+	public String description = "";
 
-	public Double min;
-	public Double max;
+	public Double min = new Double(0);
+	public Double max = new Double(0);
+
+	public Double bid = new Double(0);
+	public Double ask = new Double(0);
 
 	public boolean favourite;
 	
@@ -48,9 +51,12 @@ public class RSSItem implements Serializable {
 		try{ this.min = obj.getDouble("min"); }catch(JSONException e){ }
 		try{ this.max = obj.getDouble("max"); }catch(JSONException e){ }
 		
+		try{ this.bid = obj.getDouble("bid"); }catch(JSONException e){ }
+		try{ this.ask = obj.getDouble("ask"); }catch(JSONException e){ }
 	}
 	
 	public String getShortContent() {
+		
 		return description.length() > 100 ? description.substring(0, 97) + "..." : description;
 	}
 
