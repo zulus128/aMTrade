@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -63,6 +64,7 @@ public class Common {
 	
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
 	private static HashSet<String> favrList = new HashSet<String>();
+	private static HashMap<String, String> accMap = new HashMap<String, String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
 
@@ -110,6 +112,16 @@ public class Common {
 			instrMap.put(key, new Instrument(key, obj));
 		else
 			old.update(obj);
+	}
+
+	public static void addToAccountList(String key, JSONObject obj) throws JSONException {
+		
+			accMap.put(key, obj.getString("code"));
+	}
+
+	public static Collection<String> getAccountList() {
+		
+		return accMap.values();
 	}
 	
 	public static void validateFavourites() {

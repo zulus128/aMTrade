@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class InstrActivity extends Activity {
@@ -49,6 +52,7 @@ public class InstrActivity extends Activity {
 	private InstrsAdapter adapter;
 	private ProgressBar pb;
 	private Button customDialog_Dismiss;
+	private static int ordernum;
 	
     public void onCreate(Bundle savedInstanceState) {
     	
@@ -121,6 +125,7 @@ public class InstrActivity extends Activity {
         buff.put(readMsg(sock.getInputStream(), 4));
         buff.position(0);
         int pkgSize = buff.getInt();
+//        Log.i(TAG, "size = "+pkgSize);
         String s = new String(readMsg(sock.getInputStream(), pkgSize));
         return new JSONObject(s);
     }
@@ -210,7 +215,7 @@ public class InstrActivity extends Activity {
                     			Iterator<String> keys = data.keys();
                     			while( keys.hasNext() ){
                     				String key = (String)keys.next();
-                    				if(!key.equals("time") && !key.equals("objType")) {
+                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
                     					Common.addToInstrList(key, data.getJSONObject(key));
                     				}
                     			}
@@ -219,8 +224,14 @@ public class InstrActivity extends Activity {
                     		else
                     		if( t == Common.TRADEACCOUNT) {
                     			
-                    			Common.addToAccountList();
+                    			Iterator<String> keys = data.keys();
+                    			while( keys.hasNext() ){
+                    				String key = (String)keys.next();
+                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
                     			
+                    					Common.addToAccountList(key, data.getJSONObject(key));
+                    				}
+                    			}
 							}
 							
 						} catch (JSONException e) {
@@ -354,6 +365,13 @@ public class InstrActivity extends Activity {
         	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
         	itext.setText(it.symbol);
 
+        	final Spinner aspinner = (Spinner) dialog.findViewById(R.id.acc_spinner);
+        	List<String> list = new ArrayList<String>(Common.getAccountList());
+        	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Common.app_ctx,
+        		android.R.layout.simple_spinner_item, list);
+        	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        	aspinner.setAdapter(dataAdapter);
+        	
         	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
         	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
         	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
@@ -368,11 +386,13 @@ public class InstrActivity extends Activity {
         		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
         		         msg.put("time", Calendar.getInstance().getTimeInMillis());
         		         msg.put("version", Common.PROTOCOL_VERSION);
-        		         msg.put("instrumId", it.id);
-        		         msg.put("qty", pricetxt.getText());
-        		         msg.put("price", quanttxt.getText());
+        		         msg.put("instrumId", Long.valueOf(it.id));
+        		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
+        		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
         		         msg.put("ordType", 1);
         		         msg.put("side", bu0.isChecked()?0:1);
+        		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
+        		         msg.put("orderNum", ++ordernum);
         		         
         		     
         		         writeJSONMsg(msg);
