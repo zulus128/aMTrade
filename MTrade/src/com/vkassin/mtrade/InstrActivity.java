@@ -77,6 +77,8 @@ public class InstrActivity extends Activity {
      
     	Common.clearInstrList();
     	
+    	Common.clearOrderList();
+    	
     	refresh();
     }
 
@@ -153,6 +155,32 @@ public class InstrActivity extends Activity {
 
         writeJSONMsg(msg);
 
+        sendGraphSubscription();
+    }
+
+    private void sendGraphSubscription() throws Exception {
+
+        JSONObject msg = new JSONObject();
+        try{
+        	HashSet<String> t = Common.getFavrList();
+            for(String id : t) {
+            	
+            	Log.i(TAG, "f: " + id);
+            	msg.put("objType", Common.QUOTE_CHART_SUBSCRIPTION);
+            	msg.put("time", Calendar.getInstance().getTimeInMillis());
+            	msg.put("version", Common.PROTOCOL_VERSION);
+            	msg.put("instrumId", Long.valueOf(id));
+      
+            	Log.i(TAG, "chart subscr = "+msg);
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            Log.e(TAG, "Error! Cannot create JSON login object", e);
+        }
+
+        writeJSONMsg(msg);
+
     }
     
     private void refresh() {
@@ -221,6 +249,18 @@ public class InstrActivity extends Activity {
                     			}
                 				adapter.notifyDataSetChanged();
 							}
+                    		else
+                        		if( t == Common.TRANSIT_ORDER) {
+                        			
+                        			Iterator<String> keys = data.keys();
+                        			while( keys.hasNext() ){
+                        				String key = (String)keys.next();
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        					Common.addToOrderList(key, data.getJSONObject(key));
+                        				}
+                        			}
+//                    				adapter.notifyDataSetChanged();
+    							}
                     		else
                     		if( t == Common.TRADEACCOUNT) {
                     			

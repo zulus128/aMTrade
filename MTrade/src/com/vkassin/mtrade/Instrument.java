@@ -8,7 +8,7 @@ import android.util.Log;
 public class Instrument implements Serializable {
 
 	private static final long serialVersionUID = 22L;
-	private static final String TAG = "MTrade.RSSItem"; 
+	private static final String TAG = "MTrade.Instrument"; 
 
 	public String id = "";
 	public String symbol = "";

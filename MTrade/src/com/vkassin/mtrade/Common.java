@@ -49,7 +49,8 @@ public class Common {
     public final static Integer CHART = 106;
     	
     public final static Integer SUBSCRIBE = 107;
-
+    public final static Integer QUOTE_CHART_SUBSCRIPTION = 108;
+    
     public final static String PROTOCOL_VERSION = "1.0";
     public final static int ERROR_USER_WAS_NOT_FOUND = 200;
     public final static int ERROR_USER_ALREADY_CONNECTED = 201;
@@ -63,6 +64,7 @@ public class Common {
 	private static final String FLIST_FNAME = "favr_list";
 	
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
+	private static HashMap<String, Order> orderMap = new HashMap<String, Order>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
 
@@ -85,6 +87,11 @@ public class Common {
     public static ArrayList<Instrument> getAllInstrs() {
 		
 		return new ArrayList<Instrument>(instrMap.values());
+	}
+
+    public static Instrument getInstrById(long id) {
+		
+		return instrMap.get(String.valueOf(id));
 	}
 	
 	public static ArrayList<String> getInstrNameArray() {
@@ -110,6 +117,25 @@ public class Common {
 		Instrument old = instrMap.get(key);
 		if(old == null)
 			instrMap.put(key, new Instrument(key, obj));
+		else
+			old.update(obj);
+	}
+
+	public static ArrayList<Order> getAllOrders() {
+		
+		return new ArrayList<Order>(orderMap.values());
+	}
+
+	public static void clearOrderList() {
+		
+		orderMap.clear();
+	}
+
+	public static void addToOrderList(String key, JSONObject obj) {
+		
+		Order old = orderMap.get(key);
+		if(old == null)
+			orderMap.put(key, new Order(key, obj));
 		else
 			old.update(obj);
 	}
