@@ -15,8 +15,7 @@
 	    android:choiceMode="singleChoice"
 	    android:footerDividersEnabled="true"
 	    android:headerDividersEnabled="false"
-	    android:listSelector="#2B60DE" >
-
+	    android:listSelector="#2B60DE">
 	</ListView>
 	
 			

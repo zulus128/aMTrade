@@ -65,15 +65,17 @@ public class InstrActivity extends Activity {
         list = (ListView)this.findViewById(R.id.InstrList);
     	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<Instrument>());
     	list.setAdapter(adapter);
-		
     	registerForContextMenu(list);
-		
-//    	list.setOnItemClickListener(new OnItemClickListener() {
-//			
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//				
-//			}
-//		});
+
+//    	Common.selectedListItem = getIntent().getIntExtra("PositionInList", -1);
+    	
+    	list.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
+				adapter.setSelectedPosition(arg2);				
+			}
+		});
      
     	Common.clearInstrList();
     	

@@ -69,7 +69,8 @@ public class Common {
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
-
+//    public static int selectedListItem = 0;
+    
     public static ArrayList<Instrument> getFavInstrs() {
 		
 		ArrayList<Instrument> a = new ArrayList<Instrument>();
