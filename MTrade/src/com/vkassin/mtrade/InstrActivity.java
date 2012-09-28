@@ -145,6 +145,10 @@ public class InstrActivity extends Activity {
           msg.put("time", Calendar.getInstance().getTimeInMillis());
           msg.put("version", Common.PROTOCOL_VERSION);
           HashSet<String> t = Common.getFavrList();
+          
+          if(t.size() < 1)
+        	  return;
+          
           JSONArray jsonA = new JSONArray(t);
           msg.put("subscribe_array", jsonA);
       
