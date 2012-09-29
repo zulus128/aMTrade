@@ -256,6 +256,18 @@ public class InstrActivity extends Activity {
                 				adapter.notifyDataSetChanged();
 							}
                     		else
+                        		if( t == Common.CHART) {
+                        			
+                        			Iterator<String> keys = data.keys();
+                        			while( keys.hasNext() ){
+                        				String key = (String)keys.next();
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        					Common.addToCharts(key, data.getJSONObject(key));
+                        				}
+                        			}
+                    				adapter.notifyDataSetChanged();
+    							}
+                    		else
                         		if( t == Common.TRANSIT_ORDER) {
                         			
                         			Iterator<String> keys = data.keys();

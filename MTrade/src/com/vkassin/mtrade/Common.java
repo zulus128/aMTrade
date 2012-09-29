@@ -122,6 +122,21 @@ public class Common {
 			old.update(obj);
 	}
 
+	public static void addToCharts(String key, JSONObject obj) {
+	
+		try {
+			
+			long instid = obj.getLong("instrId");
+			Log.i(TAG, "key = " + key + " instr = " + instid);
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
 	public static ArrayList<Order> getAllOrders() {
 		
 		return new ArrayList<Order>(orderMap.values());

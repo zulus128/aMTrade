@@ -1,6 +1,8 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
+import java.util.SortedSet;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
@@ -21,6 +23,8 @@ public class Instrument implements Serializable {
 	public Double ask = new Double(0);
 
 	public boolean favourite;
+	
+	public SortedSet<DayChartElement> daychart;
 	
 	public Instrument(String i, JSONObject obj) {
 		
