@@ -1,7 +1,10 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +27,8 @@ public class Instrument implements Serializable {
 
 	public boolean favourite;
 	
-	public SortedSet<DayChartElement> daychart;
+//	public SortedSet<DayChartElement> daychart = new TreeSet<DayChartElement>();
+	public HashMap<String, DayChartElement> daychart = new HashMap<String, DayChartElement>();
 	
 	public Instrument(String i, JSONObject obj) {
 		
@@ -43,6 +47,12 @@ public class Instrument implements Serializable {
 		
 	}
 	
+	public void addDayChartElement(String key, JSONObject obj) {
+		
+		daychart.put(key, new DayChartElement(obj));
+	}
+		
+			
 	private void set(JSONObject obj){
 
 		try{ this.description = obj.getString("descRu"); }catch(JSONException e){ }

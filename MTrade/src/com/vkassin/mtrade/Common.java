@@ -60,6 +60,8 @@ public class Common {
 
 	public static TabHost tabHost;
 
+	public static Instrument selectedInstrument;
+	
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
 	
@@ -127,14 +129,17 @@ public class Common {
 		try {
 			
 			long instid = obj.getLong("instrId");
-			Log.i(TAG, "key = " + key + " instr = " + instid);
+//			Log.i(TAG, "key = " + key + " instr = " + instid);
+			
+			Instrument i = getInstrById(instid);
+			if(i != null)
+				i.addDayChartElement(key, obj);
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-
 	}
 
 	public static ArrayList<Order> getAllOrders() {
@@ -220,7 +225,7 @@ public class Common {
 			e.printStackTrace();
 		}
 		
-		Toast.makeText(app_ctx, "Сохранен список инструментов", Toast.LENGTH_SHORT).show();
+//		Toast.makeText(app_ctx, "Сохранен список инструментов", Toast.LENGTH_SHORT).show();
 
 	}
 	

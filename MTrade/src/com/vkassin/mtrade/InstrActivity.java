@@ -82,6 +82,10 @@ public class InstrActivity extends Activity {
     	Common.clearOrderList();
     	
     	refresh();
+//    	double f = 1331748000000.0;
+//    	Log.w(TAG, "1331748000000 = " + f/1000/60/60/24/365);
+//    	f = 1349029547375.0;
+//    	Log.w(TAG, "1349029547375 = " + f/1000/60/60/24/365);
     }
 
     public JSONObject getLogin() {
@@ -265,6 +269,9 @@ public class InstrActivity extends Activity {
                         					Common.addToCharts(key, data.getJSONObject(key));
                         				}
                         			}
+
+                        			Log.i(TAG, "Chart message processed.");
+
                     				adapter.notifyDataSetChanged();
     							}
                     		else
@@ -345,7 +352,7 @@ public class InstrActivity extends Activity {
     public void onStop() {
     
     	super.onStop();
-//    	Common.saveFavrList();
+    	Common.saveFavrList();
     }
     
     @Override

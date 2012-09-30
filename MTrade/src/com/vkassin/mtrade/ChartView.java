@@ -3,6 +3,10 @@ package com.vkassin.mtrade;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.afree.chart.AFreeChart;
 import org.afree.chart.annotations.XYTitleAnnotation;
 import org.afree.chart.axis.AxisLocation;
@@ -18,6 +22,7 @@ import org.afree.chart.renderer.xy.CandlestickRenderer;
 import org.afree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.afree.chart.title.LegendTitle;
 import org.afree.data.time.Day;
+import org.afree.data.time.Millisecond;
 import org.afree.data.time.TimeSeries;
 import org.afree.data.time.TimeSeriesCollection;
 import org.afree.data.xy.DefaultHighLowDataset;
@@ -34,12 +39,21 @@ import org.afree.ui.RectangleInsets;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 
 public class ChartView extends RootView {
 
+	private static final String TAG = "MTrade.ChartView"; 
+	
     public ChartView(Context context) {
         super(context);
 
+        if(Common.selectedInstrument == null) {
+        
+        	Log.w(TAG, "Common.selectedInstrument == null");
+        	return;
+        }
+        
         final AFreeChart chart = createChart();
         setChart(chart);
     }
@@ -59,8 +73,9 @@ public class ChartView extends RootView {
         NumberAxis rangeAxis1 = new NumberAxis();
         rangeAxis1.setStandardTickUnits(createTickUnits());
         rangeAxis1.setAutoTickUnitSelection(true);
-        rangeAxis1.setAutoRange(true);
-        rangeAxis1.setAutoRangeIncludesZero(false);
+//        rangeAxis1.setAutoRangeIncludesZero(true);
+        rangeAxis1.setAutoRange(false);
+        rangeAxis1.setRange(200, 280);
         rangeAxis1.setAxisLinePaintType(white);
         rangeAxis1.setAxisLineStroke(1);
         rangeAxis1.setTickMarkPaintType(white);
@@ -69,17 +84,23 @@ public class ChartView extends RootView {
         rangeAxis1.setLabelPaintType(white);
         rangeAxis1.setTickLabelPaintType(white);
         rangeAxis1.setTickLabelInsets(new RectangleInsets(10, 0, 10, 0));
-        rangeAxis1.setLimitAble(/*true*/false);
-        rangeAxis1.setLimitRange(20, 70);
+        
+        
+        
+        rangeAxis1.setAutoRangeIncludesZero(false);
+//        rangeAxis1.setLimitAble(true);
+//        rangeAxis1.setLimitRange(200, 280);
 
         CandlestickRenderer renderer1 = new CandlestickRenderer();
 
+        renderer1.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
         renderer1.setUseOutlinePaint(true);
         renderer1.setBaseOutlinePaintType(white);
         renderer1.setBaseOutlineStroke(1.0f);
 
         renderer1.setUpPaintType(red);
         renderer1.setDownPaintType(blue);
+        renderer1.setVolumePaintType(blue);
 
         XYPlot subplot1 = new XYPlot(dataset1, null, rangeAxis1, renderer1);
        
@@ -128,7 +149,7 @@ public class ChartView extends RootView {
         subplot2.setOutlineStroke(2.0f);
 
         // setting domain axis
-        ValueAxis timeAxis = new DateAxis("Date");
+        ValueAxis timeAxis = new DateAxis("Дата");
         timeAxis.setAxisLinePaintType(white);
         timeAxis.setAxisLineStroke(1);
 
@@ -157,7 +178,7 @@ public class ChartView extends RootView {
         subplot2.addAnnotation(ta);
 
         AFreeChart chart = new AFreeChart(
-                "Candle Stick Chart Demo 03",
+                "Candle Stick Chart",
                 AFreeChart.DEFAULT_TITLE_FONT,
                 plot,
                 false);
@@ -174,49 +195,75 @@ public class ChartView extends RootView {
      */
     public static OHLCDataset createDataset1() {
 
-        Date[] date = new Date[47];
-        double[] high = new double[47];
-        double[] low = new double[47];
-        double[] open = new double[47];
-        double[] close = new double[47];
-        double[] volume = new double[47];
 
-        int jan = 1;
-        int feb = 2;
-
-        for(int i = 0; i < 47; i++) {
-        	if(i <= 27) {
-        		date[i] = createDate(2001, jan, i+4, 12, 0);
-        	} else {
-        		date[i] = createDate(2001, feb, i-27, 12, 0);
-        	}
-        	high[i] = 45 + Math.random() * 20;
-        	low[i] = high[i] - (Math.random() * 30 + 3);
-        	do {
-	        	open[i] = high[i] - Math.random() * (high[i] - low[i]);
-	        	close[i] = low[i] + Math.random() * (high[i] - low[i]);
-        	} while(Math.abs(open[i] - close[i]) < 1);
-        }
+    	int c = Common.selectedInstrument.daychart.size();
+    	Date[] date = new Date[c];
+    	double[] high = new double[c];
+    	double[] low = new double[c];
+    	double[] open = new double[c];
+    	double[] close = new double[c];
+    	double[] volume = new double[c];
+    
+    	int i = 0;
+    	SortedSet<DayChartElement> set = new TreeSet<DayChartElement>();
+        set.addAll(Common.selectedInstrument.daychart.values());
+    	Iterator<DayChartElement> itr = set.iterator();
+    	while (itr.hasNext()) {
+			
+    		DayChartElement dce = itr.next();
+    		date[i] = new Date(dce.dateTime.longValue());
+//    		Log.w(TAG, "date["+i+"] = "+dce.dateTime.longValue()+ "  "+new Date(dce.dateTime.longValue()));
+    		high[i] = dce.high.doubleValue();
+    		low[i] = dce.low.doubleValue();
+    		open[i] = dce.open.doubleValue();
+    		close[i] = dce.close.doubleValue();
+    		volume[i] = dce.volume.doubleValue();
+    		i++;
+    	}
+		
+//    	Date[] date = new Date[47];
+//        double[] high = new double[47];
+//        double[] low = new double[47];
+//        double[] open = new double[47];
+//        double[] close = new double[47];
+//        double[] volume = new double[47];
+//
+//        int jan = 1;
+//        int feb = 2;
+//
+//        for(int i = 0; i < 47; i++) {
+//        	if(i <= 27) {
+//        		date[i] = createDate(2001, jan, i+4, 12, 0);
+//        	} else {
+//        		date[i] = createDate(2001, feb, i-27, 12, 0);
+//        	}
+//        	high[i] = 45 + Math.random() * 20;
+//        	low[i] = high[i] - (Math.random() * 30 + 3);
+//        	do {
+//	        	open[i] = high[i] - Math.random() * (high[i] - low[i]);
+//	        	close[i] = low[i] + Math.random() * (high[i] - low[i]);
+//        	} while(Math.abs(open[i] - close[i]) < 1);
+//        }
 
         return new DefaultHighLowDataset("Series 1", date, high, low, open, close, volume);
     }
 
     private static final Calendar calendar = Calendar.getInstance();
 
-    /**
-     * Returns a date using the default locale and timezone.
-     * @param y the year (YYYY).
-     * @param m the month (1-12).
-     * @param d the day of the month.
-     * @param hour the hour of the day.
-     * @param min the minute of the hour.
-     * @return A date.
-     */
-    private static Date createDate(int y, int m, int d, int hour, int min) {
-        calendar.clear();
-        calendar.set(y, m - 1, d, hour, min);
-        return calendar.getTime();
-    }
+//    /**
+//     * Returns a date using the default locale and timezone.
+//     * @param y the year (YYYY).
+//     * @param m the month (1-12).
+//     * @param d the day of the month.
+//     * @param hour the hour of the day.
+//     * @param min the minute of the hour.
+//     * @return A date.
+//     */
+//    private static Date createDate(int y, int m, int d, int hour, int min) {
+//        calendar.clear();
+//        calendar.set(y, m - 1, d, hour, min);
+//        return calendar.getTime();
+//    }
 
     /**
      * Creates a dataset.
@@ -226,13 +273,23 @@ public class ChartView extends RootView {
 
         TimeSeries s1 = new TimeSeries("MACD");
 
-        for(int i = 0; i < 47; i++) {
-        	if(i <= 27) {
-        		s1.add(new Day(i + 4, 1, 2001), Math.random() * 30 + 30);
-        	} else {
-        		s1.add(new Day(i - 27, 2, 2001), Math.random() * 30 + 30);
-        	}
-        }
+//    	int c = Common.selectedInstrument.daychart.size();
+      
+    	SortedSet<DayChartElement> set = new TreeSet<DayChartElement>();
+        set.addAll(Common.selectedInstrument.daychart.values());
+    	Iterator<DayChartElement> itr = set.iterator();
+    	while (itr.hasNext()) {
+    		
+    		DayChartElement dce = itr.next();
+    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), Math.random() * 60 + 200);
+    	}
+//        for(int i = 0; i < 47; i++) {
+//        	if(i <= 27) {
+//        		s1.add(new Day(i + 4, 1, 2011), Math.random() * 200 + 200);
+//        	} else {
+//        		s1.add(new Day(i - 27, 2, 2011), Math.random() * 200 + 200);
+//        	}
+//        }
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(s1);
@@ -243,8 +300,8 @@ public class ChartView extends RootView {
     public static TickUnitSource createTickUnits() {
 
         TickUnits units = new TickUnits();
-        DecimalFormat df1 = new DecimalFormat("$0");
-        DecimalFormat df2 = new DecimalFormat("$0.00");
+        DecimalFormat df1 = new DecimalFormat("0");
+        DecimalFormat df2 = new DecimalFormat("0.00");
 
         // we can add the units in any order, the TickUnits collection will
         // sort them...

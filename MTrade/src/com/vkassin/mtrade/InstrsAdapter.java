@@ -45,9 +45,12 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 
 //    	if (position == Common.selectedListItem)
 //    		layout.setBackgroundResource(android.R.color.darker_gray);
-    	
-    	if (position == selectedPos) {
-    	    layout.setBackgroundColor(Color.BLUE);
+    	boolean b = (position == selectedPos);
+    	if (b) {
+    	    
+    		layout.setBackgroundColor(Color.BLUE);
+    	    Common.selectedInstrument = getItems().get(position);
+    	    
     	} else {
     	    layout.setBackgroundColor(Color.WHITE);
     	}
@@ -57,12 +60,16 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 
     		TextView title = (TextView) layout.findViewById(R.id.InstrName);
     		title.setText(item.symbol);
+    		title.setTextColor(b?Color.WHITE:Color.BLACK);
     		
     		TextView bid = (TextView) layout.findViewById(R.id.InstrBid);
     		bid.setText(item.bid.toString());
+    		bid.setTextColor(b?Color.WHITE:Color.BLACK);
 
     		TextView ask = (TextView) layout.findViewById(R.id.InstrAsk);
     		ask.setText(item.ask.toString());
+    		ask.setTextColor(b?Color.WHITE:Color.BLACK);
+
     	}
     	
     	return layout;
@@ -71,6 +78,9 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 	public void setItems(ArrayList<Instrument> objects) {
 		this.items.clear();
 		this.items.addAll(objects);
+		
+		if((selectedPos < 0) && (objects.size() > 0))
+			setSelectedPosition(0);
 	}
 	
 	public void addItems(ArrayList<Instrument> objects) {
