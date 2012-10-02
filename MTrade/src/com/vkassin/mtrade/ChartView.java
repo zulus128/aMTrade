@@ -67,6 +67,7 @@ public class ChartView extends RootView {
         PaintType yellow = new SolidColor(Color.YELLOW);
         PaintType darkGreen = new SolidColor(Color.argb(255, 0, 64, 0));
         PaintType white = new SolidColor(Color.WHITE);
+        PaintType green = new SolidColor(Color.GREEN);
         
         OHLCDataset dataset1 = createDataset1();
 
@@ -74,7 +75,8 @@ public class ChartView extends RootView {
         rangeAxis1.setStandardTickUnits(createTickUnits());
         rangeAxis1.setAutoTickUnitSelection(true);
 //        rangeAxis1.setAutoRangeIncludesZero(true);
-        rangeAxis1.setAutoRange(false);
+//        rangeAxis1.setAutoRange(false);
+//        rangeAxis1.setAutoRange(true);
         rangeAxis1.setRange(200, 280);
         rangeAxis1.setAxisLinePaintType(white);
         rangeAxis1.setAxisLineStroke(1);
@@ -93,14 +95,14 @@ public class ChartView extends RootView {
 
         CandlestickRenderer renderer1 = new CandlestickRenderer();
 
-        renderer1.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+//        renderer1.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
         renderer1.setUseOutlinePaint(true);
         renderer1.setBaseOutlinePaintType(white);
         renderer1.setBaseOutlineStroke(1.0f);
 
         renderer1.setUpPaintType(red);
         renderer1.setDownPaintType(blue);
-        renderer1.setVolumePaintType(blue);
+        renderer1.setVolumePaintType(green);
 
         XYPlot subplot1 = new XYPlot(dataset1, null, rangeAxis1, renderer1);
        
@@ -243,6 +245,7 @@ public class ChartView extends RootView {
 //	        	open[i] = high[i] - Math.random() * (high[i] - low[i]);
 //	        	close[i] = low[i] + Math.random() * (high[i] - low[i]);
 //        	} while(Math.abs(open[i] - close[i]) < 1);
+//        	volume[i] = Math.random() * 50;
 //        }
 
         return new DefaultHighLowDataset("Series 1", date, high, low, open, close, volume);
@@ -259,11 +262,11 @@ public class ChartView extends RootView {
 //     * @param min the minute of the hour.
 //     * @return A date.
 //     */
-//    private static Date createDate(int y, int m, int d, int hour, int min) {
-//        calendar.clear();
-//        calendar.set(y, m - 1, d, hour, min);
-//        return calendar.getTime();
-//    }
+    private static Date createDate(int y, int m, int d, int hour, int min) {
+        calendar.clear();
+        calendar.set(y, m - 1, d, hour, min);
+        return calendar.getTime();
+    }
 
     /**
      * Creates a dataset.
@@ -283,11 +286,12 @@ public class ChartView extends RootView {
     		DayChartElement dce = itr.next();
     		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), Math.random() * 60 + 200);
     	}
+
 //        for(int i = 0; i < 47; i++) {
 //        	if(i <= 27) {
-//        		s1.add(new Day(i + 4, 1, 2011), Math.random() * 200 + 200);
+//        		s1.add(new Day(i + 4, 1, 2001), Math.random() * 30 + 30);
 //        	} else {
-//        		s1.add(new Day(i - 27, 2, 2011), Math.random() * 200 + 200);
+//        		s1.add(new Day(i - 27, 2, 2001), Math.random() * 30 + 30);
 //        	}
 //        }
 

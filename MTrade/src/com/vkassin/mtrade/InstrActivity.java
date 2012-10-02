@@ -349,10 +349,17 @@ public class InstrActivity extends Activity {
     }
     
     @Override
+    public void onPause() {
+    	
+    	super.onPause();
+    	Common.saveFavrList();
+    }
+
+    	@Override
     public void onStop() {
     
     	super.onStop();
-    	Common.saveFavrList();
+//    	Common.saveFavrList();
     }
     
     @Override

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent">
+	android:layout_height="fill_parent" android:layout_width="fill_parent"
+	android:background="#909090"
+	>
 	
 	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout01"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		>
 
 	<ListView
 	    android:id="@+id/InstrList"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:background="#ffffff"
+	    android:background="#696969"
 	    android:cacheColorHint="@android:color/transparent"
 	    android:choiceMode="singleChoice"
 	    android:footerDividersEnabled="true"

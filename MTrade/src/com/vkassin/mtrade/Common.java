@@ -206,6 +206,7 @@ public class Common {
 	
 	public static void saveFavrList() {
 		
+		Log.i(TAG, "saveFavrList()");
 		FileOutputStream fos;
 		try {
 			
