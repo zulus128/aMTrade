@@ -64,7 +64,10 @@ public class InstrActivity extends Activity {
 
         list = (ListView)this.findViewById(R.id.InstrList);
     	adapter = new InstrsAdapter(this, R.layout.instritem, new ArrayList<Instrument>());
+    	
+//    	list.addHeaderView(getLayoutInflater().inflate(R.layout.instritem, null), null, false);
     	list.setAdapter(adapter);
+    	
     	registerForContextMenu(list);
 
 //    	Common.selectedListItem = getIntent().getIntExtra("PositionInList", -1);

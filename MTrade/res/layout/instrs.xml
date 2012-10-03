@@ -8,10 +8,16 @@
 	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout01"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		>
-
+	    <TextView android:id="@+id/txtTtt" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        	android:textStyle="bold" android:textColor="#FFFFFF" android:text="hhhhhhhhh"
+        	android:textSize="15sp"
+        	android:gravity="center_vertical" android:paddingLeft="5dp">
+        
+		</TextView>
+		
 	<ListView
 	    android:id="@+id/InstrList"
-	    android:layout_width="fill_parent"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:background="#696969"
 	    android:cacheColorHint="@android:color/transparent"
