@@ -12,17 +12,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class InstrsAdapter extends ArrayAdapter<Instrument> {
+
+	private final int colorBackSelected;
+	private final int colorBackUnselected;
+	private final int colorTextSelected;
+	private final int colorTextUnselected;
+	private final int colorInstrUnselected;
+	private final int colorInstrSelected;
+
 	private ArrayList<Instrument> items;
 	private Context ctx;
 	private int resourceId;
-	
+
+	private int selectedPos = -1;	// init value for none-selected
+
 	public InstrsAdapter(Context context, int resourceId, ArrayList<Instrument> objects) {
+
 		super(context, resourceId, objects);
+		
 		this.items = objects;
 		this.ctx = context;
 		this.resourceId = resourceId;
+		
+		colorBackSelected = ctx.getResources().getColor(R.color.Blue);
+		colorBackUnselected = ctx.getResources().getColor(R.color.SlateGray);
+		colorTextSelected = ctx.getResources().getColor(R.color.White);
+		colorTextUnselected = ctx.getResources().getColor(R.color.WhiteSmoke);
+		colorInstrSelected = ctx.getResources().getColor(R.color.YellowGreen);
+		colorInstrUnselected = ctx.getResources().getColor(R.color.Yellow);
 	}
-	private int selectedPos = -1;	// init value for not-selected
 
 	public void setSelectedPosition(int pos){
 		
@@ -48,11 +66,11 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
     	boolean b = (position == selectedPos);
     	if (b) {
     	    
-    		layout.setBackgroundColor(Color.BLUE);
+    		layout.setBackgroundColor(colorBackSelected);
     	    Common.selectedInstrument = getItems().get(position);
     	    
     	} else {
-    	    layout.setBackgroundColor(Color.WHITE);
+    	    layout.setBackgroundColor(colorBackUnselected);
     	}
     	
     	Instrument item = getItems().get(position);
@@ -60,15 +78,23 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 
     		TextView title = (TextView) layout.findViewById(R.id.InstrName);
     		title.setText(item.symbol);
-    		title.setTextColor(b?Color.WHITE:Color.BLACK);
+    		title.setTextColor(b?colorInstrSelected:colorInstrUnselected);
+
+    		TextView tstatus = (TextView) layout.findViewById(R.id.InstrStatus);
+    		tstatus.setText(item.tradeStatus);
+    		tstatus.setTextColor(b?colorTextSelected:colorTextUnselected);
     		
+    		TextView chg = (TextView) layout.findViewById(R.id.InstrChg);
+    		chg.setText(item.avg.toString());
+    		chg.setTextColor(b?colorTextSelected:colorTextUnselected);
+
     		TextView bid = (TextView) layout.findViewById(R.id.InstrBid);
     		bid.setText(item.bid.toString());
-    		bid.setTextColor(b?Color.WHITE:Color.BLACK);
+    		bid.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     		TextView ask = (TextView) layout.findViewById(R.id.InstrAsk);
     		ask.setText(item.ask.toString());
-    		ask.setTextColor(b?Color.WHITE:Color.BLACK);
+    		ask.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     	}
     	

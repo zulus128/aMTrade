@@ -13,5 +13,10 @@
     <string name="SellButton">Продать</string>
     <string name="Price">Цена</string>
     <string name="Quantity">Количество</string>
+    <string name="TitleInstr">Инструмент</string>
+    <string name="TitleChg">Средняя</string>
+    <string name="TitleSell">Продажа</string>
+    <string name="TitleBuy">Покупка</string>
+    <string name="TitleStatus">Статус</string>
 
 </resources>

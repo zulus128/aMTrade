@@ -17,13 +17,14 @@ public class Instrument implements Serializable {
 
 	public String id = "";
 	public String symbol = "";
+	public String tradeStatus = "";
 	public String description = "";
 
 	public Double min = new Double(0);
 	public Double max = new Double(0);
-
 	public Double bid = new Double(0);
 	public Double ask = new Double(0);
+	public Double avg = new Double(0);
 
 	public boolean favourite;
 	
@@ -57,12 +58,13 @@ public class Instrument implements Serializable {
 
 		try{ this.description = obj.getString("descRu"); }catch(JSONException e){ }
 		try{ this.symbol = obj.getString("symbol"); }catch(JSONException e){ }
+		try{ this.tradeStatus = obj.getString("tradeStatus"); }catch(JSONException e){ }
 		
 		try{ this.min = obj.getDouble("min"); }catch(JSONException e){ }
 		try{ this.max = obj.getDouble("max"); }catch(JSONException e){ }
-		
 		try{ this.bid = obj.getDouble("bid"); }catch(JSONException e){ }
 		try{ this.ask = obj.getDouble("ask"); }catch(JSONException e){ }
+		try{ this.avg = obj.getDouble("avg"); }catch(JSONException e){ }
 	}
 	
 	public String getShortContent() {

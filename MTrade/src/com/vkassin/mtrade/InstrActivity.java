@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
@@ -53,12 +54,15 @@ public class InstrActivity extends Activity {
 	private ProgressBar pb;
 	private Button customDialog_Dismiss;
 	private static int ordernum;
+	private LinearLayout header;
 	
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instrs);
         
+        header = (LinearLayout) findViewById(R.id.LinLayout02);
+
         pb = (ProgressBar)findViewById(R.id.ProgressBar01);
 //		pb.setVisibility(View.VISIBLE);
 
@@ -234,12 +238,15 @@ public class InstrActivity extends Activity {
     							int s = data.getInt("status");
 //    							Log.i(TAG, "Logion status: " + s);
                     			if(s == 0) {
+                    				
+                    				header.setVisibility(View.GONE);
                         			pb.setVisibility(View.VISIBLE);
                         			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
                     			}
                     			else {
                     				
+                    				header.setVisibility(View.VISIBLE);
                     				pb.setVisibility(View.GONE);
                     				Common.validateFavourites();
                     				sendSubscription();

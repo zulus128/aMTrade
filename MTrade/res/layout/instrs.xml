@@ -2,29 +2,82 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:background="#909090"
+	android:background="@color/SlateGray"
 	>
 	
 	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout01"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		>
-	    <TextView android:id="@+id/txtTtt" android:layout_width="wrap_content" android:layout_height="wrap_content"
-        	android:textStyle="bold" android:textColor="#FFFFFF" android:text="hhhhhhhhh"
-        	android:textSize="15sp"
-        	android:gravity="center_vertical" android:paddingLeft="5dp">
-        
+	
+		<LinearLayout android:orientation="horizontal"
+		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="30dip"
+			>
+		    		<TextView 
+		android:layout_width="120dip" 
+		android:layout_height="fill_parent" 
+		android:textSize="16dp"
+		android:textColor="@color/White"
+		android:textStyle="bold"
+		android:layout_gravity="center_vertical"
+		android:text = "@string/TitleInstr">
 		</TextView>
 		
+		<TextView 
+		android:layout_width="60dip" 
+		android:layout_height="fill_parent" 
+		android:textSize="16dp"
+		android:textColor="@color/White"
+		android:textStyle="bold"
+		android:layout_gravity="center_vertical"
+		android:gravity="center_horizontal"
+		android:text = "@string/TitleStatus">
+		</TextView>
+						
+		<TextView 
+		android:layout_width="120dip" 
+		android:layout_height="fill_parent" 
+		android:textSize="16dp"
+		android:textColor="@color/White"
+		android:textStyle="bold"
+		android:layout_gravity="center_vertical"
+		android:gravity="right"
+		android:text = "@string/TitleChg">
+		</TextView>
+				
+		<TextView 
+		android:layout_width="120dip" 
+		android:layout_height="fill_parent" 
+		android:textSize="16dp"
+		android:textColor="@color/White"
+		android:textStyle="bold"
+		android:layout_gravity="center_vertical"
+		android:gravity="right"
+		android:text = "@string/TitleBuy">
+		</TextView>
+				
+		<TextView 
+		android:layout_width="120dip" 
+		android:layout_height="fill_parent" 
+		android:textSize="16dp"
+		android:textColor="@color/White"
+		android:textStyle="bold"
+		android:layout_gravity="center_vertical"
+		android:gravity="right"
+		android:text = "@string/TitleSell">
+		</TextView>
+		    				
+				
+		</LinearLayout>
+
 	<ListView
 	    android:id="@+id/InstrList"
-	    android:layout_width="wrap_content"
+	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:background="#696969"
-	    android:cacheColorHint="@android:color/transparent"
 	    android:choiceMode="singleChoice"
+	    android:paddingBottom="10dp"
+	    android:paddingTop="10dp"
 	    android:footerDividersEnabled="true"
-	    android:headerDividersEnabled="false"
-	    android:listSelector="#2B60DE">
+	    android:headerDividersEnabled="true">
 	</ListView>
 	
 			

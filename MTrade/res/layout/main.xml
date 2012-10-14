@@ -19,8 +19,8 @@
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#606060"	
             android:padding="1dp"
+            android:background="@color/SlateGray"
              />
             	
     </LinearLayout>
