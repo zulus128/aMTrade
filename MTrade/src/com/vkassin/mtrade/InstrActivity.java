@@ -45,6 +45,7 @@ public class InstrActivity extends Activity {
 	private static final String TAG = "MTrade.InstrActivity"; 
 
 	private static final int CONTEXTMENU_PUTORDER = 1;
+	private static final int CONTEXTMENU_GOGLASS = 2;
 	private int selectedRowId;
 
 	private Socket sock;
@@ -428,6 +429,7 @@ public class InstrActivity extends Activity {
 	    
 		menu.setHeaderTitle(R.string.MenuTitle);  
 	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
+	    menu.add(0, CONTEXTMENU_GOGLASS, 0, R.string.MenuItemGoGlass);
 	    
 		super.onCreateContextMenu(menu, v, menuInfo);  
 

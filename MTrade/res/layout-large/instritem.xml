@@ -4,6 +4,11 @@
     android:paddingLeft="3dp" android:layout_height="30dip"
     >
 
+<LinearLayout
+    android:orientation="horizontal" android:layout_width="fill_parent"
+    android:paddingLeft="3dp" android:layout_height="30dip"
+    >
+    
 <TextView 
 android:layout_width="120dp"
 android:layout_height="fill_parent" 
@@ -53,4 +58,5 @@ android:gravity="right"
 android:id="@+id/InstrAsk">
 </TextView>
 
+</LinearLayout>
 </LinearLayout>

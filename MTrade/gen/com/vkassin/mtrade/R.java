@@ -210,6 +210,7 @@ public final class R {
     }
     public static final class string {
         public static final int BuyButton=0x7f050008;
+        public static final int MenuItemGoGlass=0x7f050011;
         public static final int MenuItemPutOrder=0x7f050006;
         public static final int MenuTitle=0x7f050005;
         public static final int OrderDialogInstrument=0x7f050007;

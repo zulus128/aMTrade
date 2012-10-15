@@ -18,5 +18,6 @@
     <string name="TitleSell">Продажа</string>
     <string name="TitleBuy">Покупка</string>
     <string name="TitleStatus">Статус</string>
+    <string name="MenuItemGoGlass">Открыть стакан</string>
 
 </resources>
