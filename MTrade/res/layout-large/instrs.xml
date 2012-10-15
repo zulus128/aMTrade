@@ -13,9 +13,9 @@
 		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="30dip"
 			>
 		    		<TextView 
-		android:layout_width="80dp"
+		android:layout_width="120dp"
 		android:layout_height="fill_parent" 
-		android:textSize="12dp"
+		android:textSize="16dp"
 		android:textColor="@color/White"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
@@ -23,9 +23,9 @@
 		</TextView>
 		
 		<TextView 
-		android:layout_width="40dp"
+		android:layout_width="60dp"
 		android:layout_height="fill_parent" 
-		android:textSize="12dp"
+		android:textSize="16dp"
 		android:textColor="@color/White"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
@@ -34,9 +34,9 @@
 		</TextView>
 						
 		<TextView 
-		android:layout_width="60dp"
+		android:layout_width="120dp"
 		android:layout_height="fill_parent" 
-		android:textSize="12dp"
+		android:textSize="16dp"
 		android:textColor="@color/White"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
@@ -45,9 +45,9 @@
 		</TextView>
 				
 		<TextView 
-		android:layout_width="60dp"
+		android:layout_width="120dp"
 		android:layout_height="fill_parent" 
-		android:textSize="12dp"
+		android:textSize="16dp"
 		android:textColor="@color/White"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
@@ -56,9 +56,9 @@
 		</TextView>
 				
 		<TextView 
-		android:layout_width="60dp"
+		android:layout_width="120dp"
 		android:layout_height="fill_parent" 
-		android:textSize="12dp"
+		android:textSize="16dp"
 		android:textColor="@color/White"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
