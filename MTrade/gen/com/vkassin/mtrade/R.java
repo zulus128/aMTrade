@@ -172,16 +172,18 @@ public final class R {
         public static final int InstrStatus=0x7f070006;
         public static final int LinLayout01=0x7f07000a;
         public static final int LinLayout011=0x7f070000;
+        public static final int LinLayout0111=0x7f07001d;
         public static final int LinLayout02=0x7f07000b;
         public static final int ProgressBar01=0x7f07000d;
-        public static final int TableLayout01=0x7f070021;
+        public static final int QuoteList=0x7f07001e;
+        public static final int TableLayout01=0x7f070023;
         public static final int acc_spinner=0x7f070018;
-        public static final int btnClear=0x7f070020;
-        public static final int buttonlayout=0x7f07001d;
-        public static final int buttonlayout2=0x7f07001e;
+        public static final int btnClear=0x7f070022;
+        public static final int buttonlayout=0x7f07001f;
+        public static final int buttonlayout2=0x7f070020;
         public static final int customorderdialog=0x7f07000e;
         public static final int instrtext=0x7f070011;
-        public static final int menuselect=0x7f070022;
+        public static final int menuselect=0x7f070024;
         public static final int orderlayout1=0x7f07000f;
         public static final int orderlayout2=0x7f070012;
         public static final int orderlayout3=0x7f070015;
@@ -194,7 +196,7 @@ public final class R {
         public static final int radio0=0x7f07001a;
         public static final int radio1=0x7f07001b;
         public static final int radioGroup1=0x7f070019;
-        public static final int txtTest=0x7f07001f;
+        public static final int txtTest=0x7f070021;
     }
     public static final class layout {
         public static final int history=0x7f030000;
@@ -203,7 +205,9 @@ public final class R {
         public static final int instrs=0x7f030003;
         public static final int main=0x7f030004;
         public static final int order_dialog=0x7f030005;
-        public static final int select_instr=0x7f030006;
+        public static final int quotes=0x7f030006;
+        public static final int quotesitem=0x7f030007;
+        public static final int select_instr=0x7f030008;
     }
     public static final class menu {
         public static final int instrsmenu=0x7f060000;

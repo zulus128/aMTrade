@@ -59,6 +59,7 @@ public class Common {
     public final static int ERROR_LOGIN_INFORMATION = 204;
 
 	public static TabHost tabHost;
+	public static TabHost.TabSpec tabspec;
 
 	public static Instrument selectedInstrument;
 	

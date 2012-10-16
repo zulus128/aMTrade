@@ -429,7 +429,7 @@ public class InstrActivity extends Activity {
 	    
 		menu.setHeaderTitle(R.string.MenuTitle);  
 	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
-	    menu.add(0, CONTEXTMENU_GOGLASS, 0, R.string.MenuItemGoGlass);
+	    menu.add(0, CONTEXTMENU_GOGLASS, 1, R.string.MenuItemGoGlass);
 	    
 		super.onCreateContextMenu(menu, v, menuInfo);  
 
@@ -438,6 +438,14 @@ public class InstrActivity extends Activity {
    @Override  
    public boolean onContextItemSelected(MenuItem item) {  
 		   
+	    if (item.getItemId() == CONTEXTMENU_GOGLASS) {
+	    	
+	    	Intent intent = new Intent().setClass(this, QuoteActivity.class);
+	    	Common.tabspec.setContent(intent);
+	    	Common.tabHost.setCurrentTab(1);
+	    	Common.tabHost.setCurrentTab(0);
+	    }
+	    
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
 	    	final Instrument it = adapter.getItem(selectedRowId);

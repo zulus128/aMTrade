@@ -13,9 +13,9 @@ public class Order implements Serializable {
 	public String id = "";
 //	public String symbol = "";
 
-	public Double price = new Double(0);
-	public Long qty = new Long(0);
-	public Long instrId = new Long(0);
+	public Double price = Double.valueOf(0);
+	public Long qty = Long.valueOf(0);
+	public Long instrId = Long.valueOf(0);
 
 	public Order(String i, JSONObject obj) {
 		

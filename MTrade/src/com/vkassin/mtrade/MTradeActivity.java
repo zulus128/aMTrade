@@ -22,10 +22,10 @@ public class MTradeActivity extends TabActivity {
 	    Intent intent;  // Reusable Intent for each tab
 
 	    intent = new Intent().setClass(this, InstrActivity.class);
-	    spec = Common.tabHost.newTabSpec("t_instr").setIndicator("Котировки",
+	    Common.tabspec = Common.tabHost.newTabSpec("t_instr").setIndicator("Котировки",
 	                      res.getDrawable(R.drawable.ic_menu_goto))
 	                  .setContent(intent);
-	    Common.tabHost.addTab(spec);
+	    Common.tabHost.addTab(Common.tabspec);
 
 	    intent = new Intent().setClass(this, ChartActivity.class);
 	    spec = Common.tabHost.newTabSpec("t_chart").setIndicator("Графики",

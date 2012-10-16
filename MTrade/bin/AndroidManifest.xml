@@ -24,6 +24,7 @@
         <activity android:name=".TradeActivity"></activity>
         <activity android:name=".HistoryActivity"></activity>
         <activity android:name=".SelectListView"></activity>
+        <activity android:name=".QuoteActivity"></activity>
     </application>
 
 </manifest>

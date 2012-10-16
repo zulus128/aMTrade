@@ -20,11 +20,11 @@ public class Instrument implements Serializable {
 	public String tradeStatus = "";
 	public String description = "";
 
-	public Double min = new Double(0);
-	public Double max = new Double(0);
-	public Double bid = new Double(0);
-	public Double ask = new Double(0);
-	public Double avg = new Double(0);
+	public Double min = Double.valueOf(0);
+	public Double max = Double.valueOf(0);
+	public Double bid = Double.valueOf(0);
+	public Double ask = Double.valueOf(0);
+	public Double avg = Double.valueOf(0);
 
 	public boolean favourite;
 	
