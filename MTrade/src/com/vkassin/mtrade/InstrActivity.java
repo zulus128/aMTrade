@@ -205,9 +205,8 @@ public class InstrActivity extends Activity {
     	
       try {
 
-//        sock = new Socket("212.19.144.126", 9800);
-        //sock = new Socket("192.168.186.129", 9800);
-        sock = new Socket("192.168.111.12", 9800);
+        sock = new Socket("212.19.144.126", 9800);
+//        sock = new Socket("192.168.111.12", 9800);
 
         writeJSONMsg(getLogin());
         
