@@ -31,6 +31,8 @@ public class Instrument implements Serializable {
 //	public SortedSet<DayChartElement> daychart = new TreeSet<DayChartElement>();
 	public HashMap<String, DayChartElement> daychart = new HashMap<String, DayChartElement>();
 	
+	private SortedSet<Quote> quotes = new TreeSet<Quote>();
+	
 	public Instrument(String i, JSONObject obj) {
 		
 		this.id = i;

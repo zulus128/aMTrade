@@ -19,7 +19,7 @@ public class QuoteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quotes);
         
-        list = (ListView)this.findViewById(R.id.HistoryList);
+        list = (ListView)this.findViewById(R.id.QuoteList);
     	adapter = new QuoteAdapter(this, R.layout.quotesitem, new ArrayList<Quote>());
     	list.setAdapter(adapter);
 

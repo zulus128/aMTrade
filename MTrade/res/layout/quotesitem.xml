@@ -10,8 +10,8 @@ android:layout_height="fill_parent"
 android:textSize="16dp"
 android:textColor="#000000" android:textStyle="bold"
 android:layout_gravity="center_vertical"
-android:layout_weight=".60"
-android:id="@+id/HistoryName">
+android:layout_weight=".35"
+android:id="@+id/QuoteBidQ">
 </TextView>
 
 <TextView 
@@ -21,8 +21,8 @@ android:textSize="16dp"
 android:textColor="#000000" android:textStyle="bold"
 android:layout_gravity="center_vertical"
 android:gravity="right"
-android:layout_weight=".20"
-android:id="@+id/HistoryPrice">
+android:layout_weight=".30"
+android:id="@+id/QuotePrice">
 </TextView>
 
 <TextView 
@@ -32,8 +32,8 @@ android:textSize="16dp"
 android:textColor="#000000" android:textStyle="bold"
 android:layout_gravity="center_vertical"
 android:gravity="right"
-android:layout_weight=".20"
-android:id="@+id/HistoryQty">
+android:layout_weight=".35"
+android:id="@+id/QuoteSellQ">
 </TextView>
 
 </LinearLayout>

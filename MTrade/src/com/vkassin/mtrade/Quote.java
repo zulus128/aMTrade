@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class Quote {
+public class Quote implements Comparable<Quote> {
 
 //	private static final long serialVersionUID = 24L;
 	private static final String TAG = "MTrade.Quote"; 
@@ -17,6 +17,23 @@ public class Quote {
 	public Long qtyBuy = Long.valueOf(0);
 	public Long instrId = Long.valueOf(0);
 
+	public int compareTo(Quote arg0) {
+
+		if(this.price < arg0.price)
+	    {
+	      /* текущее меньше полученного */
+	      return -1;
+	    }   
+	    else if(this.price > arg0.price)
+	    {
+	      /* текущее больше полученного */
+	      return 1;
+	    }
+	    /* текущее равно полученному */
+	    return 0;  
+	    
+	}
+	
 	public Quote(String i, JSONObject obj) {
 		
 		this.id = i;
