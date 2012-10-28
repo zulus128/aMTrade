@@ -270,6 +270,21 @@ public class InstrActivity extends Activity {
                 				adapter.notifyDataSetChanged();
 							}
                     		else
+                        		if( t == Common.QUOTE) {
+                        			
+                        			Iterator<String> keys = data.keys();
+                        			if(Common.selectedInstrument != null)
+                        			while( keys.hasNext() ) {
+                        				String key = (String)keys.next();
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        					
+                        					Instrument instr = Common.getInstrById(data.getJSONObject(key).getLong("instrId"));
+                        					instr.addToQuoteList(key, data.getJSONObject(key));
+                        				}
+                        			}
+                    				adapter.notifyDataSetChanged();
+    							}
+                    		else
                         		if( t == Common.CHART) {
                         			
                         			Iterator<String> keys = data.keys();
@@ -439,10 +454,15 @@ public class InstrActivity extends Activity {
 		   
 	    if (item.getItemId() == CONTEXTMENU_GOGLASS) {
 	    	
-	    	Intent intent = new Intent().setClass(this, QuoteActivity.class);
-	    	Common.tabspec.setContent(intent);
+//	    	Intent intent = new Intent().setClass(this, QuoteActivity.class);
+//	    	Common.tabspec.setContent(intent);
+//	    	Common.tabHost.setCurrentTab(1);
+//	    	Common.tabHost.setCurrentTab(0);
+	    	
+	    	Common.tabHost.getTabWidget().getChildAt(0).setVisibility(View.GONE);
+	    	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 	    	Common.tabHost.setCurrentTab(1);
-	    	Common.tabHost.setCurrentTab(0);
+
 	    }
 	    
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {

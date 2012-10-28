@@ -3,6 +3,7 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class QuoteAdapter extends ArrayAdapter<Quote> {
+
 	private ArrayList<Quote> items;
 	private Context ctx;
 	private int resourceId;
-	
+	private static final String TAG = "MTrade.QuoteAdapter"; 
+
 	public QuoteAdapter(Context context, int resourceId, ArrayList<Quote> objects) {
 		super(context, resourceId, objects);
 		this.items = objects;
@@ -28,24 +31,26 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	layout.addView(vi.inflate(resourceId, null));
     	
-//    	Order item = getItems().get(position);
-//    	if (item != null) {
-//
-//    		Instrument i = Common.getInstrById(item.instrId);
-//    		TextView title = (TextView) layout.findViewById(R.id.HistoryName);
-//    		title.setText(i.symbol);
-//    		
-//    		TextView bid = (TextView) layout.findViewById(R.id.HistoryPrice);
-//    		bid.setText(item.price.toString());
-//
-//    		TextView ask = (TextView) layout.findViewById(R.id.HistoryQty);
-//    		ask.setText(item.qty.toString());
-//    	}
+    	Quote item = getItems().get(position);
+    	if (item != null) {
+
+    		TextView bid = (TextView) layout.findViewById(R.id.QuoteBidQ);
+    		bid.setText(item.qtyBuy.toString());
+
+    		TextView price = (TextView) layout.findViewById(R.id.QuotePrice);
+    		price.setText(item.price.toString());
+
+    		TextView ask = (TextView) layout.findViewById(R.id.QuoteSellQ);
+    		ask.setText(item.qtySell.toString());
+
+    	}
     	
     	return layout;
     }
 
 	public void setItems(ArrayList<Quote> objects) {
+		
+		Log.w(TAG, "Quotes cnt = " + objects.size());
 		this.items.clear();
 		this.items.addAll(objects);
 	}

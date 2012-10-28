@@ -1,6 +1,7 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -29,10 +30,43 @@ public class Instrument implements Serializable {
 	public boolean favourite;
 	
 //	public SortedSet<DayChartElement> daychart = new TreeSet<DayChartElement>();
-	public HashMap<String, DayChartElement> daychart = new HashMap<String, DayChartElement>();
+	private HashMap<String, DayChartElement> daychart = new HashMap<String, DayChartElement>();
 	
+	/**
+	 * @return the daychart
+	 */
+	public HashMap<String, DayChartElement> getDaychart() {
+		return daychart;
+	}
+
+//	/**
+//	 * @param daychart the daychart to set
+//	 */
+//	public void setDaychart(HashMap<String, DayChartElement> daychart) {
+//		this.daychart = daychart;
+//	}
+
 	private SortedSet<Quote> quotes = new TreeSet<Quote>();
+
+	public ArrayList<Quote> getQuotes() {
 	
+		return new ArrayList<Quote>(quotes);
+	}
+	
+//	/**
+//	 * @return the quotes
+//	 */
+//	public SortedSet<Quote> getQuotes() {
+//		return quotes;
+//	}
+//
+//	/**
+//	 * @param quotes the quotes to set
+//	 */
+//	public void setQuotes(SortedSet<Quote> quotes) {
+//		this.quotes = quotes;
+//	}
+
 	public Instrument(String i, JSONObject obj) {
 		
 		this.id = i;
@@ -55,7 +89,12 @@ public class Instrument implements Serializable {
 		daychart.put(key, new DayChartElement(obj));
 	}
 		
-			
+		
+	public void addToQuoteList(String key, JSONObject obj) {
+		
+		quotes.add(new Quote(key, obj));
+	}
+
 	private void set(JSONObject obj){
 
 		try{ this.description = obj.getString("descRu"); }catch(JSONException e){ }

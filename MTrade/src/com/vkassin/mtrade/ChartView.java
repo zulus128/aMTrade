@@ -198,7 +198,7 @@ public class ChartView extends RootView {
     public static OHLCDataset createDataset1() {
 
 
-    	int c = Common.selectedInstrument.daychart.size();
+    	int c = Common.selectedInstrument.getDaychart().size();
     	Date[] date = new Date[c];
     	double[] high = new double[c];
     	double[] low = new double[c];
@@ -208,7 +208,7 @@ public class ChartView extends RootView {
     
     	int i = 0;
     	SortedSet<DayChartElement> set = new TreeSet<DayChartElement>();
-        set.addAll(Common.selectedInstrument.daychart.values());
+        set.addAll(Common.selectedInstrument.getDaychart().values());
     	Iterator<DayChartElement> itr = set.iterator();
     	while (itr.hasNext()) {
 			
@@ -279,7 +279,7 @@ public class ChartView extends RootView {
 //    	int c = Common.selectedInstrument.daychart.size();
       
     	SortedSet<DayChartElement> set = new TreeSet<DayChartElement>();
-        set.addAll(Common.selectedInstrument.daychart.values());
+        set.addAll(Common.selectedInstrument.getDaychart().values());
     	Iterator<DayChartElement> itr = set.iterator();
     	while (itr.hasNext()) {
     		

@@ -102,6 +102,7 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
     }
 
 	public void setItems(ArrayList<Instrument> objects) {
+		
 		this.items.clear();
 		this.items.addAll(objects);
 		
@@ -110,10 +111,12 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 	}
 	
 	public void addItems(ArrayList<Instrument> objects) {
+		
 		this.items.addAll(objects);
 	}
 
 	public ArrayList<Instrument> getItems() {
+		
 		return items;
 	}
 }

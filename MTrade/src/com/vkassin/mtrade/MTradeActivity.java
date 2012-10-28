@@ -4,6 +4,7 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TabHost;
 
 public class MTradeActivity extends TabActivity {
@@ -22,7 +23,13 @@ public class MTradeActivity extends TabActivity {
 	    Intent intent;  // Reusable Intent for each tab
 
 	    intent = new Intent().setClass(this, InstrActivity.class);
-	    Common.tabspec = Common.tabHost.newTabSpec("t_instr").setIndicator("Котировки",
+	    Common.tabspec = Common.tabHost.newTabSpec("t_instr").setIndicator("Инструменты",
+	                      res.getDrawable(R.drawable.ic_menu_goto))
+	                  .setContent(intent);
+	    Common.tabHost.addTab(Common.tabspec);
+
+	    intent = new Intent().setClass(this, QuoteActivity.class);
+	    Common.tabspec = Common.tabHost.newTabSpec("t_quote").setIndicator("Котировки",
 	                      res.getDrawable(R.drawable.ic_menu_goto))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(Common.tabspec);
@@ -44,6 +51,8 @@ public class MTradeActivity extends TabActivity {
 	                      res.getDrawable(R.drawable.ic_menu_show_list))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
+	    
+    	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
 
     }
 }
