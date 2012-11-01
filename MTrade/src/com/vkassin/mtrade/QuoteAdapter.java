@@ -17,12 +17,18 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
 	private Context ctx;
 	private int resourceId;
 	private static final String TAG = "MTrade.QuoteAdapter"; 
-
+	
+	private final int colorBuy;
+	private final int colorSell;
+	
 	public QuoteAdapter(Context context, int resourceId, ArrayList<Quote> objects) {
 		super(context, resourceId, objects);
 		this.items = objects;
 		this.ctx = context;
 		this.resourceId = resourceId;
+		
+		colorBuy = ctx.getResources().getColor(R.color.Green);
+		colorSell = ctx.getResources().getColor(R.color.Red);
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -32,16 +38,22 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
     	layout.addView(vi.inflate(resourceId, null));
     	
     	Quote item = getItems().get(position);
+    	boolean b = item.qtyBuy > 0;
+    	
     	if (item != null) {
 
     		TextView bid = (TextView) layout.findViewById(R.id.QuoteBidQ);
     		bid.setText(item.qtyBuy.toString());
+    		bid.setTextColor(b?colorBuy:colorSell);
 
     		TextView price = (TextView) layout.findViewById(R.id.QuotePrice);
     		price.setText(item.price.toString());
+    		price.setTextColor(b?colorBuy:colorSell);
 
     		TextView ask = (TextView) layout.findViewById(R.id.QuoteSellQ);
     		ask.setText(item.qtySell.toString());
+    		ask.setTextColor(b?colorBuy:colorSell);
+
 
     	}
     	
@@ -62,5 +74,7 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
 	public ArrayList<Quote> getItems() {
 		return items;
 	}
+	
+	
 }
 

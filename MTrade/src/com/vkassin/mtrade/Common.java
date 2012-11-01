@@ -10,18 +10,28 @@ import java.io.StreamCorruptedException;
 import java.util.AbstractSequentialList;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TabHost;//
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Common {
@@ -262,4 +272,63 @@ public class Common {
 	
 	//return favourites;
 	}
+	
+	public static void putOrder(Context ctx) {
+		
+		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);
+    	
+    	final Dialog dialog = new Dialog(ctx);
+    	dialog.setContentView(R.layout.order_dialog);
+    	dialog.setTitle(R.string.OrderDialogTitle);
+
+    	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
+    	itext.setText(it.symbol);
+
+    	final Spinner aspinner = (Spinner) dialog.findViewById(R.id.acc_spinner);
+    	List<String> list = new ArrayList<String>(Common.getAccountList());
+    	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Common.app_ctx,
+    		android.R.layout.simple_spinner_item, list);
+    	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    	aspinner.setAdapter(dataAdapter);
+    	
+    	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
+    	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
+    	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
+
+    	Button customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
+    	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+    		       JSONObject msg = new JSONObject();
+    		       try{
+    		    	   
+    		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
+    		         msg.put("time", Calendar.getInstance().getTimeInMillis());
+    		         msg.put("version", Common.PROTOCOL_VERSION);
+    		         msg.put("instrumId", Long.valueOf(it.id));
+    		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
+    		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
+    		         msg.put("ordType", 1);
+    		         msg.put("side", bu0.isChecked()?0:1);
+    		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
+    		         msg.put("orderNum", ++ordernum);
+    		         
+    		     
+    		         writeJSONMsg(msg);
+
+    		       }
+    		       catch(Exception e){
+    		    	   
+    		           e.printStackTrace();
+    		           Log.e(TAG, "Error! Cannot create JSON order object", e);
+    		       }
+    		       
+    			 dialog.dismiss(); 
+    		 }
+    		    
+    	});
+    	
+    	dialog.show();
+    }
+	
 }

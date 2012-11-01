@@ -1,13 +1,28 @@
 package com.vkassin.mtrade;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 public class QuoteActivity extends Activity {
 
@@ -15,6 +30,9 @@ public class QuoteActivity extends Activity {
 
 	private ListView list;
 	private QuoteAdapter adapter;
+
+	private static final int CONTEXTMENU_PUTORDER = 1;
+	private int selectedRowId;
 
 	public void onCreate(Bundle savedInstanceState) {
     	
@@ -24,6 +42,7 @@ public class QuoteActivity extends Activity {
         list = (ListView)this.findViewById(R.id.QuoteList);
     	adapter = new QuoteAdapter(this, R.layout.quotesitem, new ArrayList<Quote>());
     	list.setAdapter(adapter);
+    	registerForContextMenu(list);
 
 	}
 
@@ -56,4 +75,31 @@ public class QuoteActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+    
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
+		
+	    AdapterView.AdapterContextMenuInfo info =
+            (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+	    selectedRowId = (int)info.id;
+    
+		menu.setHeaderTitle(R.string.MenuTitle);  
+	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
+
+	    super.onCreateContextMenu(menu, v, menuInfo);  
+
+	}  
+	
+   @Override  
+   public boolean onContextItemSelected(MenuItem item) {  
+		   
+	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
+
+	    	Common.putOrder(this);
+
+
+	    }
+	    return true;  
+   }
 }
