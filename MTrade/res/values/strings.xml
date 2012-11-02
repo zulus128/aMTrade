@@ -19,5 +19,10 @@
     <string name="TitleBuy">Покупка</string>
     <string name="TitleStatus">Статус</string>
     <string name="MenuItemGoGlass">Открыть стакан</string>
+    <string name="LoginName">Имя</string>
+    <string name="Password">Пароль</string>
+    <string name="GoLogin">Войти</string>
+    <string name="LoginDialogTitle">Вход</string>
+    <string name="MenuItemRelogin">Войти под другим пользователем</string>
 
 </resources>

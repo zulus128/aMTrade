@@ -2,5 +2,6 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/menuselect" android:titleCondensed="@string/SelectInstrs" android:title="@string/SelectInstrs" android:icon="@android:drawable/ic_menu_edit"></item>
+    <item android:id="@+id/menulogin" android:titleCondensed="@string/MenuItemRelogin" android:title="@string/MenuItemRelogin" android:icon="@android:drawable/ic_menu_revert"></item>
     
 </menu>

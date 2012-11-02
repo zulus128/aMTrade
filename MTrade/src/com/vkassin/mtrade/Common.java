@@ -37,19 +37,14 @@ import android.widget.Toast;
 public class Common {
 
 	private static final String TAG = "MTrade.Common"; 
-//    private static final int HTTP_STATUS_OK = 200;
-//	private static String sUserAgent = null;
-//    private static byte[] sBuffer = new byte[4096];   
 
 	public enum item_type { IT_NONE, IT_INSTR };
 	 
 	public final static Integer NO_ERRORS = 0;
 	public final static Integer INITIAL_LOADING_COMPLITE = 1;
-     
     public final static Integer HEARTBEAT = 10;
     public final static Integer LOGIN = 11;
     public final static Integer LOGOUT = 12;
-
     public final static Integer INSTRUMENT = 100;
     public final static Integer TRADEACCOUNT = 101;
     public final static Integer QUOTE = 102;
@@ -57,10 +52,8 @@ public class Common {
     public final static Integer TRANSIT_ORDER = 104;
     public final static Integer CREATE_REMOVE_ORDER = 105;
     public final static Integer CHART = 106;
-    	
     public final static Integer SUBSCRIBE = 107;
     public final static Integer QUOTE_CHART_SUBSCRIPTION = 108;
-    
     public final static String PROTOCOL_VERSION = "1.0";
     public final static int ERROR_USER_WAS_NOT_FOUND = 200;
     public final static int ERROR_USER_ALREADY_CONNECTED = 201;
@@ -68,26 +61,30 @@ public class Common {
     public final static int ERROR_WRONG_PROTOCOL_VERSION = 203;
     public final static int ERROR_LOGIN_INFORMATION = 204;
 
-	public static TabHost tabHost;
+    public static TabHost tabHost;
 	public static TabHost.TabSpec tabspec;
-
 	public static Instrument selectedInstrument;
-	
+	private static int ordernum;
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
+	private static final String ACCOUNT_FNAME = "myacc";
 	
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
 	private static HashMap<String, Order> orderMap = new HashMap<String, Order>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
+	
+	public static HashMap<String, String> myaccount = new HashMap<String, String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
-//    public static int selectedListItem = 0;
+    
+    public static InstrActivity mainActivity;
     
     public static ArrayList<Instrument> getFavInstrs() {
 		
 		ArrayList<Instrument> a = new ArrayList<Instrument>();
 		Iterator<String> itr = instrMap.keySet().iterator();
+		
 		while (itr.hasNext()) {
 			
 			String key = itr.next();
@@ -96,6 +93,7 @@ public class Common {
 		}
 		
 		return a;
+		
 	}
 
     public static ArrayList<Instrument> getAllInstrs() {
@@ -273,6 +271,109 @@ public class Common {
 	//return favourites;
 	}
 	
+	public static void saveAccountDetails() {
+		
+		FileOutputStream fos;
+		try {
+			
+			fos = app_ctx.openFileOutput(ACCOUNT_FNAME, Context.MODE_PRIVATE);
+			ObjectOutputStream os = new ObjectOutputStream(fos);
+			os.writeObject(myaccount);
+			os.close();
+			fos.close();
+			
+		} catch (FileNotFoundException e) {
+
+			Toast.makeText(app_ctx, "Файл не записан " + e.toString(), Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+			
+			Toast.makeText(app_ctx, "Файл не записан: " + e.toString(), Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void loadAccountDetails() {
+		   
+	FileInputStream fileInputStream;
+	try {
+		
+		fileInputStream = app_ctx.openFileInput(ACCOUNT_FNAME);
+		ObjectInputStream oInputStream = new ObjectInputStream(fileInputStream);
+		Object one = oInputStream.readObject();
+		myaccount = (HashMap<String, String>) one;
+		oInputStream.close();
+		fileInputStream.close();
+		
+	} catch (FileNotFoundException e) {
+		
+		//e.printStackTrace();
+  	   Log.i(TAG, "No account file " + ACCOUNT_FNAME);
+ 	   
+	} catch (StreamCorruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	//return favourites;
+	}
+
+	public static void login(Context ctx) {
+		
+    	final Dialog dialog = new Dialog(ctx);
+    	dialog.setContentView(R.layout.login_dialog);
+    	dialog.setTitle(R.string.LoginDialogTitle);
+
+    	final EditText nametxt = (EditText) dialog.findViewById(R.id.loginnameedit);
+    	final EditText passtxt = (EditText) dialog.findViewById(R.id.passwordedit);
+
+    	Button customDialog_Dismiss = (Button)dialog.findViewById(R.id.gologin);
+    	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+    			 
+    			 
+    			 JSONObject msg = new JSONObject();
+    		      try{
+
+    		    	  msg.put("objType", Common.LOGOUT);
+    		    	  msg.put("time", Calendar.getInstance().getTimeInMillis());
+    		    	  msg.put("version", Common.PROTOCOL_VERSION);
+    		    	  msg.put("status", 1);
+   		        	mainActivity.writeJSONMsg(msg);
+    		      }
+    		      catch(Exception e){
+    		          e.printStackTrace();
+    		          Log.e(TAG, "Error! Cannot create JSON logout object", e);
+    		      }
+    		      
+    			 myaccount.put("name", nametxt.getText().toString());
+    			 myaccount.put("password", passtxt.getText().toString());
+
+    			 dialog.dismiss(); 
+    			 mainActivity.stop();
+//    			 saveAccountDetails();
+    			 try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    			 mainActivity.refresh();
+    		 }
+    		    
+    	});
+    	
+    	dialog.show();
+	}
+	
 	public static void putOrder(Context ctx) {
 		
 		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);
@@ -312,9 +413,9 @@ public class Common {
     		         msg.put("side", bu0.isChecked()?0:1);
     		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
     		         msg.put("orderNum", ++ordernum);
-    		         
+    		         msg.put("action", "CREATE");
     		     
-    		         writeJSONMsg(msg);
+    		         mainActivity.writeJSONMsg(msg);
 
     		       }
     		       catch(Exception e){

@@ -46,6 +46,7 @@ public class InstrActivity extends Activity {
 
 	private static final int CONTEXTMENU_PUTORDER = 1;
 	private static final int CONTEXTMENU_GOGLASS = 2;
+//	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
 
 	private Socket sock;
@@ -54,13 +55,15 @@ public class InstrActivity extends Activity {
 	private InstrsAdapter adapter;
 	private ProgressBar pb;
 	private Button customDialog_Dismiss;
-	private static int ordernum;
+//	private static int ordernum;
 	private LinearLayout header;
 	
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instrs);
+        
+        Common.mainActivity = this;
         
         header = (LinearLayout) findViewById(R.id.LinLayout02);
 
@@ -98,15 +101,28 @@ public class InstrActivity extends Activity {
 
     public JSONObject getLogin() {
     	
+    	Common.loadAccountDetails();
+    	
       JSONObject msg = new JSONObject();
       try{
         msg.put("objType", Common.LOGIN);
         msg.put("time", Calendar.getInstance().getTimeInMillis());
         msg.put("version", Common.PROTOCOL_VERSION);
+
+        String name = Common.myaccount.get("name");
+        String password = Common.myaccount.get("password");
+        
+        if((name == null) || (password == null)) {
+
+        	Common.login(this);
+        	return null;
+        }
+
+      msg.put("password", password);
+      msg.put("login", name);
+        
 //        msg.put("password", "1");
-//        msg.put("login", "CE007");
-        msg.put("password", "1");
-        msg.put("login", "133b06");
+//        msg.put("login", "133b06");
     
       }
       catch(Exception e){
@@ -117,8 +133,9 @@ public class InstrActivity extends Activity {
 
     }
 
-    private void writeJSONMsg(JSONObject msg) throws Exception {
+    public void writeJSONMsg(JSONObject msg) throws Exception {
     	
+    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
         byte[] array = msg.toString().getBytes();
         ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
         buff.putInt(array.length);
@@ -149,7 +166,7 @@ public class InstrActivity extends Activity {
     private void sendSubscription() throws Exception {
 
     	
-		Log.w(TAG, "favr1 = " + Common.getFavrList());
+//		Log.w(TAG, "favr1 = " + Common.getFavrList());
 
         JSONObject msg = new JSONObject();
         try{
@@ -179,8 +196,10 @@ public class InstrActivity extends Activity {
     private void sendGraphSubscription() throws Exception {
 
         JSONObject msg = new JSONObject();
-        try{
+        try {
+        	
         	HashSet<String> t = Common.getFavrList();
+        	
             for(String id : t) {
             	
             	Log.i(TAG, "f: " + id);
@@ -189,7 +208,7 @@ public class InstrActivity extends Activity {
             	msg.put("version", Common.PROTOCOL_VERSION);
             	msg.put("instrumId", Long.valueOf(id));
       
-            	Log.i(TAG, "chart subscr = "+msg);
+            	Log.i(TAG, "chart subscr = " + msg);
             }
         }
         catch(Exception e){
@@ -201,14 +220,27 @@ public class InstrActivity extends Activity {
 
     }
     
-    private void refresh() {
+    public void stop() {
+    	
+		thrd.interrupt();
+
+    }
+    
+    public void refresh() {
     	
       try {
 
+//    	  if(sock != null)
+//    		  sock.close();
+    	  
         sock = new Socket("212.19.144.126", 9800);
 //        sock = new Socket("192.168.111.12", 9800);
 
-        writeJSONMsg(getLogin());
+        JSONObject login = getLogin();
+        if(login == null)
+        	return;
+        
+        writeJSONMsg(login);
         
         thrd = new Thread(new Runnable() {
           public void run() {
@@ -243,6 +275,8 @@ public class InstrActivity extends Activity {
                         			pb.setVisibility(View.VISIBLE);
                         			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
+                        			Common.saveAccountDetails();
+
                     			}
                     			else {
                     				
@@ -256,6 +290,15 @@ public class InstrActivity extends Activity {
                         			onResume();
                     			}
 
+                    		}
+                    		else
+                    		if( t == Common.LOGOUT) {
+                    			
+                    			Log.i(TAG, "LOGOUT received!");
+//                    			sock.close();
+//                    			sock = null;
+//                    			thrd.interrupt();
+                    				
                     		}
                     		else
                     		if( t == Common.INSTRUMENT) {
@@ -424,6 +467,10 @@ public class InstrActivity extends Activity {
 	        	Intent intent = new Intent(this, SelectListView.class);
 	            startActivityForResult(intent, 0);
 	            break;
+	        case R.id.menulogin: 
+	        	
+	        	Common.login(this);
+	            break;
 	               
 //	        case R.id.menuorder: 
 //	        	break;
@@ -444,6 +491,7 @@ public class InstrActivity extends Activity {
 		menu.setHeaderTitle(R.string.MenuTitle);  
 	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
 	    menu.add(0, CONTEXTMENU_GOGLASS, 1, R.string.MenuItemGoGlass);
+//	    menu.add(0, CONTEXTMENU_RELOGIN, 2, R.string.MenuItemRelogin);
 	    
 		super.onCreateContextMenu(menu, v, menuInfo);  
 
@@ -452,6 +500,11 @@ public class InstrActivity extends Activity {
    @Override  
    public boolean onContextItemSelected(MenuItem item) {  
 		   
+//	    if (item.getItemId() == CONTEXTMENU_RELOGIN) {
+//	    	
+//	    	Common.login(this);
+//	    }
+
 	    if (item.getItemId() == CONTEXTMENU_GOGLASS) {
 	    	
 //	    	Intent intent = new Intent().setClass(this, QuoteActivity.class);
@@ -467,60 +520,62 @@ public class InstrActivity extends Activity {
 	    
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
-	    	final Instrument it = adapter.getItem(selectedRowId);
-		    	
-	    	final Dialog dialog = new Dialog(this);
-        	dialog.setContentView(R.layout.order_dialog);
-        	dialog.setTitle(R.string.OrderDialogTitle);
+//	    	final Instrument it = adapter.getItem(selectedRowId);
 
-        	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
-        	itext.setText(it.symbol);
-
-        	final Spinner aspinner = (Spinner) dialog.findViewById(R.id.acc_spinner);
-        	List<String> list = new ArrayList<String>(Common.getAccountList());
-        	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Common.app_ctx,
-        		android.R.layout.simple_spinner_item, list);
-        	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        	aspinner.setAdapter(dataAdapter);
-        	
-        	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
-        	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
-        	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
-
-        	customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
-        	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
-        		 public void onClick(View arg0) {
-        			 
-        		       JSONObject msg = new JSONObject();
-        		       try{
-        		    	   
-        		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
-        		         msg.put("time", Calendar.getInstance().getTimeInMillis());
-        		         msg.put("version", Common.PROTOCOL_VERSION);
-        		         msg.put("instrumId", Long.valueOf(it.id));
-        		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
-        		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
-        		         msg.put("ordType", 1);
-        		         msg.put("side", bu0.isChecked()?0:1);
-        		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
-        		         msg.put("orderNum", ++ordernum);
-        		         
-        		     
-        		         writeJSONMsg(msg);
-
-        		       }
-        		       catch(Exception e){
-        		    	   
-        		           e.printStackTrace();
-        		           Log.e(TAG, "Error! Cannot create JSON order object", e);
-        		       }
-        		       
-        			 dialog.dismiss(); 
-        		 }
-        		    
-        	});
-        	
-        	dialog.show();
+	    	Common.putOrder(this);
+	    	
+//	    	final Dialog dialog = new Dialog(this);
+//        	dialog.setContentView(R.layout.order_dialog);
+//        	dialog.setTitle(R.string.OrderDialogTitle);
+//
+//        	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
+//        	itext.setText(it.symbol);
+//
+//        	final Spinner aspinner = (Spinner) dialog.findViewById(R.id.acc_spinner);
+//        	List<String> list = new ArrayList<String>(Common.getAccountList());
+//        	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Common.app_ctx,
+//        		android.R.layout.simple_spinner_item, list);
+//        	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        	aspinner.setAdapter(dataAdapter);
+//        	
+//        	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
+//        	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
+//        	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
+//
+//        	customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
+//        	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
+//        		 public void onClick(View arg0) {
+//        			 
+//        		       JSONObject msg = new JSONObject();
+//        		       try{
+//        		    	   
+//        		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
+//        		         msg.put("time", Calendar.getInstance().getTimeInMillis());
+//        		         msg.put("version", Common.PROTOCOL_VERSION);
+//        		         msg.put("instrumId", Long.valueOf(it.id));
+//        		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
+//        		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
+//        		         msg.put("ordType", 1);
+//        		         msg.put("side", bu0.isChecked()?0:1);
+//        		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
+//        		         msg.put("orderNum", ++ordernum);
+//        		         
+//        		     
+//        		         writeJSONMsg(msg);
+//
+//        		       }
+//        		       catch(Exception e){
+//        		    	   
+//        		           e.printStackTrace();
+//        		           Log.e(TAG, "Error! Cannot create JSON order object", e);
+//        		       }
+//        		       
+//        			 dialog.dismiss(); 
+//        		 }
+//        		    
+//        	});
+//        	
+//        	dialog.show();
 	    }
 
 	    return true;  
