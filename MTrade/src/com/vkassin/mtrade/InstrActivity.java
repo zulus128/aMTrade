@@ -222,7 +222,8 @@ public class InstrActivity extends Activity {
     
     public void stop() {
     	
-		thrd.interrupt();
+		if(thrd != null)
+			thrd.interrupt();
 
     }
     
