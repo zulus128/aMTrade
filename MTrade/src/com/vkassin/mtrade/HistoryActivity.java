@@ -20,7 +20,7 @@ public class HistoryActivity extends Activity {
         setContentView(R.layout.history);
         
         list = (ListView)this.findViewById(R.id.HistoryList);
-    	adapter = new HistoryAdapter(this, R.layout.historyitem, new ArrayList<Order>());
+    	adapter = new HistoryAdapter(this, R.layout.historyitem, new ArrayList<History>());
     	list.setAdapter(adapter);
 
 	}
@@ -33,7 +33,7 @@ public class HistoryActivity extends Activity {
       
       if(Common.FIRSTLOAD_FINISHED) {
     	
-    	adapter.setItems(Common.getAllOrders());
+    	adapter.setItems(Common.getAllHistory());
 		adapter.notifyDataSetChanged();
       }
       

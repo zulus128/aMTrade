@@ -8,10 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
 
-public class Order implements Serializable, History {
+public class Deal implements Serializable, History {
 
-	private static final long serialVersionUID = 23L;
-	private static final String TAG = "MTrade.Order"; 
+	private static final long serialVersionUID = 29L;
+	private static final String TAG = "MTrade.Deal"; 
 
 	public String id = "";
 	public Long instrId = Long.valueOf(0);
@@ -21,20 +21,20 @@ public class Order implements Serializable, History {
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
 
-	public Order(String i, JSONObject obj) {
+	public Deal(String i, JSONObject obj) {
 		
 		this.id = i;
 		
 		set(obj);
 		
-		Log.i(TAG, "Order created id:" + i);
+		Log.i(TAG, "Deal created id:" + i);
 		
 	}
 		
 	public void update(JSONObject obj) {
 		
 		set(obj);
-		Log.i(TAG, "order " + id + " updated.");
+		Log.i(TAG, "deal " + id + " updated.");
 		
 	}
 	
@@ -51,7 +51,7 @@ public class Order implements Serializable, History {
 
 	public String getOperationType() {
 		
-		return "Transit";
+		return "Deal";
 	}
 
 	public String getInstr() {
@@ -85,6 +85,7 @@ public class Order implements Serializable, History {
 		
 		Date d = new Date(dtime);
 		return new SimpleDateFormat("HH:mm dd/MM").format(d);
+
 	}
 	
 }

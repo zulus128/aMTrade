@@ -3,10 +3,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/SlateGray">
 	
-	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout0111"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout_q01"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		>
+	
+		<LinearLayout android:orientation="horizontal"
+		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="20dip"
+			>
 
-    
+<TextView 
+android:layout_width="90dip" 
+android:layout_height="fill_parent" 
+android:textSize="12dp"
+android:textColor="@color/White"
+android:textStyle="bold"
+android:layout_gravity="center_vertical"
+android:text = "@string/TitleBuyQty">
+</TextView>
+
+<TextView 
+android:layout_width="80dip" 
+android:layout_height="fill_parent" 
+android:textSize="12dp"
+android:textColor="@color/White"
+android:textStyle="bold"
+android:layout_gravity="center_vertical"
+android:gravity="right"
+android:text = "@string/Price">
+</TextView>
+
+<TextView 
+android:layout_width="130dip" 
+android:layout_height="fill_parent" 
+android:textSize="12dp"
+android:textColor="@color/White"
+android:textStyle="bold"
+android:layout_gravity="center_vertical"
+android:gravity="right"
+android:text = "@string/TitleSellQty">
+</TextView>
+
+</LinearLayout>
+
 	<ListView
 	    android:id="@+id/QuoteList"
 	    android:layout_width="fill_parent"
@@ -14,12 +52,12 @@
 	    android:choiceMode="singleChoice"
 	    android:cacheColorHint="@android:color/transparent"
 	    android:paddingBottom="5dp"
-	    android:paddingTop="5dp"
+	    android:paddingTop="0dp"
 	    android:footerDividersEnabled="true"
 	    android:headerDividersEnabled="true">
 
 	</ListView>
 	
-	</LinearLayout>
+</LinearLayout>
 		
 </RelativeLayout>

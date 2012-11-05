@@ -135,7 +135,7 @@ public class InstrActivity extends Activity {
 
     public void writeJSONMsg(JSONObject msg) throws Exception {
     	
-    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
+//    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
         byte[] array = msg.toString().getBytes();
         ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
         buff.putInt(array.length);
@@ -343,14 +343,26 @@ public class InstrActivity extends Activity {
 
                     				adapter.notifyDataSetChanged();
     							}
+                        		else
+                            		if(t == Common.DEAL) {
+                            			
+                            			Iterator<String> keys = data.keys();
+                            			while( keys.hasNext() ){
+                            				String key = (String)keys.next();
+                            				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                            					Common.addDealToHistoryList(key, data.getJSONObject(key));
+                            				}
+                            			}
+//                        				adapter.notifyDataSetChanged();
+        							}
                     		else
-                        		if( t == Common.TRANSIT_ORDER) {
+                        		if(t == Common.TRANSIT_ORDER) {
                         			
                         			Iterator<String> keys = data.keys();
                         			while( keys.hasNext() ){
                         				String key = (String)keys.next();
                         				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
-                        					Common.addToOrderList(key, data.getJSONObject(key));
+                        					Common.addOrderToHistoryList(key, data.getJSONObject(key));
                         				}
                         			}
 //                    				adapter.notifyDataSetChanged();
@@ -486,7 +498,8 @@ public class InstrActivity extends Activity {
             (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 	    selectedRowId = (int)info.id;
-    
+		adapter.setSelectedPosition(selectedRowId);				
+
 //	    Log.i(TAG, "selectedRowId = "+selectedRowId);
 	    
 		menu.setHeaderTitle(R.string.MenuTitle);  
@@ -501,17 +514,8 @@ public class InstrActivity extends Activity {
    @Override  
    public boolean onContextItemSelected(MenuItem item) {  
 		   
-//	    if (item.getItemId() == CONTEXTMENU_RELOGIN) {
-//	    	
-//	    	Common.login(this);
-//	    }
 
-	    if (item.getItemId() == CONTEXTMENU_GOGLASS) {
-	    	
-//	    	Intent intent = new Intent().setClass(this, QuoteActivity.class);
-//	    	Common.tabspec.setContent(intent);
-//	    	Common.tabHost.setCurrentTab(1);
-//	    	Common.tabHost.setCurrentTab(0);
+	   if (item.getItemId() == CONTEXTMENU_GOGLASS) {
 	    	
 	    	Common.tabHost.getTabWidget().getChildAt(0).setVisibility(View.GONE);
 	    	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
@@ -521,68 +525,10 @@ public class InstrActivity extends Activity {
 	    
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
-//	    	final Instrument it = adapter.getItem(selectedRowId);
-
-	    	Common.putOrder(this);
-	    	
-//	    	final Dialog dialog = new Dialog(this);
-//        	dialog.setContentView(R.layout.order_dialog);
-//        	dialog.setTitle(R.string.OrderDialogTitle);
-//
-//        	TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
-//        	itext.setText(it.symbol);
-//
-//        	final Spinner aspinner = (Spinner) dialog.findViewById(R.id.acc_spinner);
-//        	List<String> list = new ArrayList<String>(Common.getAccountList());
-//        	ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Common.app_ctx,
-//        		android.R.layout.simple_spinner_item, list);
-//        	dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        	aspinner.setAdapter(dataAdapter);
-//        	
-//        	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
-//        	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
-//        	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
-//
-//        	customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
-//        	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
-//        		 public void onClick(View arg0) {
-//        			 
-//        		       JSONObject msg = new JSONObject();
-//        		       try{
-//        		    	   
-//        		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
-//        		         msg.put("time", Calendar.getInstance().getTimeInMillis());
-//        		         msg.put("version", Common.PROTOCOL_VERSION);
-//        		         msg.put("instrumId", Long.valueOf(it.id));
-//        		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
-//        		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
-//        		         msg.put("ordType", 1);
-//        		         msg.put("side", bu0.isChecked()?0:1);
-//        		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
-//        		         msg.put("orderNum", ++ordernum);
-//        		         
-//        		     
-//        		         writeJSONMsg(msg);
-//
-//        		       }
-//        		       catch(Exception e){
-//        		    	   
-//        		           e.printStackTrace();
-//        		           Log.e(TAG, "Error! Cannot create JSON order object", e);
-//        		       }
-//        		       
-//        			 dialog.dismiss(); 
-//        		 }
-//        		    
-//        	});
-//        	
-//        	dialog.show();
+	    	Common.putOrder(this, null);
 	    }
 
 	    return true;  
    }  
-
-//   private void putOrder(Instrument it) {
-//   }
 
 }

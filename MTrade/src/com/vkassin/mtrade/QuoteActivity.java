@@ -83,7 +83,7 @@ public class QuoteActivity extends Activity {
             (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 	    selectedRowId = (int)info.id;
-    
+	    Log.i(TAG, "Selected " + selectedRowId);
 		menu.setHeaderTitle(R.string.MenuTitle);  
 	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
 
@@ -96,7 +96,8 @@ public class QuoteActivity extends Activity {
 		   
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
-	    	Common.putOrder(this);
+	      	Quote q = Common.selectedInstrument.getQuotes().get(selectedRowId);
+	    	Common.putOrder(this, q);
 
 
 	    }

@@ -10,7 +10,7 @@
 		>
 	
 		<LinearLayout android:orientation="horizontal"
-		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="30dip"
+		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="20dip"
 			>
 		    		<TextView 
 		android:layout_width="80dp"
@@ -76,7 +76,7 @@
 	    android:choiceMode="singleChoice"
 	    android:cacheColorHint="@android:color/transparent"
 	    android:paddingBottom="5dp"
-	    android:paddingTop="5dp"
+	    android:paddingTop="0dp"
 	    android:footerDividersEnabled="true"
 	    android:headerDividersEnabled="true">
 	</ListView>

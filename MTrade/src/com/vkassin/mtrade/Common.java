@@ -70,7 +70,7 @@ public class Common {
 	private static final String ACCOUNT_FNAME = "myacc";
 	
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
-	private static HashMap<String, Order> orderMap = new HashMap<String, Order>();
+	private static HashMap<String, History> historyMap = new HashMap<String, History>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
 	
@@ -151,21 +151,30 @@ public class Common {
 		
 	}
 
-	public static ArrayList<Order> getAllOrders() {
+	public static ArrayList<History> getAllHistory() {
 		
-		return new ArrayList<Order>(orderMap.values());
+		return new ArrayList<History>(historyMap.values());
 	}
 
 	public static void clearOrderList() {
 		
-		orderMap.clear();
+		historyMap.clear();
 	}
 
-	public static void addToOrderList(String key, JSONObject obj) {
+	public static void addOrderToHistoryList(String key, JSONObject obj) {
 		
-		Order old = orderMap.get(key);
+		Order old = (Order)historyMap.get(key);
 		if(old == null)
-			orderMap.put(key, new Order(key, obj));
+			historyMap.put(key, new Order(key, obj));
+		else
+			old.update(obj);
+	}
+
+	public static void addDealToHistoryList(String key, JSONObject obj) {
+		
+		Deal old = (Deal)historyMap.get(key);
+		if(old == null)
+			historyMap.put(key, new Deal(key, obj));
 		else
 			old.update(obj);
 	}
@@ -374,7 +383,7 @@ public class Common {
     	dialog.show();
 	}
 	
-	public static void putOrder(Context ctx) {
+	public static void putOrder(Context ctx, Quote quote) {
 		
 		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);
     	
@@ -395,7 +404,26 @@ public class Common {
     	final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
     	final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
     	final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
+    	final RadioButton bu1 = (RadioButton) dialog.findViewById(R.id.radio1);
 
+    	if(quote != null) {
+    		
+    		pricetxt.setText(quote.price.toString());
+    		if(quote.qtyBuy > 0) {
+    			
+    			quanttxt.setText(quote.qtyBuy.toString());
+    			bu1.setChecked(true);
+    			bu0.setChecked(false);
+    			
+    		}
+    		else {
+
+    			quanttxt.setText(quote.qtySell.toString());
+    			bu1.setChecked(false);
+    			bu0.setChecked(true);
+    			
+    		}
+    	}
     	Button customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
     	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
