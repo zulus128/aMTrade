@@ -10,23 +10,21 @@
 		>
 	
 		<LinearLayout android:orientation="horizontal"
-		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="20dip"
+		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content"
+		     android:weightSum="1"
 			>
 		    		<TextView 
-		android:layout_width="80dp"
-		android:layout_height="fill_parent" 
-		android:textSize="12dp"
-		android:textColor="@color/White"
+		style="@style/CodeFont1"
+    	android:layout_weight="0.28"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
+		android:paddingLeft ="4dp"
 		android:text = "@string/TitleInstr">
 		</TextView>
 		
 		<TextView 
-		android:layout_width="40dp"
-		android:layout_height="fill_parent" 
-		android:textSize="12dp"
-		android:textColor="@color/White"
+		style="@style/CodeFont1"
+	    android:layout_weight="0.12"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="center_horizontal"
@@ -34,10 +32,8 @@
 		</TextView>
 						
 		<TextView 
-		android:layout_width="60dp"
-		android:layout_height="fill_parent" 
-		android:textSize="12dp"
-		android:textColor="@color/White"
+		style="@style/CodeFont1"
+	    android:layout_weight="0.2"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="right"
@@ -45,10 +41,8 @@
 		</TextView>
 				
 		<TextView 
-		android:layout_width="60dp"
-		android:layout_height="fill_parent" 
-		android:textSize="12dp"
-		android:textColor="@color/White"
+		style="@style/CodeFont1"
+	    android:layout_weight="0.2"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="right"
@@ -56,13 +50,12 @@
 		</TextView>
 				
 		<TextView 
-		android:layout_width="60dp"
-		android:layout_height="fill_parent" 
-		android:textSize="12dp"
-		android:textColor="@color/White"
+	    android:layout_weight="0.2"
+		style="@style/CodeFont1"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="right"
+		android:paddingRight ="4dp"
 		android:text = "@string/TitleSell">
 		</TextView>
 		    				

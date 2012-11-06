@@ -26,5 +26,6 @@
     <string name="MenuItemRelogin">Войти под другим пользователем</string>
     <string name="TitleBuyQty">Объем покупки</string>
     <string name="TitleSellQty">Объем продажи</string>
+    <string name="Clear">Очистить</string>
 
 </resources>

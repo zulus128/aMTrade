@@ -1,28 +1,17 @@
 package com.vkassin.mtrade;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class QuoteActivity extends Activity {
 
@@ -30,6 +19,7 @@ public class QuoteActivity extends Activity {
 
 	private ListView list;
 	private QuoteAdapter adapter;
+//	private listviewAdapter adapter;
 
 	private static final int CONTEXTMENU_PUTORDER = 1;
 	private int selectedRowId;
@@ -41,6 +31,8 @@ public class QuoteActivity extends Activity {
         
         list = (ListView)this.findViewById(R.id.QuoteList);
     	adapter = new QuoteAdapter(this, R.layout.quotesitem, new ArrayList<Quote>());
+//    	adapter = new listviewAdapter(this, new ArrayList<HashMap<String,String>>());
+
     	list.setAdapter(adapter);
     	registerForContextMenu(list);
 

@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
      android:orientation="vertical" android:layout_width="fill_parent"
-     android:layout_height="fill_parent" android:background="#81BEF7" android:scrollbars="vertical">
+     android:layout_height="fill_parent" android:background="@color/SlateGray" android:scrollbars="vertical">
      
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/buttonlayout" android:orientation="horizontal"
@@ -32,8 +32,8 @@
     	    android:layout_marginBottom="2px" android:layout_marginTop="2px" android:height="15dp" android:width="70dp"></Button>
 		-->
     	<Button android:id="@+id/btnClear" android:layout_width="wrap_content" android:layout_height="wrap_content"
-    	    android:text="Clear" android:textSize="15sp" android:layout_marginLeft="10px" android:layout_marginRight="10px"
-    	    android:layout_marginBottom="2px" android:layout_marginTop="2px" android:height="15dp" android:width="70dp"></Button>
+    	    android:text="@string/Clear" android:textSize="15sp" android:layout_marginLeft="10px" android:layout_marginRight="10px"
+    	    android:layout_marginBottom="2px" android:layout_marginTop="2px" android:height="15dp" android:width="170dp"></Button>
 		</LinearLayout>
 		
 </LinearLayout>

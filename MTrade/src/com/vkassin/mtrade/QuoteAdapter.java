@@ -2,6 +2,7 @@ package com.vkassin.mtrade;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,7 +23,9 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
 	private final int colorSell;
 	
 	public QuoteAdapter(Context context, int resourceId, ArrayList<Quote> objects) {
+		
 		super(context, resourceId, objects);
+		
 		this.items = objects;
 		this.ctx = context;
 		this.resourceId = resourceId;
@@ -32,32 +35,33 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
-    	LinearLayout layout = new LinearLayout(parent.getContext());
     	
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	layout.addView(vi.inflate(resourceId, null));
-    	
+
+    	if(convertView == null)
+    		convertView= vi.inflate(R.layout.quotesitem, null);
+
     	Quote item = getItems().get(position);
     	boolean b = item.qtyBuy > 0;
     	
     	if (item != null) {
 
-    		TextView bid = (TextView) layout.findViewById(R.id.QuoteBidQ);
+    		TextView bid = (TextView) convertView.findViewById(R.id.QuoteBidQ);
     		bid.setText(item.qtyBuy.toString());
     		bid.setTextColor(b?colorBuy:colorSell);
 
-    		TextView price = (TextView) layout.findViewById(R.id.QuotePrice);
+    		TextView price = (TextView) convertView.findViewById(R.id.QuotePrice);
     		price.setText(item.price.toString());
     		price.setTextColor(b?colorBuy:colorSell);
 
-    		TextView ask = (TextView) layout.findViewById(R.id.QuoteSellQ);
+    		TextView ask = (TextView) convertView.findViewById(R.id.QuoteSellQ);
     		ask.setText(item.qtySell.toString());
     		ask.setTextColor(b?colorBuy:colorSell);
 
 
     	}
     	
-    	return layout;
+    	return convertView;
     }
 
 	public void setItems(ArrayList<Quote> objects) {

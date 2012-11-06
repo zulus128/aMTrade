@@ -2,54 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="fill_parent"
     android:paddingLeft="3dp" android:layout_height="30dip"
+    android:weightSum="1"
     >
 
 <TextView 
-android:layout_width="80dp"
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textStyle="bold"
+style="@style/CodeFont"
+android:layout_weight="0.28"
 android:layout_gravity="center_vertical"
+android:paddingLeft ="4dp"
 android:id="@+id/InstrName">
 </TextView>
 
 <TextView 
-android:layout_width="40dp"
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textStyle="bold"
+style="@style/CodeFont"
+android:layout_weight="0.12"
 android:layout_gravity="center_vertical"
 android:gravity="center_horizontal"
 android:id="@+id/InstrStatus">
 </TextView>
 
 <TextView 
-android:layout_width="60dp"
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textStyle="bold"
+style="@style/CodeFont"
+android:layout_weight="0.2"
 android:layout_gravity="center_vertical"
 android:gravity="right"
 android:id="@+id/InstrChg">
 </TextView>
 
 <TextView 
-android:layout_width="60dp"
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textStyle="bold"
+style="@style/CodeFont"
+android:layout_weight="0.2"
 android:layout_gravity="center_vertical"
 android:gravity="right"
 android:id="@+id/InstrBid">
 </TextView>
 
 <TextView 
-android:layout_width="60dp"
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textStyle="bold"
+style="@style/CodeFont"
+android:layout_weight="0.2"
 android:layout_gravity="center_vertical"
 android:gravity="right"
+android:paddingRight ="4dp"
 android:id="@+id/InstrAsk">
 </TextView>
 

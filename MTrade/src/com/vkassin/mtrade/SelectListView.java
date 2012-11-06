@@ -19,27 +19,11 @@ import android.widget.ListView;
 		private ArrayList<Instrument> listInstr;
 		private static final String TAG = "MTrade.SelectListView"; 
 
-//		final String SETTING_TODOLIST = "todolist";
-
-//		private ArrayList<String> selectedItems = new ArrayList<String>();
-
 		/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.select_instr);
-
-//			Button btnSave = (Button) findViewById(R.id.btnSave);
-//			btnSave.setOnClickListener(new OnClickListener() {
-//
-//				public void onClick(View v) {
-//
-//					Toast.makeText(getApplicationContext(),
-//							" You clicked Save button", Toast.LENGTH_SHORT).show();
-//
-//					SaveSelections();
-//				}
-//			});
 
 			Button btnClear = (Button) findViewById(R.id.btnClear);
 			btnClear.setOnClickListener(new OnClickListener() {
@@ -53,8 +37,7 @@ import android.widget.ListView;
 				}
 			});
 
-			// Prepare an ArrayList of todo items
-			listInstr = Common.getAllInstrs();//PrepareListFromXml();
+			listInstr = Common.getAllInstrs();
 
 			this.mainListView = getListView();
 
@@ -64,7 +47,9 @@ import android.widget.ListView;
 			
 			ArrayList<String> a = new ArrayList<String>();
 			Iterator<Instrument> itr = listInstr.iterator();
-				while (itr.hasNext()){
+				
+			while (itr.hasNext()) {
+					
 					Instrument k = itr.next();
 					a.add(k.symbol);
 				}
@@ -73,8 +58,6 @@ import android.widget.ListView;
 			mainListView.setAdapter(new ArrayAdapter<String>(SelectListView.this,
 					android.R.layout.simple_list_item_multiple_choice, lv_arr));
 
-//			mainListView.setAdapter(new SelectAdapter(SelectListView.this, android.R.layout.simple_list_item_multiple_choice, listTODO));
-			
 			mainListView.setItemsCanFocus(false);
 			mainListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
@@ -87,7 +70,7 @@ import android.widget.ListView;
 
 			SaveSelections();
 
-			Log.w(TAG, "onPause");
+//			Log.w(TAG, "onPause");
 			
 			super.onPause();
 		}
@@ -148,7 +131,7 @@ import android.widget.ListView;
 		
 			Common.setFavrList(a);
 			
-			Log.w(TAG, "favr = " + Common.getFavrList());
+//			Log.w(TAG, "favr = " + Common.getFavrList());
 			
 		
 		//			// save the selections in the shared preference in private mode for the user

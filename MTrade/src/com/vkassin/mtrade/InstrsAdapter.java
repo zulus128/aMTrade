@@ -56,49 +56,47 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		LinearLayout layout = new LinearLayout(parent.getContext());
-    	
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	layout.addView(vi.inflate(resourceId, null));
 
-//    	if (position == Common.selectedListItem)
-//    		layout.setBackgroundResource(android.R.color.darker_gray);
+    	if(convertView == null)
+    		convertView = vi.inflate(R.layout.instritem, null);
+
     	boolean b = (position == selectedPos);
     	if (b) {
     	    
-    		layout.setBackgroundColor(colorBackSelected);
+    		convertView.setBackgroundColor(colorBackSelected);
     	    Common.selectedInstrument = getItems().get(position);
     	    
     	} else {
-    	    layout.setBackgroundColor(colorBackUnselected);
+    		convertView.setBackgroundColor(colorBackUnselected);
     	}
     	
     	Instrument item = getItems().get(position);
     	if (item != null) {
 
-    		TextView title = (TextView) layout.findViewById(R.id.InstrName);
+    		TextView title = (TextView) convertView.findViewById(R.id.InstrName);
     		title.setText(item.symbol);
     		title.setTextColor(b?colorInstrSelected:colorInstrUnselected);
 
-    		TextView tstatus = (TextView) layout.findViewById(R.id.InstrStatus);
+    		TextView tstatus = (TextView) convertView.findViewById(R.id.InstrStatus);
     		tstatus.setText(item.tradeStatus);
     		tstatus.setTextColor(b?colorTextSelected:colorTextUnselected);
     		
-    		TextView chg = (TextView) layout.findViewById(R.id.InstrChg);
+    		TextView chg = (TextView) convertView.findViewById(R.id.InstrChg);
     		chg.setText(item.avg.toString());
     		chg.setTextColor(b?colorTextSelected:colorTextUnselected);
 
-    		TextView bid = (TextView) layout.findViewById(R.id.InstrBid);
+    		TextView bid = (TextView) convertView.findViewById(R.id.InstrBid);
     		bid.setText(item.bid.toString());
     		bid.setTextColor(b?colorTextSelected:colorTextUnselected);
 
-    		TextView ask = (TextView) layout.findViewById(R.id.InstrAsk);
+    		TextView ask = (TextView) convertView.findViewById(R.id.InstrAsk);
     		ask.setText(item.ask.toString());
     		ask.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     	}
     	
-    	return layout;
+    	return convertView;
     }
 
 	public void setItems(ArrayList<Instrument> objects) {

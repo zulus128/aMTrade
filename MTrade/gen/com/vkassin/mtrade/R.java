@@ -160,55 +160,55 @@ public final class R {
         public static final int ic_menu_show_list=0x7f020004;
     }
     public static final class id {
-        public static final int HistoryDate=0x7f070007;
-        public static final int HistoryDirect=0x7f070003;
-        public static final int HistoryList=0x7f070000;
-        public static final int HistoryName=0x7f070002;
-        public static final int HistoryPrice=0x7f070004;
-        public static final int HistoryQty=0x7f070005;
-        public static final int HistoryStatus=0x7f070006;
-        public static final int HistoryType=0x7f070001;
-        public static final int InstrAsk=0x7f07000c;
-        public static final int InstrBid=0x7f07000b;
-        public static final int InstrChg=0x7f07000a;
-        public static final int InstrList=0x7f07000f;
-        public static final int InstrName=0x7f070008;
-        public static final int InstrStatus=0x7f070009;
-        public static final int LinLayout01=0x7f07000d;
-        public static final int LinLayout02=0x7f07000e;
-        public static final int LinLayout_q01=0x7f070025;
-        public static final int ProgressBar01=0x7f070010;
-        public static final int QuoteBidQ=0x7f070027;
-        public static final int QuoteList=0x7f070026;
-        public static final int QuotePrice=0x7f070028;
-        public static final int QuoteSellQ=0x7f070029;
-        public static final int TableLayout01=0x7f07002e;
-        public static final int acc_spinner=0x7f070020;
-        public static final int btnClear=0x7f07002d;
-        public static final int buttonlayout=0x7f07002a;
-        public static final int buttonlayout2=0x7f07002b;
-        public static final int customorderdialog=0x7f070011;
-        public static final int gologin=0x7f070018;
-        public static final int instrtext=0x7f07001b;
-        public static final int loginnameedit=0x7f070014;
-        public static final int logintext=0x7f070013;
-        public static final int menulogin=0x7f070030;
-        public static final int menuselect=0x7f07002f;
-        public static final int orderlayout1=0x7f070019;
-        public static final int orderlayout2=0x7f070012;
-        public static final int orderlayout3=0x7f070015;
-        public static final int ordertext=0x7f07001a;
-        public static final int passtext=0x7f070016;
-        public static final int passwordedit=0x7f070017;
-        public static final int priceedit=0x7f07001d;
-        public static final int pricetext=0x7f07001c;
-        public static final int putorder=0x7f070024;
-        public static final int quantedit=0x7f07001f;
-        public static final int quanttext=0x7f07001e;
-        public static final int radio0=0x7f070022;
-        public static final int radio1=0x7f070023;
-        public static final int radioGroup1=0x7f070021;
-        public static final int txtTest=0x7f07002c;
+        public static final int HistoryDate=0x7f080007;
+        public static final int HistoryDirect=0x7f080003;
+        public static final int HistoryList=0x7f080000;
+        public static final int HistoryName=0x7f080002;
+        public static final int HistoryPrice=0x7f080004;
+        public static final int HistoryQty=0x7f080005;
+        public static final int HistoryStatus=0x7f080006;
+        public static final int HistoryType=0x7f080001;
+        public static final int InstrAsk=0x7f08000c;
+        public static final int InstrBid=0x7f08000b;
+        public static final int InstrChg=0x7f08000a;
+        public static final int InstrList=0x7f08000f;
+        public static final int InstrName=0x7f080008;
+        public static final int InstrStatus=0x7f080009;
+        public static final int LinLayout01=0x7f08000d;
+        public static final int LinLayout02=0x7f08000e;
+        public static final int LinLayout_q01=0x7f080025;
+        public static final int ProgressBar01=0x7f080010;
+        public static final int QuoteBidQ=0x7f080027;
+        public static final int QuoteList=0x7f080026;
+        public static final int QuotePrice=0x7f080028;
+        public static final int QuoteSellQ=0x7f080029;
+        public static final int TableLayout01=0x7f08002e;
+        public static final int acc_spinner=0x7f080020;
+        public static final int btnClear=0x7f08002d;
+        public static final int buttonlayout=0x7f08002a;
+        public static final int buttonlayout2=0x7f08002b;
+        public static final int customorderdialog=0x7f080011;
+        public static final int gologin=0x7f080018;
+        public static final int instrtext=0x7f08001b;
+        public static final int loginnameedit=0x7f080014;
+        public static final int logintext=0x7f080013;
+        public static final int menulogin=0x7f080030;
+        public static final int menuselect=0x7f08002f;
+        public static final int orderlayout1=0x7f080019;
+        public static final int orderlayout2=0x7f080012;
+        public static final int orderlayout3=0x7f080015;
+        public static final int ordertext=0x7f08001a;
+        public static final int passtext=0x7f080016;
+        public static final int passwordedit=0x7f080017;
+        public static final int priceedit=0x7f08001d;
+        public static final int pricetext=0x7f08001c;
+        public static final int putorder=0x7f080024;
+        public static final int quantedit=0x7f08001f;
+        public static final int quanttext=0x7f08001e;
+        public static final int radio0=0x7f080022;
+        public static final int radio1=0x7f080023;
+        public static final int radioGroup1=0x7f080021;
+        public static final int txtTest=0x7f08002c;
     }
     public static final class layout {
         public static final int history=0x7f030000;
@@ -223,10 +223,11 @@ public final class R {
         public static final int select_instr=0x7f030009;
     }
     public static final class menu {
-        public static final int instrsmenu=0x7f060000;
+        public static final int instrsmenu=0x7f070000;
     }
     public static final class string {
         public static final int BuyButton=0x7f050008;
+        public static final int Clear=0x7f050019;
         public static final int GoLogin=0x7f050014;
         public static final int LoginDialogTitle=0x7f050015;
         public static final int LoginName=0x7f050012;
@@ -251,5 +252,9 @@ public final class R {
         public static final int TitleStatus=0x7f050010;
         public static final int app_name=0x7f050001;
         public static final int hello=0x7f050000;
+    }
+    public static final class style {
+        public static final int CodeFont=0x7f060000;
+        public static final int CodeFont1=0x7f060001;
     }
 }
