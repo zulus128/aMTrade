@@ -65,7 +65,9 @@ public class Common {
 
     public static TabHost tabHost;
 	public static TabHost.TabSpec tabspec;
-	public static Instrument selectedInstrument;
+
+	private static Instrument selectedInstrument;
+
 	private static int ordernum;
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
@@ -84,7 +86,23 @@ public class Common {
     public static QuoteActivity quoteActivity;
     public static HistoryActivity historyActivity;
     
-    public static ArrayList<Instrument> getFavInstrs() {
+	public static Instrument getSelectedInstrument() {
+		return selectedInstrument;
+	}
+
+	public static void setSelectedInstrument(Instrument selectedInstrument) {
+		
+		Log.i(TAG, "Instr selected = " + selectedInstrument.symbol);
+		Common.selectedInstrument = selectedInstrument;
+		try {
+			mainActivity.sendQuoteGraphSubscription();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static ArrayList<Instrument> getFavInstrs() {
 		
 		ArrayList<Instrument> a = new ArrayList<Instrument>();
 		Iterator<String> itr = instrMap.keySet().iterator();

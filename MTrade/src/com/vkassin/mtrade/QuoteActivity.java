@@ -44,7 +44,7 @@ public class QuoteActivity extends Activity {
 		
 	      if(Common.FIRSTLOAD_FINISHED) {
 	      	
-        	adapter.setItems(Common.selectedInstrument.getQuotes());
+        	adapter.setItems(Common.getSelectedInstrument().getQuotes());
 	  		adapter.notifyDataSetChanged();
 	        }
 
@@ -95,7 +95,7 @@ public class QuoteActivity extends Activity {
 		   
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
-	      	Quote q = Common.selectedInstrument.getQuotes().get(selectedRowId);
+	      	Quote q = Common.getSelectedInstrument().getQuotes().get(selectedRowId);
 	    	Common.putOrder(this, q);
 
 

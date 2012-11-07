@@ -85,6 +85,8 @@ public class InstrActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				
 				adapter.setSelectedPosition(arg2);				
+	    	    Common.setSelectedInstrument( adapter.getItems().get(arg2) );
+
 			}
 		});
      
@@ -185,34 +187,36 @@ public class InstrActivity extends Activity {
 
         writeJSONMsg(msg);
 
-        sendGraphSubscription();
+//        sendGraphSubscription();
     }
 
-    private void sendGraphSubscription() throws Exception {
+    public void sendQuoteGraphSubscription() {
 
-        JSONObject msg = new JSONObject();
         try {
         	
-        	HashSet<String> t = Common.getFavrList();
+//        	HashSet<String> t = Common.getFavrList();
         	
-            for(String id : t) {
+        	String id = Common.getSelectedInstrument().id;
+        	
+//            for(String id : t) {
             	
-            	Log.i(TAG, "f: " + id);
+//            	Log.i(TAG, "f: " + id);
+                JSONObject msg = new JSONObject();
             	msg.put("objType", Common.QUOTE_CHART_SUBSCRIPTION);
             	msg.put("time", Calendar.getInstance().getTimeInMillis());
             	msg.put("version", Common.PROTOCOL_VERSION);
             	msg.put("instrumId", Long.valueOf(id));
       
-            	Log.i(TAG, "chart subscr = " + msg);
-            }
+             	Log.i(TAG, "chart subscr = " + msg);
+             	writeJSONMsg(msg);
+//            }
         }
         catch(Exception e){
             e.printStackTrace();
             Log.e(TAG, "Error! Cannot create JSON login object", e);
         }
 
-        writeJSONMsg(msg);
-
+   
     }
     
     public void stop() {
@@ -220,7 +224,17 @@ public class InstrActivity extends Activity {
     	Log.w(TAG, " --- Stop!!!");
 		if(thrd != null)
 			thrd.interrupt();
-
+		
+		if(sock != null) {
+			
+			try {
+				sock.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			sock = null;
+		}
     }
     
     public void refresh() {
@@ -320,7 +334,7 @@ public class InstrActivity extends Activity {
                         		if( t == Common.QUOTE) {
                         			
                         			Iterator<String> keys = data.keys();
-                        			if(Common.selectedInstrument != null)
+                        			if(Common.getSelectedInstrument() != null)
                         			while( keys.hasNext() ) {
                         				String key = (String)keys.next();
                         				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
@@ -509,6 +523,7 @@ public class InstrActivity extends Activity {
 
 	    selectedRowId = (int)info.id;
 		adapter.setSelectedPosition(selectedRowId);				
+	    Common.setSelectedInstrument( adapter.getItems().get(selectedRowId) );
 
 //	    Log.i(TAG, "selectedRowId = "+selectedRowId);
 	    

@@ -65,7 +65,7 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
     	if (b) {
     	    
     		convertView.setBackgroundColor(colorBackSelected);
-    	    Common.selectedInstrument = getItems().get(position);
+//    	    Common.setSelectedInstrument( getItems().get(position) );
     	    
     	} else {
     		convertView.setBackgroundColor(colorBackUnselected);
