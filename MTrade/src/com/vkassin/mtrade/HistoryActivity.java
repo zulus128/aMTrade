@@ -19,23 +19,31 @@ public class HistoryActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
         
+        Common.historyActivity = this;
+        
         list = (ListView)this.findViewById(R.id.HistoryList);
     	adapter = new HistoryAdapter(this, R.layout.historyitem, new ArrayList<History>());
     	list.setAdapter(adapter);
 
 	}
 
+	public void refresh() {
+
+		if(Common.FIRSTLOAD_FINISHED) {
+	      	Log.i(TAG, "History count = " + Common.getAllHistory().size());
+	      	adapter.setItems(Common.getAllHistory());
+	  		adapter.notifyDataSetChanged();
+	        }
+		
+	}
+	
     @Override
     public void onResume() {
     	
       super.onResume();
       Log.i(TAG, "onResume");
       
-      if(Common.FIRSTLOAD_FINISHED) {
-    	
-    	adapter.setItems(Common.getAllHistory());
-		adapter.notifyDataSetChanged();
-      }
+      refresh();
       
     }
 }

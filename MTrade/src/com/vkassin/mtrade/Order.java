@@ -86,5 +86,25 @@ public class Order implements Serializable, History {
 		Date d = new Date(dtime);
 		return new SimpleDateFormat("HH:mm dd/MM").format(d);
 	}
-	
+
+	public Long getLongDTime() {
+		
+		return dtime;
+	}
+
+	public int compareTo(History arg0) {
+
+		if(this.dtime < arg0.getLongDTime()) {
+
+			return -1;
+	    }   
+	    else
+			if(this.dtime > arg0.getLongDTime()) {
+
+				return 1;
+			}
+
+		return 0;  
+	    
+	}
 }

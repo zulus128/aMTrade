@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,6 +81,8 @@ public class Common {
     public static boolean FIRSTLOAD_FINISHED = false;
     
     public static InstrActivity mainActivity;
+    public static QuoteActivity quoteActivity;
+    public static HistoryActivity historyActivity;
     
     public static ArrayList<Instrument> getFavInstrs() {
 		
@@ -152,11 +156,14 @@ public class Common {
 	}
 
 	public static ArrayList<History> getAllHistory() {
-		
-		return new ArrayList<History>(historyMap.values());
+
+		SortedSet<History> hists = new TreeSet<History>(historyMap.values());
+		return new ArrayList<History>(hists);
+
+//		return new ArrayList<History>(historyMap.values());
 	}
 
-	public static void clearOrderList() {
+	public static void clearHistoryList() {
 		
 		historyMap.clear();
 	}

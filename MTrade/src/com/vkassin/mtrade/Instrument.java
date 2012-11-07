@@ -46,26 +46,14 @@ public class Instrument implements Serializable {
 //		this.daychart = daychart;
 //	}
 
-	private SortedSet<Quote> quotes = new TreeSet<Quote>();
+//	private SortedSet<Quote> quotes = new TreeSet<Quote>();
+	private static HashMap<String, Quote> quoteMap = new HashMap<String, Quote>();
 
 	public ArrayList<Quote> getQuotes() {
 	
+		SortedSet<Quote> quotes = new TreeSet<Quote>(quoteMap.values());
 		return new ArrayList<Quote>(quotes);
 	}
-	
-//	/**
-//	 * @return the quotes
-//	 */
-//	public SortedSet<Quote> getQuotes() {
-//		return quotes;
-//	}
-//
-//	/**
-//	 * @param quotes the quotes to set
-//	 */
-//	public void setQuotes(SortedSet<Quote> quotes) {
-//		this.quotes = quotes;
-//	}
 
 	public Instrument(String i, JSONObject obj) {
 		
@@ -92,7 +80,13 @@ public class Instrument implements Serializable {
 		
 	public void addToQuoteList(String key, JSONObject obj) {
 		
-		quotes.add(new Quote(key, obj));
+		Quote old = (Quote)quoteMap.get(key);
+		if(old == null)
+			quoteMap.put(key, new Quote(key, obj));
+		else
+			old.update(obj);
+
+//		quotes.add(new Quote(key, obj));
 	}
 
 	private void set(JSONObject obj){

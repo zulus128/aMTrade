@@ -29,6 +29,8 @@ public class QuoteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quotes);
         
+        Common.quoteActivity = this;
+        
         list = (ListView)this.findViewById(R.id.QuoteList);
     	adapter = new QuoteAdapter(this, R.layout.quotesitem, new ArrayList<Quote>());
 //    	adapter = new listviewAdapter(this, new ArrayList<HashMap<String,String>>());
@@ -38,18 +40,23 @@ public class QuoteActivity extends Activity {
 
 	}
 
+	public void refresh() {
+		
+	      if(Common.FIRSTLOAD_FINISHED) {
+	      	
+        	adapter.setItems(Common.selectedInstrument.getQuotes());
+	  		adapter.notifyDataSetChanged();
+	        }
+
+	}
+	
     @Override
     public void onResume() {
     	
       super.onResume();
       Log.i(TAG, "onResume");
       
-      if(Common.FIRSTLOAD_FINISHED) {
-    	
-      	adapter.setItems(Common.selectedInstrument.getQuotes());
-		adapter.notifyDataSetChanged();
-      }
-      
+      refresh();
     }
     
     @Override

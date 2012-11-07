@@ -1,63 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/SlateGray">
-	
-	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout_q01"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		>
-	
-		<LinearLayout android:orientation="horizontal"
-		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="20dip"
-			>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/SlateGray" >
 
-<TextView 
-android:layout_width="90dip" 
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textColor="@color/White"
-android:textStyle="bold"
-android:layout_gravity="center_vertical"
-android:text = "@string/TitleBuyQty">
-</TextView>
+    <LinearLayout
+        android:id="@+id/LinLayout_q01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-<TextView 
-android:layout_width="80dip" 
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textColor="@color/White"
-android:textStyle="bold"
-android:layout_gravity="center_vertical"
-android:gravity="right"
-android:text = "@string/Price">
-</TextView>
+        <LinearLayout
+            android:id="@+id/LinLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1" >
 
-<TextView 
-android:layout_width="130dip" 
-android:layout_height="fill_parent" 
-android:textSize="12dp"
-android:textColor="@color/White"
-android:textStyle="bold"
-android:layout_gravity="center_vertical"
-android:gravity="right"
-android:text = "@string/TitleSellQty">
-</TextView>
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.25"
+                android:paddingLeft="14dp"
+                android:text="@string/TitleBuyQty"
+                android:textStyle="bold" >
+            </TextView>
 
-</LinearLayout>
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.3"
+                android:gravity="right"
+                android:text="@string/Price"
+                android:textStyle="bold" >
+            </TextView>
 
-	<ListView
-	    android:id="@+id/QuoteList"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:choiceMode="singleChoice"
-	    android:cacheColorHint="@android:color/transparent"
-	    android:paddingBottom="5dp"
-	    android:paddingTop="0dp"
-	    android:footerDividersEnabled="true"
-	    android:headerDividersEnabled="true">
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.45"
+                android:gravity="right"
+                android:paddingRight="14dp"
+                android:text="@string/TitleSellQty"
+                android:textStyle="bold" >
+            </TextView>
+        </LinearLayout>
 
-	</ListView>
-	
-</LinearLayout>
-		
+        <ListView
+            android:id="@+id/QuoteList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="0dp" >
+        </ListView>
+    </LinearLayout>
+
 </RelativeLayout>

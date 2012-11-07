@@ -88,15 +88,10 @@ public class InstrActivity extends Activity {
 			}
 		});
      
-    	Common.clearInstrList();
-    	
-    	Common.clearOrderList();
+//    	Common.clearInstrList();
+//    	Common.clearOrderList();
     	
     	refresh();
-//    	double f = 1331748000000.0;
-//    	Log.w(TAG, "1331748000000 = " + f/1000/60/60/24/365);
-//    	f = 1349029547375.0;
-//    	Log.w(TAG, "1349029547375 = " + f/1000/60/60/24/365);
     }
 
     public JSONObject getLogin() {
@@ -222,13 +217,19 @@ public class InstrActivity extends Activity {
     
     public void stop() {
     	
+    	Log.w(TAG, " --- Stop!!!");
 		if(thrd != null)
 			thrd.interrupt();
 
     }
     
     public void refresh() {
-    	
+     	
+    	Log.w(TAG, " --- Refresh!!!");
+  	  
+    	if((sock != null) && sock.isConnected())
+    		return;
+
       try {
 
 //    	  if(sock != null)
@@ -245,6 +246,7 @@ public class InstrActivity extends Activity {
         
         thrd = new Thread(new Runnable() {
           public void run() {
+          	Log.w(TAG, " --- Start!!!");
             while (!Thread.interrupted()) {
               try {
                 final JSONObject data = readJSONMsg();
@@ -252,8 +254,9 @@ public class InstrActivity extends Activity {
                   runOnUiThread(new Runnable() {
 //                    @Override
                     public void run() {
-                      // do something in ui thread with the data var
-//                    	Log.i(TAG, "readMsg: " + data);
+
+//                      	Log.w(TAG, " --- getData!!!");
+                    	
                     	try {
                     		
 							int t = data.getInt("objType");
@@ -326,7 +329,11 @@ public class InstrActivity extends Activity {
                         					instr.addToQuoteList(key, data.getJSONObject(key));
                         				}
                         			}
-                    				adapter.notifyDataSetChanged();
+                    				
+                        			if(Common.quoteActivity != null)
+                        				Common.quoteActivity.refresh();
+                        			
+//                        			adapter.notifyDataSetChanged();
     							}
                     		else
                         		if( t == Common.CHART) {
@@ -353,7 +360,9 @@ public class InstrActivity extends Activity {
                             					Common.addDealToHistoryList(key, data.getJSONObject(key));
                             				}
                             			}
-//                        				adapter.notifyDataSetChanged();
+
+                            			if(Common.historyActivity != null)
+                            				Common.historyActivity.refresh();
         							}
                     		else
                         		if(t == Common.TRANSIT_ORDER) {
@@ -365,7 +374,8 @@ public class InstrActivity extends Activity {
                         					Common.addOrderToHistoryList(key, data.getJSONObject(key));
                         				}
                         			}
-//                    				adapter.notifyDataSetChanged();
+                        			if(Common.historyActivity != null)
+                        				Common.historyActivity.refresh();
     							}
                     		else
                     		if( t == Common.TRADEACCOUNT) {
@@ -404,7 +414,7 @@ public class InstrActivity extends Activity {
     public void onResume() {
     	
       super.onResume();
-      Log.i(TAG, "onResume");
+      Log.i(TAG, "--- onResume");
       
       if(Common.FIRSTLOAD_FINISHED) {
     	  

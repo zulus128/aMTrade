@@ -8,11 +8,14 @@
 	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout01"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		>
-	
-		<LinearLayout android:orientation="horizontal"
-		     android:id="@+id/LinLayout02" android:layout_width="fill_parent" android:layout_height="wrap_content"
-		     android:weightSum="1"
-			>
+	
+		<LinearLayout
+		    android:id="@+id/LinLayout02"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:weightSum="1" >
+
 		    		<TextView 
 		style="@style/CodeFont1"
     	android:layout_weight="0.28"

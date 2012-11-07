@@ -24,7 +24,7 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 		this.ctx = context;
 		this.resourceId = resourceId;
 		
-		this.colorDeal =  ctx.getResources().getColor(R.color.Green);
+		this.colorDeal =  ctx.getResources().getColor(R.color.Orange);
 		this.colorTransit =  ctx.getResources().getColor(R.color.Yellow);
 		this.items = objects;
 		this.ctx = context;
@@ -32,47 +32,48 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
-    	LinearLayout layout = new LinearLayout(parent.getContext());
     	
     	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    	layout.addView(vi.inflate(resourceId, null));
+
+    	if(convertView == null)
+    		convertView = vi.inflate(R.layout.historyitem, null);
 
     	History item = getItems().get(position);
     	if (item != null) {
 
         	boolean d = item.getOperationType().equals("Deal"); 
 
-    		TextView type = (TextView) layout.findViewById(R.id.HistoryType);
+    		TextView type = (TextView) convertView.findViewById(R.id.HistoryType);
     		type.setText(item.getOperationType());
     		type.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView name = (TextView) layout.findViewById(R.id.HistoryName);
+    		TextView name = (TextView) convertView.findViewById(R.id.HistoryName);
     		name.setText(item.getInstr());
     		name.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView dir = (TextView) layout.findViewById(R.id.HistoryDirect);
+    		TextView dir = (TextView) convertView.findViewById(R.id.HistoryDirect);
     		dir.setText(item.getDirect());
     		dir.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView price = (TextView) layout.findViewById(R.id.HistoryPrice);
+    		TextView price = (TextView) convertView.findViewById(R.id.HistoryPrice);
     		price.setText(item.getPrice());
     		price.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView qty = (TextView) layout.findViewById(R.id.HistoryQty);
+    		TextView qty = (TextView) convertView.findViewById(R.id.HistoryQty);
     		qty.setText(item.getQty());
     		qty.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView st = (TextView) layout.findViewById(R.id.HistoryStatus);
+    		TextView st = (TextView) convertView.findViewById(R.id.HistoryStatus);
     		st.setText(item.getStatus());
     		st.setTextColor(d?colorDeal:colorTransit);
 
-    		TextView date = (TextView) layout.findViewById(R.id.HistoryDate);
+    		TextView date = (TextView) convertView.findViewById(R.id.HistoryDate);
     		date.setText(item.getDTime());
     		date.setTextColor(d?colorDeal:colorTransit);
 
     	}
     	
-    	return layout;
+    	return convertView;
     }
 
 	public void setItems(ArrayList<History> objects) {

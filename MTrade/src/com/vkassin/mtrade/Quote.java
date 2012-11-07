@@ -40,14 +40,14 @@ public class Quote implements Comparable<Quote> {
 		
 		set(obj);
 		
-		Log.i(TAG, "Quote created id:" + i);
+		Log.i(TAG, " --/ Quote created id:" + i + ", price = " + price);
 		
 	}
 		
 	public void update(JSONObject obj) {
 		
 		set(obj);
-		Log.i(TAG, "quote " + id + " updated.");
+		Log.i(TAG, "quote " + id + ", price = " + price + " updated.");
 		
 	}
 	
