@@ -20,7 +20,7 @@
             <TextView
                 style="@style/CodeFont1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.25"
+                android:layout_weight="0.3"
                 android:paddingLeft="14dp"
                 android:text="@string/TitleBuyQty"
                 android:textStyle="bold" >
@@ -29,7 +29,7 @@
             <TextView
                 style="@style/CodeFont1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.3"
+                android:layout_weight="0.25"
                 android:gravity="right"
                 android:text="@string/Price"
                 android:textStyle="bold" >

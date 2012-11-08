@@ -30,7 +30,7 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
 		this.ctx = context;
 		this.resourceId = resourceId;
 		
-		colorBuy = ctx.getResources().getColor(R.color.Green);
+		colorBuy = ctx.getResources().getColor(R.color.LimeGreen);
 		colorSell = ctx.getResources().getColor(R.color.Red);
 	}
 	

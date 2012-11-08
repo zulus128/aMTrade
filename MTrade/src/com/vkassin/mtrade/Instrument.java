@@ -47,7 +47,7 @@ public class Instrument implements Serializable {
 //	}
 
 //	private SortedSet<Quote> quotes = new TreeSet<Quote>();
-	private static HashMap<String, Quote> quoteMap = new HashMap<String, Quote>();
+	private HashMap<String, Quote> quoteMap = new HashMap<String, Quote>();
 
 	public ArrayList<Quote> getQuotes() {
 	
@@ -80,6 +80,7 @@ public class Instrument implements Serializable {
 		
 	public void addToQuoteList(String key, JSONObject obj) {
 		
+//		Log.i(TAG, "addToQuoteList from instr = " + this.symbol + " cnt = " + quoteMap.size());
 		Quote old = (Quote)quoteMap.get(key);
 		if(old == null)
 			quoteMap.put(key, new Quote(key, obj));
