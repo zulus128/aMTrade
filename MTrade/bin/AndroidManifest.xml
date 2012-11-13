@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".InstrActivity"></activity>
         <activity android:name=".ChartActivity"></activity>
-        <activity android:name=".TradeActivity"></activity>
+        <activity android:name=".PosActivity"></activity>
         <activity android:name=".HistoryActivity"></activity>
         <activity android:name=".SelectListView"></activity>
         <activity android:name=".QuoteActivity"></activity>

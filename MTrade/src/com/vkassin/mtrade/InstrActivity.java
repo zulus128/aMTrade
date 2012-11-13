@@ -98,7 +98,10 @@ public class InstrActivity extends Activity {
 
     public JSONObject getLogin() {
     	
-    	Common.loadAccountDetails();
+    	if(!Common.loginFromDialog)
+    		Common.loadAccountDetails();
+    	
+    	Common.loginFromDialog = false;
     	
       JSONObject msg = new JSONObject();
       try{
@@ -120,7 +123,9 @@ public class InstrActivity extends Activity {
         
 //        msg.put("password", "1");
 //        msg.put("login", "133b06");
-    
+
+      Log.i(TAG, "Login message: " + msg);
+
       }
       catch(Exception e){
           e.printStackTrace();
@@ -362,7 +367,10 @@ public class InstrActivity extends Activity {
 
                         			Log.i(TAG, "Chart message processed.");
 
-                    				adapter.notifyDataSetChanged();
+                        			if(Common.chartActivity != null)
+                        				Common.chartActivity.refresh();
+
+//                    				adapter.notifyDataSetChanged();
     							}
                         		else
                             		if(t == Common.DEAL) {
@@ -391,6 +399,20 @@ public class InstrActivity extends Activity {
                         			if(Common.historyActivity != null)
                         				Common.historyActivity.refresh();
     							}
+                        		else
+                            		if(t == Common.POSITIONS_INFO) {
+                            			
+                            			Iterator<String> keys = data.keys();
+                            			while( keys.hasNext() ){
+                            				String key = (String)keys.next();
+                            				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                            					Common.addPositionToList(key, data.getJSONObject(key));
+                            				}
+                            			}
+
+                            			if(Common.posActivity != null)
+                            				Common.posActivity.refresh();
+        							}
                     		else
                     		if( t == Common.TRADEACCOUNT) {
                     			

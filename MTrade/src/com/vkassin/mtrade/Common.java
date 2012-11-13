@@ -56,6 +56,7 @@ public class Common {
     public final static Integer CHART = 106;
     public final static Integer SUBSCRIBE = 107;
     public final static Integer QUOTE_CHART_SUBSCRIPTION = 108;
+    public final static Integer POSITIONS_INFO = 109;
     public final static String PROTOCOL_VERSION = "1.0";
     public final static int ERROR_USER_WAS_NOT_FOUND = 200;
     public final static int ERROR_USER_ALREADY_CONNECTED = 201;
@@ -77,14 +78,17 @@ public class Common {
 	private static HashMap<String, History> historyMap = new HashMap<String, History>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
+	private static HashMap<String, Position> posMap = new HashMap<String, Position>();
 	
 	public static HashMap<String, String> myaccount = new HashMap<String, String>();
 
     public static boolean FIRSTLOAD_FINISHED = false;
-    
+    public static boolean loginFromDialog = false;
     public static InstrActivity mainActivity;
     public static QuoteActivity quoteActivity;
     public static HistoryActivity historyActivity;
+    public static ChartActivity chartActivity;
+    public static PosActivity posActivity;
     
 	public static Instrument getSelectedInstrument() {
 		return selectedInstrument;
@@ -173,6 +177,27 @@ public class Common {
 		
 	}
 
+	public static ArrayList<Position> getAllPositions() {
+		
+		ArrayList<Position> arr = new ArrayList<Position>(posMap.values());
+		Log.w(TAG, "pos_cnt = " + arr.size());
+		return arr;
+	}
+
+	public static void clearPositionList() {
+		
+		posMap.clear();
+	}
+
+	public static void addPositionToList(String key, JSONObject obj) {
+		
+		Position old = (Position)posMap.get(key);
+		if(old == null)
+			posMap.put(key, new Position(key, obj));
+		else
+			old.update(obj);
+	}
+
 	public static ArrayList<History> getAllHistory() {
 
 		SortedSet<History> hists = new TreeSet<History>(historyMap.values());
@@ -227,7 +252,7 @@ public class Common {
 			Iterator<String> setIterator = favrList.iterator();
 		while (setIterator.hasNext()) {
 		    String currentElement = setIterator.next();
-		    Log.w(TAG, "cur = "+currentElement);
+//		    Log.w(TAG, "cur = "+currentElement);
 		    if (instrMap.get(currentElement) == null) {
 		        setIterator.remove();
 		        Log.w(TAG, "removed");
@@ -315,7 +340,7 @@ public class Common {
 			os.writeObject(myaccount);
 			os.close();
 			fos.close();
-			
+			Log.i(TAG, "saved username: " + myaccount.get("name") + " password: " + myaccount.get("password"));
 		} catch (FileNotFoundException e) {
 
 			Toast.makeText(app_ctx, "Файл не записан " + e.toString(), Toast.LENGTH_SHORT).show();
@@ -391,6 +416,8 @@ public class Common {
     			 myaccount.put("name", nametxt.getText().toString());
     			 myaccount.put("password", passtxt.getText().toString());
 
+    				Log.i(TAG, "myaccount username: " + myaccount.get("name") + " password: " + myaccount.get("password"));
+
     			 dialog.dismiss(); 
     			 mainActivity.stop();
 //    			 saveAccountDetails();
@@ -400,6 +427,7 @@ public class Common {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+    			 loginFromDialog = true;
     			 mainActivity.refresh();
     		 }
     		    

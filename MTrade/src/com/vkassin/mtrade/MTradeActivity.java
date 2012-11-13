@@ -40,7 +40,7 @@ public class MTradeActivity extends TabActivity {
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
 
-	    intent = new Intent().setClass(this, TradeActivity.class);
+	    intent = new Intent().setClass(this, PosActivity.class);
 	    spec = Common.tabHost.newTabSpec("t_trade").setIndicator("Портфель",
 	                      res.getDrawable(R.drawable.ic_menu_friendslist))
 	                  .setContent(intent);

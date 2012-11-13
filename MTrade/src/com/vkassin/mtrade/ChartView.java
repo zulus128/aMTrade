@@ -61,7 +61,8 @@ public class ChartView extends RootView {
     private static AFreeChart createChart() {
 
         // declare colors
-        PaintType black = new SolidColor(Color.BLACK);
+//        PaintType black = new SolidColor(Color.BLACK);
+        PaintType black = new SolidColor(Common.app_ctx.getResources().getColor(R.color.SlateGray));
         PaintType blue = new SolidColor(Color.BLUE);
         PaintType red = new SolidColor(Color.RED);
         PaintType yellow = new SolidColor(Color.YELLOW);
@@ -180,7 +181,8 @@ public class ChartView extends RootView {
         subplot2.addAnnotation(ta);
 
         AFreeChart chart = new AFreeChart(
-                "Candle Stick Chart",
+//                "Candle Stick Chart",
+                Common.getSelectedInstrument().symbol,
                 AFreeChart.DEFAULT_TITLE_FONT,
                 plot,
                 false);
@@ -284,7 +286,8 @@ public class ChartView extends RootView {
     	while (itr.hasNext()) {
     		
     		DayChartElement dce = itr.next();
-    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), Math.random() * 60 + 200);
+//    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), Math.random() * 60 + 200);
+    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), dce.avg);
     	}
 
 //        for(int i = 0; i < 47; i++) {

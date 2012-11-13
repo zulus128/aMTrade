@@ -2,6 +2,7 @@ package com.vkassin.mtrade;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 
 public class ChartActivity extends Activity {
@@ -10,8 +11,20 @@ public class ChartActivity extends Activity {
 	    public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 
-	        ChartView mView = new ChartView(this);
+	        Common.chartActivity = this;
+	        
 	        requestWindowFeature(Window.FEATURE_NO_TITLE);
-	        setContentView(mView);
+	        refresh();
 	    }
+	   
+		public void refresh() {
+
+			if(Common.FIRSTLOAD_FINISHED) {
+
+				ChartView mView = new ChartView(this);
+		        setContentView(mView);
+		        
+			}
+			
+		}
 }
