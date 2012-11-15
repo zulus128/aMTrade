@@ -99,12 +99,24 @@
 
 
     </RadioGroup>
-
+    <LinearLayout
+    android:id="@+id/orderlayout333" android:orientation="horizontal"
+    android:layout_width="fill_parent" android:layout_height="wrap_content"
+    android:padding="7dp"
+    android:background="@android:color/transparent">
 <Button
 android:id="@+id/putorder"
 android:layout_width="fill_parent"
 android:layout_height="wrap_content"
 android:text="@string/PutOrder"
 />
-    
+
+<Button
+android:id="@+id/cancelbutt"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:text="@string/CancelOrder"
+/>
+	</LinearLayout>
+	
 </LinearLayout>

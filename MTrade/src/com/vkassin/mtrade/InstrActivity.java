@@ -46,12 +46,13 @@ public class InstrActivity extends Activity {
 
 	private static final int CONTEXTMENU_PUTORDER = 1;
 	private static final int CONTEXTMENU_GOGLASS = 2;
+	private static final int CONTEXTMENU_GOCHART = 3;
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
 
 	private Socket sock;
 	private Thread thrd;
-	private ListView list;
+	public ListView list;
 	private InstrsAdapter adapter;
 	private ProgressBar pb;
 	private Button customDialog_Dismiss;
@@ -84,8 +85,9 @@ public class InstrActivity extends Activity {
 			
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				
-				adapter.setSelectedPosition(arg2);				
-	    	    Common.setSelectedInstrument( adapter.getItems().get(arg2) );
+//				adapter.setSelectedPosition(arg2);				
+//	    	    Common.setSelectedInstrument( adapter.getItems().get(arg2) );
+	    	    list.showContextMenuForChild(arg1);
 
 			}
 		});
@@ -540,7 +542,15 @@ public class InstrActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
 		
-	    AdapterView.AdapterContextMenuInfo info =
+		menu.setHeaderTitle(R.string.MenuTitle);  
+	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
+	    menu.add(0, CONTEXTMENU_GOGLASS, 1, R.string.MenuItemGoGlass);
+	    menu.add(0, CONTEXTMENU_GOCHART, 2, R.string.MenuItemGoChart);
+//	    menu.add(0, CONTEXTMENU_RELOGIN, 2, R.string.MenuItemRelogin);
+	    
+		super.onCreateContextMenu(menu, v, menuInfo);  
+
+		AdapterView.AdapterContextMenuInfo info =
             (AdapterView.AdapterContextMenuInfo) menuInfo;
 
 	    selectedRowId = (int)info.id;
@@ -549,12 +559,14 @@ public class InstrActivity extends Activity {
 
 //	    Log.i(TAG, "selectedRowId = "+selectedRowId);
 	    
-		menu.setHeaderTitle(R.string.MenuTitle);  
-	    menu.add(0, CONTEXTMENU_PUTORDER, 0, R.string.MenuItemPutOrder);
-	    menu.add(0, CONTEXTMENU_GOGLASS, 1, R.string.MenuItemGoGlass);
-//	    menu.add(0, CONTEXTMENU_RELOGIN, 2, R.string.MenuItemRelogin);
-	    
-		super.onCreateContextMenu(menu, v, menuInfo);  
+//		try {
+//		
+//			sendQuoteGraphSubscription();
+//	
+//		} catch (Exception e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//		}
 
 	}  
 	
@@ -573,6 +585,11 @@ public class InstrActivity extends Activity {
 	    if (item.getItemId() == CONTEXTMENU_PUTORDER) {
 
 	    	Common.putOrder(this, null);
+	    }
+
+	    if (item.getItemId() == CONTEXTMENU_GOCHART) {
+
+	    	Common.tabHost.setCurrentTab(2);
 	    }
 
 	    return true;  

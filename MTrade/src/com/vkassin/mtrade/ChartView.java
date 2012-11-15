@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.afree.chart.AFreeChart;
+import org.afree.chart.annotations.XYTextAnnotation;
 import org.afree.chart.annotations.XYTitleAnnotation;
 import org.afree.chart.axis.AxisLocation;
 import org.afree.chart.axis.DateAxis;
@@ -17,6 +18,9 @@ import org.afree.chart.axis.TickUnitSource;
 import org.afree.chart.axis.TickUnits;
 import org.afree.chart.axis.ValueAxis;
 import org.afree.chart.plot.CombinedDomainXYPlot;
+import org.afree.chart.plot.IntervalMarker;
+import org.afree.chart.plot.Marker;
+import org.afree.chart.plot.ValueMarker;
 import org.afree.chart.plot.XYPlot;
 import org.afree.chart.renderer.xy.CandlestickRenderer;
 import org.afree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -32,9 +36,11 @@ import org.afree.graphics.PaintType;
 import org.afree.graphics.SolidColor;
 import org.afree.graphics.geom.Font;
 import org.afree.graphics.geom.LineShape;
+import org.afree.ui.Layer;
 import org.afree.ui.RectangleAnchor;
 import org.afree.ui.RectangleEdge;
 import org.afree.ui.RectangleInsets;
+import org.afree.ui.TextAnchor;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -77,8 +83,8 @@ public class ChartView extends RootView {
         rangeAxis1.setAutoTickUnitSelection(true);
 //        rangeAxis1.setAutoRangeIncludesZero(true);
 //        rangeAxis1.setAutoRange(false);
-//        rangeAxis1.setAutoRange(true);
-        rangeAxis1.setRange(200, 280);
+        rangeAxis1.setAutoRange(true);
+//        rangeAxis1.setRange(200, 280);
         rangeAxis1.setAxisLinePaintType(white);
         rangeAxis1.setAxisLineStroke(1);
         rangeAxis1.setTickMarkPaintType(white);
@@ -124,32 +130,32 @@ public class ChartView extends RootView {
         subplot1.setOutlinePaintType(white);
         subplot1.setOutlineStroke(2.0f);
 
-        XYDataset dataset2 = createDataset2();
-        NumberAxis rangeAxis2 = new NumberAxis();
-        rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis2.setAxisLinePaintType(white);
-        rangeAxis2.setAxisLineStroke(1);
-        rangeAxis2.setTickMarkPaintType(white);
-        rangeAxis2.setTickMarkStroke(1);
-        rangeAxis2.setTickMarkOutsideLength(2);
-        rangeAxis2.setLabelPaintType(white);
-        rangeAxis2.setTickLabelPaintType(white);
-        rangeAxis2.setTickLabelInsets(new RectangleInsets(10, 0, 10, 0));
-        rangeAxis2.setLimitAble(true);
-        rangeAxis2.setLimitRange(0, 100);
-        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
-        renderer2.setBaseShapesVisible(false);
-        renderer2.setLegendLine(new LineShape());
+//        XYDataset dataset2 = createDataset2();
+//        NumberAxis rangeAxis2 = new NumberAxis();
+//        rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+//        rangeAxis2.setAxisLinePaintType(white);
+//        rangeAxis2.setAxisLineStroke(1);
+//        rangeAxis2.setTickMarkPaintType(white);
+//        rangeAxis2.setTickMarkStroke(1);
+//        rangeAxis2.setTickMarkOutsideLength(2);
+//        rangeAxis2.setLabelPaintType(white);
+//        rangeAxis2.setTickLabelPaintType(white);
+//        rangeAxis2.setTickLabelInsets(new RectangleInsets(10, 0, 10, 0));
+//        rangeAxis2.setLimitAble(true);
+//        rangeAxis2.setLimitRange(0, 100);
+//        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer();
+//        renderer2.setBaseShapesVisible(false);
+//        renderer2.setLegendLine(new LineShape());
 
-        XYPlot subplot2 = new XYPlot(dataset2, null, rangeAxis2,renderer2);
-        subplot2.setDomainGridlinesVisible(true);
-        subplot2.setBackgroundPaintType(black);
-        subplot2.setDomainGridlinePaintType(darkGreen);
-        subplot2.setRangeGridlinePaintType(darkGreen);
-        subplot2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
-        subplot2.setOutlineVisible(true);
-        subplot2.setOutlinePaintType(white);
-        subplot2.setOutlineStroke(2.0f);
+//        XYPlot subplot2 = new XYPlot(dataset2, null, rangeAxis2,renderer2);
+//        subplot2.setDomainGridlinesVisible(true);
+//        subplot2.setBackgroundPaintType(black);
+//        subplot2.setDomainGridlinePaintType(darkGreen);
+//        subplot2.setRangeGridlinePaintType(darkGreen);
+//        subplot2.setRangeAxisLocation(AxisLocation.BOTTOM_OR_RIGHT);
+//        subplot2.setOutlineVisible(true);
+//        subplot2.setOutlinePaintType(white);
+//        subplot2.setOutlineStroke(2.0f);
 
         // setting domain axis
         ValueAxis timeAxis = new DateAxis("Дата");
@@ -166,20 +172,31 @@ public class ChartView extends RootView {
         CombinedDomainXYPlot plot = new CombinedDomainXYPlot(timeAxis);
         plot.setBackgroundPaintType(black);
         plot.add(subplot1, 2);
-        plot.add(subplot2, 1);
+//        plot.add(subplot2, 1);
 
         // add a annotation
-        LegendTitle lt = new LegendTitle(subplot2);
+//        LegendTitle lt = new LegendTitle(subplot2);
 
-        lt.setItemFont(new Font("Dialog", Typeface.BOLD, 9));
-        lt.setBackgroundPaintType(new SolidColor(Color.argb(0, 0, 0, 0)));
-        lt.setItemPaintType(white);
-        lt.setPosition(RectangleEdge.TOP);
-        XYTitleAnnotation ta = new XYTitleAnnotation(0.02, 0.98, lt, RectangleAnchor.TOP_LEFT);
+//        lt.setItemFont(new Font("Dialog", Typeface.BOLD, 9));
+//        lt.setBackgroundPaintType(new SolidColor(Color.argb(0, 0, 0, 0)));
+//        lt.setItemPaintType(white);
+//        lt.setPosition(RectangleEdge.TOP);
+//
+//        XYTitleAnnotation ta = new XYTitleAnnotation(0.02, 0.98, lt, RectangleAnchor.TOP_LEFT);
+//
+//        ta.setMaxWidth(0.48);
+//        subplot2.addAnnotation(ta);
 
-        ta.setMaxWidth(0.48);
-        subplot2.addAnnotation(ta);
-
+//        final Marker target = new ValueMarker(175.0);
+//        target.setLabel("Target Price");
+//        target.setLabelAnchor(RectangleAnchor.TOP_RIGHT);
+//        plot.addRangeMarker(target);
+        
+//        Marker mark = new ValueMarker(0);
+//        mark.setPaintType(white);
+//        mark.setStroke(1.0f);
+//        plot.addRangeMarker(mark);        
+        
         AFreeChart chart = new AFreeChart(
 //                "Candle Stick Chart",
                 Common.getSelectedInstrument().symbol,
@@ -264,11 +281,12 @@ public class ChartView extends RootView {
 //     * @param min the minute of the hour.
 //     * @return A date.
 //     */
-    private static Date createDate(int y, int m, int d, int hour, int min) {
-        calendar.clear();
-        calendar.set(y, m - 1, d, hour, min);
-        return calendar.getTime();
-    }
+
+//    private static Date createDate(int y, int m, int d, int hour, int min) {
+//        calendar.clear();
+//        calendar.set(y, m - 1, d, hour, min);
+//        return calendar.getTime();
+//    }
 
     /**
      * Creates a dataset.

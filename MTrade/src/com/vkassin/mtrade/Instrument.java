@@ -63,6 +63,9 @@ public class Instrument implements Serializable {
 		
 //		Log.i(TAG, symbol + " : " + description);
 		
+		if(Common.getSelectedInstrument() == null)
+			Common.setSelectedInstrument(this);
+		
 	}
 		
 	public void update(JSONObject obj) {

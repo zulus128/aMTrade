@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ListView;
 
 public class InstrsAdapter extends ArrayAdapter<Instrument> {
 
@@ -46,7 +47,9 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 		
 		selectedPos = pos;
 		// inform the view of this change
-		notifyDataSetChanged();
+		
+//		View view = ((InstrActivity)ctx).list.getChildAt(pos);
+//        getView(pos, view, ((InstrActivity)ctx).list);
 	}
 
 	public int getSelectedPosition(){
