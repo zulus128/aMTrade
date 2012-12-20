@@ -4,7 +4,7 @@
     <string name="hello">Hello World, MTradeActivity!</string>
     <string name="app_name">MTrade</string>
     <string name="SelectInstrs">Выбрать инструменты</string>
-    <string name="PutOrder">Подать заявку</string>
+    <string name="PutOrder">Отправить</string>
     <string name="OrderDialogTitle">Заявка</string>
     <string name="MenuTitle">Меню</string>
     <string name="MenuItemPutOrder">Подать заявку</string>
@@ -29,5 +29,7 @@
     <string name="Clear">Очистить</string>
     <string name="MenuItemGoChart">График</string>
     <string name="CancelOrder">Отмена</string>
+    <string name="CorrectPrice">Введите корректую цену</string>
+    <string name="CorrectQty">Введите корректное количество</string>
 
 </resources>

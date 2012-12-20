@@ -27,6 +27,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -436,7 +437,7 @@ public class Common {
     	dialog.show();
 	}
 	
-	public static void putOrder(Context ctx, Quote quote) {
+	public static void putOrder(final Context ctx, Quote quote) {
 		
 		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);
     	
@@ -477,19 +478,53 @@ public class Common {
     			
     		}
     	}
-    	Button customDialog_Dismiss = (Button)dialog.findViewById(R.id.putorder);
-    	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
+
+    	Button customDialog_Cancel = (Button)dialog.findViewById(R.id.cancelbutt);
+    	customDialog_Cancel.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
     			 
-    		       JSONObject msg = new JSONObject();
+    			 dialog.dismiss(); 
+    		 }
+    		    
+    	});
+
+    	
+    	
+    	Button customDialog_Put = (Button)dialog.findViewById(R.id.putorder);
+    	customDialog_Put.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+				 Double price = new Double(0);
+				 Long qval = new Long(0);
+				 
+    			 try {
+    				 
+    				 price = Double.valueOf(pricetxt.getText().toString());
+    			 }
+  		       catch(Exception e){
+  		    	 
+  		    	   Toast.makeText(ctx, R.string.CorrectPrice, Toast.LENGTH_SHORT).show();
+  		    	   return;
+		       }					
+    			 try {
+    				 
+    				  qval = Long.valueOf(quanttxt.getText().toString());
+    			 }
+  		       catch(Exception e){
+  		    	 
+  		    	   Toast.makeText(ctx, R.string.CorrectQty, Toast.LENGTH_SHORT).show();
+  		    	   return;
+		       }					
+    			 
+    			 JSONObject msg = new JSONObject();
     		       try{
     		    	   
     		         msg.put("objType", Common.CREATE_REMOVE_ORDER);
     		         msg.put("time", Calendar.getInstance().getTimeInMillis());
     		         msg.put("version", Common.PROTOCOL_VERSION);
     		         msg.put("instrumId", Long.valueOf(it.id));
-    		         msg.put("price", Double.valueOf(pricetxt.getText().toString()));
-    		         msg.put("qty", Long.valueOf(quanttxt.getText().toString()));
+    		         msg.put("price", price);
+    		         msg.put("qty", qval);
     		         msg.put("ordType", 1);
     		         msg.put("side", bu0.isChecked()?0:1);
     		         msg.put("code", String.valueOf(aspinner.getSelectedItem()));
@@ -511,6 +546,12 @@ public class Common {
     	});
     	
     	dialog.show();
+    	
+    	WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.FILL_PARENT;
+        lp.height = WindowManager.LayoutParams.FILL_PARENT;
+        dialog.getWindow().setAttributes(lp);
     }
 	
 }
