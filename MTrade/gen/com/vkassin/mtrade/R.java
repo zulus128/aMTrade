@@ -155,12 +155,15 @@ public final class R {
         public static final int YellowGreen=0x7f040050;
     }
     public static final class drawable {
-        public static final int chart=0x7f020000;
-        public static final int checkbox_selector=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
-        public static final int ic_menu_friendslist=0x7f020003;
-        public static final int ic_menu_goto=0x7f020004;
-        public static final int ic_menu_show_list=0x7f020005;
+        public static final int but0=0x7f020000;
+        public static final int chart=0x7f020001;
+        public static final int checkbox_selector=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
+        public static final int ic_menu_friendslist=0x7f020004;
+        public static final int ic_menu_goto=0x7f020005;
+        public static final int ic_menu_show_list=0x7f020006;
+        public static final int no_entry=0x7f020007;
+        public static final int radiobutton=0x7f020008;
     }
     public static final class id {
         public static final int HistoryDate=0x7f080007;
@@ -277,6 +280,7 @@ public final class R {
     public static final class style {
         public static final int CodeFont=0x7f060000;
         public static final int CodeFont1=0x7f060001;
+        public static final int CodeFontOrder=0x7f060003;
         public static final int CodeFontPos=0x7f060002;
     }
 }

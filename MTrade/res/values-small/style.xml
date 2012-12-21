@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CodeFont">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/White</item>
-                <item name="android:textSize">13dp</item>
+        <item name="android:textSize">13dp</item>
     </style>
-     <style name="CodeFont1">
+
+    <style name="CodeFont1">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/White</item>
-                <item name="android:textSize">12dp</item>
+        <item name="android:textSize">12dp</item>
     </style>
-        <style name="CodeFontPos">
+
+    <style name="CodeFontPos">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/Wheat</item>
-                <item name="android:textSize">8dp</item>
+        <item name="android:textSize">8dp</item>
     </style>
-     
+
+    <style name="CodeFontOrder">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/Black</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:textSize">8dp</item>
+    </style>
+
 </resources>
