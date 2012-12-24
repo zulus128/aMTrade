@@ -197,19 +197,18 @@ public final class R {
         public static final int QuoteList=0x7f080032;
         public static final int QuotePrice=0x7f080034;
         public static final int QuoteSellQ=0x7f080035;
-        public static final int TableLayout01=0x7f08003a;
+        public static final int TableLayout01=0x7f080039;
         public static final int acc_spinner=0x7f080022;
-        public static final int btnClear=0x7f080039;
+        public static final int btnClear=0x7f080038;
         public static final int buttonlayout=0x7f080036;
-        public static final int buttonlayout2=0x7f080037;
         public static final int cancelbutt=0x7f080028;
         public static final int customorderdialog=0x7f080011;
         public static final int gologin=0x7f080018;
         public static final int instrtext=0x7f08001d;
         public static final int loginnameedit=0x7f080014;
         public static final int logintext=0x7f080013;
-        public static final int menulogin=0x7f08003c;
-        public static final int menuselect=0x7f08003b;
+        public static final int menulogin=0x7f08003b;
+        public static final int menuselect=0x7f08003a;
         public static final int orderlayout1=0x7f08001b;
         public static final int orderlayout2=0x7f080012;
         public static final int orderlayout3=0x7f080015;
@@ -226,7 +225,7 @@ public final class R {
         public static final int radio1=0x7f080025;
         public static final int radioGroup1=0x7f080023;
         public static final int scrollviewinfo=0x7f080019;
-        public static final int txtTest=0x7f080038;
+        public static final int search_box=0x7f080037;
     }
     public static final class layout {
         public static final int history=0x7f030000;
@@ -251,6 +250,7 @@ public final class R {
         public static final int Clear=0x7f050019;
         public static final int CorrectPrice=0x7f05001c;
         public static final int CorrectQty=0x7f05001d;
+        public static final int FilterHint=0x7f05001e;
         public static final int GoLogin=0x7f050014;
         public static final int LoginDialogTitle=0x7f050015;
         public static final int LoginName=0x7f050012;

@@ -31,5 +31,6 @@
     <string name="CancelOrder">Отмена</string>
     <string name="CorrectPrice">Введите корректую цену</string>
     <string name="CorrectQty">Введите корректное количество</string>
+    <string name="FilterHint">Поиск</string>
 
 </resources>

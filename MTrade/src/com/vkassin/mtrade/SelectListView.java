@@ -5,11 +5,14 @@ import java.util.HashSet;
 import java.util.Iterator;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 	public class SelectListView extends ListActivity {
@@ -17,21 +20,41 @@ import android.widget.ListView;
 		private String[] lv_arr = {};
 		private ListView mainListView = null;
 		private ArrayList<Instrument> listInstr;
+		ArrayAdapter<String> adapter;
 		private static final String TAG = "MTrade.SelectListView"; 
+		private EditText filterText = null;
 
+		
+		private TextWatcher filterTextWatcher = new TextWatcher() {
+
+		    public void afterTextChanged(Editable s) {
+		    }
+
+		    public void beforeTextChanged(CharSequence s, int start, int count,
+		            int after) {
+		    }
+
+		    public void onTextChanged(CharSequence s, int start, int before,
+		            int count) {
+		        adapter.getFilter().filter(s);
+		    }
+
+		};
+
+		
+		
 		/** Called when the activity is first created. */
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
+			
 			super.onCreate(savedInstanceState);
+			
 			setContentView(R.layout.select_instr);
 
 			Button btnClear = (Button) findViewById(R.id.btnClear);
 			btnClear.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-
-//					Toast.makeText(getApplicationContext(),
-//							" You clicked Clear button", Toast.LENGTH_SHORT).show();
 
 					ClearSelections();
 				}
@@ -43,8 +66,10 @@ import android.widget.ListView;
 
 			mainListView.setCacheColorHint(0);
 
-			// Bind the data with the list
-			
+			filterText = (EditText) findViewById(R.id.search_box);
+		    filterText.addTextChangedListener(filterTextWatcher);
+//		    filterText.setInputType(android.text.InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+		    
 			ArrayList<String> a = new ArrayList<String>();
 			Iterator<Instrument> itr = listInstr.iterator();
 				
@@ -55,8 +80,10 @@ import android.widget.ListView;
 				}
 				
 			lv_arr = (String[])a.toArray(new String[0]);
-			mainListView.setAdapter(new ArrayAdapter<String>(SelectListView.this,
-					android.R.layout.simple_list_item_multiple_choice, lv_arr));
+			adapter = new ArrayAdapter<String>(SelectListView.this,
+					android.R.layout.simple_list_item_multiple_choice, lv_arr);
+			
+			mainListView.setAdapter(adapter);
 
 			mainListView.setItemsCanFocus(false);
 			mainListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -134,62 +161,15 @@ import android.widget.ListView;
 //			Log.w(TAG, "favr = " + Common.getFavrList());
 			
 		
-		//			// save the selections in the shared preference in private mode for the user
-//
-//			SharedPreferences settingsActivity = getPreferences(MODE_PRIVATE);
-//			SharedPreferences.Editor prefEditor = settingsActivity.edit();
-//
-//			String savedItems = getSavedItems();
-//
-//			prefEditor.putString(SETTING_TODOLIST, savedItems);
-//
-//			prefEditor.commit();
 		}
 
-//		private String getSavedItems() {
-//			String savedItems = "";
-//
-//			int count = this.mainListView.getAdapter().getCount();
-//
-//			for (int i = 0; i < count; i++) {
-//
-//				if (this.mainListView.isItemChecked(i)) {
-//					if (savedItems.length() > 0) {
-//						savedItems += "," + this.mainListView.getItemAtPosition(i);
-//					} else {
-//						savedItems += this.mainListView.getItemAtPosition(i);
-//					}
-//				}
-//
-//			}
-//			return savedItems;
-//		}
-
-//		private ArrayList<String> PrepareListFromXml() {
-//			ArrayList<String> todoItems = new ArrayList<String>();
-//			XmlResourceParser todolistXml = getResources().getXml(R.xml.todolist);
-//
-//			int eventType = -1;
-//			while (eventType != XmlResourceParser.END_DOCUMENT) {
-//				if (eventType == XmlResourceParser.START_TAG) {
-//
-//					String strNode = todolistXml.getName();
-//					if (strNode.equals("item")) {
-//						todoItems.add(todolistXml.getAttributeValue(null, "title"));
-//					}
-//				}
-//
-//				try {
-//					eventType = todolistXml.next();
-//				} catch (XmlPullParserException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//
-//			return todoItems;
-//		}
+		@Override
+		protected void onDestroy() {
+		  
+			super.onDestroy();
+		    
+			filterText.removeTextChangedListener(filterTextWatcher);
+			
+		}
+		
 	}

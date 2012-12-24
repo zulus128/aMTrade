@@ -8,6 +8,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.afree.chart.AFreeChart;
+import org.afree.chart.ChartRenderingInfo;
 import org.afree.chart.annotations.XYTextAnnotation;
 import org.afree.chart.annotations.XYTitleAnnotation;
 import org.afree.chart.axis.AxisLocation;
@@ -51,7 +52,16 @@ public class ChartView extends RootView {
 
 	private static final String TAG = "MTrade.ChartView"; 
 	
-    public ChartView(Context context) {
+//	public void handleClick(int x, int y, ChartRenderingInfo info) {
+//
+//	    // pass the click on to the plot...
+//	    // rely on the plot to post a plot change event and redraw the chart...
+//	   // this.plot.handleClick(x, y, info.getPlotInfo());
+//		Log.i(TAG, "handleClick x = " + x + ", y = " + y);
+//
+//	}
+	
+	public ChartView(Context context) {
         super(context);
 
         if(Common.getSelectedInstrument() == null) {
