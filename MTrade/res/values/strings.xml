@@ -32,5 +32,8 @@
     <string name="CorrectPrice">Введите корректую цену</string>
     <string name="CorrectQty">Введите корректное количество</string>
     <string name="FilterHint">Поиск</string>
+    <string name="Month3">3 мес</string>
+    <string name="Month6">6 мес</string>
+    <string name="Month12">12 мес</string>
 
 </resources>

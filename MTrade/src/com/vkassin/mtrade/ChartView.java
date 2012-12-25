@@ -52,6 +52,9 @@ public class ChartView extends RootView {
 
 	private static final String TAG = "MTrade.ChartView"; 
 	
+	private static int period;
+	private static Calendar now;
+	
 //	public void handleClick(int x, int y, ChartRenderingInfo info) {
 //
 //	    // pass the click on to the plot...
@@ -61,9 +64,11 @@ public class ChartView extends RootView {
 //
 //	}
 	
-	public ChartView(Context context) {
+	public ChartView(Context context, int period) {
         super(context);
 
+        this.period = period;
+        
         if(Common.getSelectedInstrument() == null) {
         
         	Log.w(TAG, "Common.selectedInstrument == null");
@@ -76,6 +81,14 @@ public class ChartView extends RootView {
 
     private static AFreeChart createChart() {
 
+    	now = Calendar.getInstance();
+        System.out.println("Current date : " + (now.get(Calendar.MONTH) + 1) + "-"
+            + now.get(Calendar.DATE) + "-" + now.get(Calendar.YEAR));
+    	
+        now.add(Calendar.MONTH, -period);
+        System.out.println("date before " + period + " monthes : " + (now.get(Calendar.MONTH) + 1) + "-"
+            + now.get(Calendar.DATE) + "-" + now.get(Calendar.YEAR));
+    	
         // declare colors
 //        PaintType black = new SolidColor(Color.BLACK);
         PaintType black = new SolidColor(Common.app_ctx.getResources().getColor(R.color.SlateGray));
@@ -243,7 +256,7 @@ public class ChartView extends RootView {
 			
     		DayChartElement dce = itr.next();
     		date[i] = new Date(dce.dateTime.longValue());
-//    		Log.w(TAG, "date["+i+"] = "+dce.dateTime.longValue()+ "  "+new Date(dce.dateTime.longValue()));
+    		Log.w(TAG, "date["+i+"] = "+dce.dateTime.longValue()+ "  "+new Date(dce.dateTime.longValue()));
     		high[i] = dce.high.doubleValue();
     		low[i] = dce.low.doubleValue();
     		open[i] = dce.open.doubleValue();

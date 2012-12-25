@@ -32,9 +32,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 
-public class RootView extends View 
+public class RootView extends View
     implements ChartChangeListener, ChartProgressListener{
     
     /** The user interface thread handler. */
@@ -56,7 +59,14 @@ public class RootView extends View
      * initialize parameters
      */
     private void initialize() {
-        this.chartMotionListeners = new CopyOnWriteArrayList<ChartTouchListener>();
+
+    	
+//      this.setLayoutParams(new LinearLayout.LayoutParams(
+//      LinearLayout.LayoutParams.FILL_PARENT,
+//      LinearLayout.LayoutParams.FILL_PARENT));
+
+    	
+    	this.chartMotionListeners = new CopyOnWriteArrayList<ChartTouchListener>();
         this.info = new ChartRenderingInfo();
         this.minimumDrawWidth = DEFAULT_MINIMUM_DRAW_WIDTH;
         this.minimumDrawHeight = DEFAULT_MINIMUM_DRAW_HEIGHT;
@@ -66,6 +76,14 @@ public class RootView extends View
         new SolidColor(Color.BLUE);
         new SolidColor(Color.argb(0, 0, 255, 63));
         new java.util.ArrayList();
+        
+        
+//        Button myButton = new Button(this);
+//        myButton.setLayoutParameters(new LinearLayout.LayoutParams(
+//                                             LinearLayout.LayoutParams.FILL_PARENT,
+//                                             LinearLayout.LayoutParams.FILL_PARENT));
+//
+//        this.addView(myButton);
     }
     
     /**
