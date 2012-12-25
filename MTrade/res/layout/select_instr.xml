@@ -11,8 +11,6 @@
         android:id="@+id/buttonlayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#2B60DE"
-        android:gravity="left|top"
         android:height="32dp"
         android:orientation="horizontal"
         android:weightSum="1" >
@@ -36,6 +34,7 @@
             android:textSize="15sp"
             android:width="170dp" >
         </Button>
+        
     </LinearLayout>
 
     <TableLayout

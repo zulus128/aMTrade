@@ -20,7 +20,7 @@ import android.widget.ListView;
 		private String[] lv_arr = {};
 		private ListView mainListView = null;
 		private ArrayList<Instrument> listInstr;
-		ArrayAdapter<String> adapter;
+		SelectAdapter<String> adapter;
 		private static final String TAG = "MTrade.SelectListView"; 
 		private EditText filterText = null;
 
@@ -28,15 +28,25 @@ import android.widget.ListView;
 		private TextWatcher filterTextWatcher = new TextWatcher() {
 
 		    public void afterTextChanged(Editable s) {
+
+//		    	LoadSelections();
+
 		    }
 
 		    public void beforeTextChanged(CharSequence s, int start, int count,
 		            int after) {
+		    	
+		    	SaveSelections();
 		    }
 
 		    public void onTextChanged(CharSequence s, int start, int before,
 		            int count) {
+		    	
+		    	
+//		    	Log.i(TAG, "b4 filter count = " + adapter.getCount());
 		        adapter.getFilter().filter(s);
+//		    	Log.i(TAG, "ar filter count = " + adapter.getCount());
+		        
 		    }
 
 		};
@@ -80,8 +90,10 @@ import android.widget.ListView;
 				}
 				
 			lv_arr = (String[])a.toArray(new String[0]);
-			adapter = new ArrayAdapter<String>(SelectListView.this,
+			adapter = new SelectAdapter<String>(SelectListView.this,
 					android.R.layout.simple_list_item_multiple_choice, lv_arr);
+			
+			adapter.slv = this;
 			
 			mainListView.setAdapter(adapter);
 
@@ -117,44 +129,50 @@ import android.widget.ListView;
 
 		}
 
-		private void LoadSelections() {
-			// if the selections were previously saved load them
-
-//			SharedPreferences settingsActivity = getPreferences(MODE_PRIVATE);
-
-//			if (settingsActivity.contains(SETTING_TODOLIST)) {
-//				String savedItems = settingsActivity
-//						.getString(SETTING_TODOLIST, "");
-//
-//				this.selectedItems.addAll(Arrays.asList(savedItems.split(",")));
+		public void LoadSelections() {
 
 			int count = this.mainListView.getAdapter().getCount();
+			Log.i(TAG, "load count = " + count);
 
-				for (int i = 0; i < count; i++) {
-					String currentItem = (String) this.mainListView.getAdapter()
-							.getItem(i);
-//					if (Common.getFavrList().contains(currentItem)) {
-//						this.mainListView.setItemChecked(i, true);
-//					}
-					if(listInstr.get(i).favourite) {
-							this.mainListView.setItemChecked(i, true);
-					Log.i(TAG, "checked "+i);
-					}
-					
+			for (int i = 0; i < count; i++) {
+				
+				Object it = this.mainListView.getAdapter().getItem(i);
+				long p = this.mainListView.getAdapter().getItemId(i);
+				
+				for (int y = 0; y < listInstr.size(); y++) {
+				
+					if(listInstr.get(y).symbol.equals(it)) 
+						this.mainListView.setItemChecked(y, listInstr.get(y).favourite);
 				}
+				
+//				Log.i(TAG, " p = " + p + " " + i);
+			}
 
-//			}
+//			for (int i = 0; i < count; i++) {
+//					if(listInstr.get(i).favourite) {
+//							
+//						this.mainListView.setItemChecked(i, true);
+//							
+//					Log.i(TAG, "checked "+ i + " " + listInstr.get(i).symbol + " " + this.mainListView.getAdapter().getItem(i));
+//					
+//					}
+//					
+//				}
+
 		}
 
-		private void SaveSelections() {
+		public void SaveSelections() {
 
 			HashSet<String> a = new HashSet<String>();
 			int count = this.mainListView.getAdapter().getCount();
 			
 			for (int i = 0; i < count; i++)
-				if (this.mainListView.isItemChecked(i)) 
+				if (this.mainListView.isItemChecked(i)) {
 					//a.add(this.mainListView.getItemAtPosition(i).toString());
 					a.add(listInstr.get(i).id);
+					Log.w(TAG, "add = " + listInstr.get(i).symbol);
+
+				}
 		
 			Common.setFavrList(a);
 			

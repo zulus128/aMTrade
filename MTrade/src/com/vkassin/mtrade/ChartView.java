@@ -241,12 +241,12 @@ public class ChartView extends RootView {
 
 
     	int c = Common.getSelectedInstrument().getDaychart().size();
-    	Date[] date = new Date[c];
-    	double[] high = new double[c];
-    	double[] low = new double[c];
-    	double[] open = new double[c];
-    	double[] close = new double[c];
-    	double[] volume = new double[c];
+    	Date[] date1 = new Date[c];
+    	double[] high1 = new double[c];
+    	double[] low1 = new double[c];
+    	double[] open1 = new double[c];
+    	double[] close1 = new double[c];
+    	double[] volume1 = new double[c];
     
     	int i = 0;
     	SortedSet<DayChartElement> set = new TreeSet<DayChartElement>();
@@ -255,16 +255,39 @@ public class ChartView extends RootView {
     	while (itr.hasNext()) {
 			
     		DayChartElement dce = itr.next();
-    		date[i] = new Date(dce.dateTime.longValue());
-    		Log.w(TAG, "date["+i+"] = "+dce.dateTime.longValue()+ "  "+new Date(dce.dateTime.longValue()));
-    		high[i] = dce.high.doubleValue();
-    		low[i] = dce.low.doubleValue();
-    		open[i] = dce.open.doubleValue();
-    		close[i] = dce.close.doubleValue();
-    		volume[i] = dce.volume.doubleValue();
-    		i++;
+//    		Date d = new Date(dce.dateTime.longValue());
+
+//    		if(now.getTime().compareTo(d) < 0) {
+    		if(now.getTimeInMillis() < dce.dateTime.longValue()) {
+	    		
+//        		Log.w(TAG, "date["+i+"] = "+dce.dateTime.longValue()+ "  "+new Date(dce.dateTime.longValue()));
+
+	    		date1[i] = new Date(dce.dateTime.longValue());
+	    		high1[i] = dce.high.doubleValue();
+	    		low1[i] = dce.low.doubleValue();
+	    		open1[i] = dce.open.doubleValue();
+	    		close1[i] = dce.close.doubleValue();
+	    		volume1[i] = dce.volume.doubleValue();
+	    		i++;
+    		}
     	}
-		
+
+    	Date[] date = new Date[i];
+    	double[] high = new double[i];
+    	double[] low = new double[i];
+    	double[] open = new double[i];
+    	double[] close = new double[i];
+    	double[] volume = new double[i];
+    	
+    	for(int k = 0; k < i; k++) {
+    		
+    		date[k] = date1[k];
+    		high[k] = high1[k];
+    		low[k] = low1[k];
+    		open[k] = open1[k];
+    		close[k] = close1[k];
+    	}
+
 //    	Date[] date = new Date[47];
 //        double[] high = new double[47];
 //        double[] low = new double[47];
@@ -327,8 +350,10 @@ public class ChartView extends RootView {
     	while (itr.hasNext()) {
     		
     		DayChartElement dce = itr.next();
-//    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), Math.random() * 60 + 200);
-    		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), dce.avg);
+    		
+//    		Date d = new Date(dce.dateTime.longValue());
+    		if(now.getTimeInMillis() < dce.dateTime.longValue())
+    		   		s1.add(new Millisecond(new Date(dce.dateTime.longValue())), dce.avg);
     	}
 
 //        for(int i = 0; i < 47; i++) {
@@ -343,6 +368,7 @@ public class ChartView extends RootView {
         dataset.addSeries(s1);
 
         return dataset;
+//    	return null;
     }
 
     public static TickUnitSource createTickUnits() {

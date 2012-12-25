@@ -49,6 +49,26 @@ public class ChartActivity extends Activity {
 		    		    
 		    	});
 
+		    	Button custom6 = (Button)header.findViewById(R.id.grbutton6);
+		    	custom6.setOnClickListener(new Button.OnClickListener(){
+		    		 public void onClick(View arg0) {
+		    			 
+		    			 m = 6;
+		    			 refresh();
+		    		 }
+		    		    
+		    	});
+
+		      	Button custom12 = (Button)header.findViewById(R.id.grbutton12);
+		    	custom12.setOnClickListener(new Button.OnClickListener(){
+		    		 public void onClick(View arg0) {
+		    			 
+		    			 m = 12;
+		    			 refresh();
+		    		 }
+		    		    
+		    	});
+
 		        setContentView(header);
 //		        setContentView(mView);
 		        
