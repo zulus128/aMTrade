@@ -107,4 +107,10 @@ public class Order implements Serializable, History {
 		return 0;  
 	    
 	}
+	
+	public String toString() {
+		
+		return "transit";
+	}
+	
 }

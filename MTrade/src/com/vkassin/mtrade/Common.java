@@ -271,6 +271,7 @@ public class Common {
 	public static void setFavrList(HashSet<String> a) {
 		
 		favrList = a;
+		validateFavourites();
 	}
 	
 	public static void saveFavrList() {

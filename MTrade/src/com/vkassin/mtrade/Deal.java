@@ -116,13 +116,19 @@ public class Deal implements Serializable, History {
 		if (this.dtime < arg0.getLongDTime()) {
 
 			return -1;
+			
 		} else if (this.dtime > arg0.getLongDTime()) {
 
 			return 1;
+			
 		}
 
 		return 0;
 
 	}
 
+	public String toString() {
+		
+		return "deal";
+	}
 }

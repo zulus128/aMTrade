@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 public class HistoryActivity extends Activity {
@@ -14,10 +16,42 @@ public class HistoryActivity extends Activity {
 	private ListView list;
 	private HistoryAdapter adapter;
 
+	private int filter = 3;
+	
 	public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history);
+        
+      	Button custom1 = (Button)findViewById(R.id.hbutton1);
+    	custom1.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+    			 filter = 1;
+    			 refresh1();
+    		 }
+    		    
+    	});
+        
+      	Button custom2 = (Button)findViewById(R.id.hbutton2);
+    	custom2.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+    			 filter = 2;
+    			 refresh1();
+    		 }
+    		    
+    	});
+        
+      	Button custom3 = (Button)findViewById(R.id.hbutton3);
+    	custom3.setOnClickListener(new Button.OnClickListener(){
+    		 public void onClick(View arg0) {
+    			 
+    			 filter = 3;
+    			 refresh1();
+    		 }
+    		    
+    	});
         
         Common.historyActivity = this;
         
@@ -27,10 +61,31 @@ public class HistoryActivity extends Activity {
 
 	}
 
+	public void refresh1() {
+
+		switch(filter) {
+      	
+      	case 1: 	//list.setTextFilterEnabled(true);  
+      					adapter.getFilter().filter("transit");
+		  				break;
+      	
+      	case 2: 	//list.setTextFilterEnabled(true);  
+      					adapter.getFilter().filter("deal");
+		  				break;
+      	
+      	default:  	//list.setTextFilterEnabled(false);
+      					adapter.getFilter().filter("");
+		  				break;
+      	}
+//      	adapter.getFilter().filter("transit");
+		
+	}
+	
 	public void refresh() {
 
 		if(Common.FIRSTLOAD_FINISHED) {
-	      	Log.i(TAG, "History count = " + Common.getAllHistory().size());
+			
+//	      	Log.i(TAG, "History count = " + Common.getAllHistory().size());
 	      	adapter.setItems(Common.getAllHistory());
 	  		adapter.notifyDataSetChanged();
 	        }

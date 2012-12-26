@@ -1,20 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@color/SlateGray">
-	
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/SlateGray" >
 
-	<ListView
-	    android:id="@+id/HistoryList"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:choiceMode="singleChoice"
-	    android:cacheColorHint="@android:color/transparent"
-	    android:paddingBottom="5dp"
-	    android:paddingTop="0dp"
-	    android:footerDividersEnabled="true"
-	    android:headerDividersEnabled="true">
+    <LinearLayout
+        android:id="@+id/LinLayoutHi01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+  
+        <LinearLayout
+            android:id="@+id/LinLayoutHor01"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
 
-	</ListView>
-		
+            <Button
+                android:id="@+id/hbutton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HistTransit"
+                android:width="90dp" />
+
+            <Button
+                android:id="@+id/hbutton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HistDeal"
+                android:width="90dp" />
+
+            <Button
+                android:id="@+id/hbutton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HistAll"
+                android:width="90dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinLayoutPos02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.14"
+                android:gravity="left"
+                android:text="@string/TitleType" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.15"
+                android:gravity="center"
+                android:text="@string/TitleInstr" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.09"
+                android:gravity="center"
+                android:text="@string/TitleDir" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.15"
+                android:gravity="right"
+                android:text="@string/Price" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.15"
+                android:gravity="right"
+                android:text="@string/TitleQuantity" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.09"
+                android:gravity="center"
+                android:text="@string/TitleStatus" />
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.23"
+                android:gravity="right"
+                android:paddingRight="4dp"
+                android:text="@string/TitleDate" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/HistoryList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="0dp" >
+        </ListView>
+    </LinearLayout>
+
 </RelativeLayout>

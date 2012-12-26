@@ -46,11 +46,11 @@ public class PosAdapter extends ArrayAdapter<Position> {
     		TextView curr = (TextView) convertView.findViewById(R.id.PosCurr);
     		curr.setText(item.currPos.toString());
 
-    		TextView buy = (TextView) convertView.findViewById(R.id.PosBuy);
-    		buy.setText(item.buyPlanPos.toString());
-
-    		TextView sell = (TextView) convertView.findViewById(R.id.PosSell);
-    		sell.setText(item.sellPlanPos.toString());
+//    		TextView buy = (TextView) convertView.findViewById(R.id.PosBuy);
+//    		buy.setText(item.buyPlanPos.toString());
+//
+//    		TextView sell = (TextView) convertView.findViewById(R.id.PosSell);
+//    		sell.setText(item.sellPlanPos.toString());
 
     		TextView rest = (TextView) convertView.findViewById(R.id.PosRest);
     		rest.setText(item.restPos.toString());

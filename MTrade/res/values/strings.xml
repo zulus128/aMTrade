@@ -13,7 +13,7 @@
     <string name="SellButton">Продать</string>
     <string name="Price">Цена</string>
     <string name="Quantity">Количество</string>
-    <string name="TitleInstr">Инструмент</string>
+    <string name="TitleInstr">Инстр</string>
     <string name="TitleChg">Средняя</string>
     <string name="TitleSell">Продажа</string>
     <string name="TitleBuy">Покупка</string>
@@ -35,5 +35,16 @@
     <string name="Month3">3 мес</string>
     <string name="Month6">6 мес</string>
     <string name="Month12">12 мес</string>
+    <string name="TitleCode">Счет</string>
+    <string name="TitleCurr">Текущая</string>
+    <string name="TitleIn">Входящая</string>
+    <string name="TitleRest">Остаток</string>
+    <string name="TitleType">Тип</string>
+    <string name="TitleDir">Напр</string>
+    <string name="TitleDate">Дата</string>
+    <string name="HistTransit">Приказы</string>
+    <string name="HistDeal">Сделки</string>
+    <string name="HistAll">Все</string>
+    <string name="TitleQuantity">Кол-во</string>
 
 </resources>
