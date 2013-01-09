@@ -101,4 +101,36 @@ public class HistoryActivity extends Activity {
       refresh();
       
     }
+    
+    @Override
+    public void onStart() {
+    	
+      super.onStart();
+//      Log.i(TAG, "--- onStart ");// + isApplicationBroughtToBackground(this));
+      
+      Common.activities++;
+    }
+    
+   	@Override
+    public void onStop() {
+    
+    	super.onStop();
+    	
+// 		Log.e(TAG, "++++++++++++ onStop");
+
+ 		Common.activities--;
+    }
+
+   	@Override
+   	protected void onRestart() {
+   		// TODO Auto-generated method stub
+   		super.onRestart();
+   		
+//   		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
+    
+   		if(Common.activities == 0)
+   			Common.login(this);
+
+   	}
+
 }

@@ -91,6 +91,9 @@ public class Common {
     public static ChartActivity chartActivity;
     public static PosActivity posActivity;
     
+    
+    public static int activities = 0;
+
 	public static Instrument getSelectedInstrument() {
 		return selectedInstrument;
 	}
@@ -395,6 +398,13 @@ public class Common {
     	final EditText nametxt = (EditText) dialog.findViewById(R.id.loginnameedit);
     	final EditText passtxt = (EditText) dialog.findViewById(R.id.passwordedit);
 
+    	String nam = myaccount.get("name");
+    	if(nam != null) {
+    		
+    		nametxt.setText(nam);
+    		passtxt.requestFocus();
+    	}
+    		
     	Button customDialog_Dismiss = (Button)dialog.findViewById(R.id.gologin);
     	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {

@@ -4,10 +4,14 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
 
 public class MTradeActivity extends TabActivity {
+	
+	private static final String TAG = "MTrade.MTradeActivity"; 
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,4 +59,22 @@ public class MTradeActivity extends TabActivity {
     	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
 
     }
+    
+//	@Override
+//	protected  
+//	 void onUserLeaveHint() {
+//		
+//		Log.e(TAG, "++++++ onUserLeaveHint()");
+//	}
+    
+//    @Override
+// 	protected void onRestart() {
+// 		// TODO Auto-generated method stub
+// 		super.onRestart();
+// 		
+// 		Log.e(TAG, "++++++++++++ onRestart");
+//     	Common.login(this);
+//
+// 	}
+
 }

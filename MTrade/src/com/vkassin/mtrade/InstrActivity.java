@@ -15,9 +15,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +40,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -49,6 +55,8 @@ public class InstrActivity extends Activity {
 	private static final int CONTEXTMENU_GOCHART = 3;
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
+
+	private boolean onActivityResultCalledBeforeOnResume;
 
 	private Socket sock;
 	private Thread thrd;
@@ -162,7 +170,7 @@ public class InstrActivity extends Activity {
         buff.put(readMsg(sock.getInputStream(), 4));
         buff.position(0);
         int pkgSize = buff.getInt();
-//        Log.i(TAG, "size = "+pkgSize);
+        Log.i(TAG, "size = "+pkgSize);
         String s = new String(readMsg(sock.getInputStream(), pkgSize));
         return new JSONObject(s);
     }
@@ -276,7 +284,7 @@ public class InstrActivity extends Activity {
 //                    @Override
                     public void run() {
 
-//                      	Log.w(TAG, " --- getData!!!");
+                      	Log.w(TAG, " --- getData!!!");
                     	
                     	try {
                     		
@@ -293,7 +301,7 @@ public class InstrActivity extends Activity {
                     		if( t == Common.LOGIN) {
                     		
     							int s = data.getInt("status");
-//    							Log.i(TAG, "Logion status: " + s);
+    							Log.e(TAG, "Logion status: " + s);
                     			if(s == 0) {
                     				
                     				header.setVisibility(View.GONE);
@@ -303,7 +311,8 @@ public class InstrActivity extends Activity {
                         			Common.saveAccountDetails();
 
                     			}
-                    			else {
+                    			else 
+                    			if(s == 1) {
                     				
                     				header.setVisibility(View.VISIBLE);
                     				pb.setVisibility(View.GONE);
@@ -313,6 +322,12 @@ public class InstrActivity extends Activity {
                     				adapter.notifyDataSetChanged();
                         			Common.FIRSTLOAD_FINISHED = true;
                         			onResume();
+                    			}
+                    			else {
+                    				
+                    				Toast.makeText(InstrActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    				Common.login(InstrActivity.this);
+//                    				break;
                     			}
 
                     		}
@@ -449,11 +464,22 @@ public class InstrActivity extends Activity {
     }
    
     @Override
+    public void onStart() {
+    	
+      super.onStart();
+      Log.i(TAG, "--- onStart ");
+      
+      Common.activities++;
+    }
+    
+    @Override
     public void onResume() {
     	
       super.onResume();
-      Log.i(TAG, "--- onResume");
+      Log.i(TAG, "--- onResume ");// + isApplicationBroughtToBackground(this));
       
+//      Common.activities++;
+
       if(Common.FIRSTLOAD_FINISHED) {
     	  
 //  		Log.w(TAG, "favr2 = " + Common.getFavrList());
@@ -488,13 +514,32 @@ public class InstrActivity extends Activity {
     public void onStop() {
     
     	super.onStop();
+    	
+		Log.e(TAG, "++++++++++++ onStop");
+
+		Common.activities--;
+		
 //    	Common.saveFavrList();
     }
     
+      @Override
+     	protected void onRestart() {
+     		// TODO Auto-generated method stub
+     		super.onRestart();
+     		
+//     		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
+      
+     		if(Common.activities == 0)
+     			Common.login(this);
+
+     	}
+      
     @Override
     public void onDestroy() {
     	
       super.onDestroy();
+
+      Log.e(TAG, "++++++++++++ onDestroy");
 
   	Common.saveFavrList();
 
@@ -570,7 +615,9 @@ public class InstrActivity extends Activity {
 
 	}  
 	
-   @Override  
+
+	
+@Override  
    public boolean onContextItemSelected(MenuItem item) {  
 		   
 
@@ -595,4 +642,24 @@ public class InstrActivity extends Activity {
 	    return true;  
    }  
 
+//public static boolean isApplicationBroughtToBackground(final Activity activity) {
+//	  ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+//	  List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
+//
+//	  // Check the top Activity against the list of Activities contained in the Application's package.
+//	  if (!tasks.isEmpty()) {
+//	    ComponentName topActivity = tasks.get(0).topActivity;
+//	    try {
+//	      PackageInfo pi = activity.getPackageManager().getPackageInfo(activity.getPackageName(), PackageManager.GET_ACTIVITIES);
+//	      for (ActivityInfo activityInfo : pi.activities) {
+//	        if(topActivity.getClassName().equals(activityInfo.name)) {
+//	          return false;
+//	        }
+//	      }
+//	    } catch( PackageManager.NameNotFoundException e) {
+//	      return false; // Never happens.
+//	    }
+//	  }
+//	  return true;
+//	}
 }
