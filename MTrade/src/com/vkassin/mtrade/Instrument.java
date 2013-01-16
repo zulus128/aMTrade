@@ -1,6 +1,7 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.SortedMap;
@@ -15,17 +16,19 @@ public class Instrument implements Serializable {
 
 	private static final long serialVersionUID = 22L;
 	private static final String TAG = "MTrade.Instrument"; 
+	
+	private DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
 	public String id = "";
 	public String symbol = "";
 	public String tradeStatus = "";
 	public String description = "";
 
-	public Double min = Double.valueOf(0);
-	public Double max = Double.valueOf(0);
-	public Double bid = Double.valueOf(0);
-	public Double ask = Double.valueOf(0);
-	public Double avg = Double.valueOf(0);
+	private Double min = Double.valueOf(0);
+	private Double max = Double.valueOf(0);
+	private Double bid = Double.valueOf(0);
+	private Double ask = Double.valueOf(0);
+	private Double avg = Double.valueOf(0);
 
 	public boolean favourite;
 	
@@ -81,9 +84,22 @@ public class Instrument implements Serializable {
 	}
 		
 		
-	public void addToQuoteList(String key, JSONObject obj) {
+	public void modifyQuoteList(String key, JSONObject obj) {
 		
 //		Log.i(TAG, "addToQuoteList from instr = " + this.symbol + " cnt = " + quoteMap.size());
+		
+		try {
+			if(obj.getString("action").equals("REMOVE")) {
+
+				quoteMap.remove(key);
+				return;
+				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		Quote old = (Quote)quoteMap.get(key);
 		if(old == null)
 			quoteMap.put(key, new Quote(key, obj));
@@ -111,4 +127,17 @@ public class Instrument implements Serializable {
 		return description.length() > 100 ? description.substring(0, 97) + "..." : description;
 	}
 
+	public String getAvgS() {
+		
+		return twoDForm.format(avg);
+	}
+
+	public String getBidS() {
+		
+		return twoDForm.format(bid);
+	}
+	public String getAskS() {
+		
+		return twoDForm.format(ask);
+	}
 }

@@ -71,7 +71,7 @@ public class InstrActivity extends Activity {
     	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instrs);
-        
+
         Common.mainActivity = this;
         
         header = (LinearLayout) findViewById(R.id.LinLayout02);
@@ -170,7 +170,7 @@ public class InstrActivity extends Activity {
         buff.put(readMsg(sock.getInputStream(), 4));
         buff.position(0);
         int pkgSize = buff.getInt();
-        Log.i(TAG, "size = "+pkgSize);
+//        Log.i(TAG, "size = "+pkgSize);
         String s = new String(readMsg(sock.getInputStream(), pkgSize));
         return new JSONObject(s);
     }
@@ -275,7 +275,7 @@ public class InstrActivity extends Activity {
         
         thrd = new Thread(new Runnable() {
           public void run() {
-          	Log.w(TAG, " --- Start!!!");
+//          	Log.w(TAG, " --- Start!!!");
             while (!Thread.interrupted()) {
               try {
                 final JSONObject data = readJSONMsg();
@@ -284,7 +284,7 @@ public class InstrActivity extends Activity {
 //                    @Override
                     public void run() {
 
-                      	Log.w(TAG, " --- getData!!!");
+//                      	Log.w(TAG, " --- getData!!!");
                     	
                     	try {
                     		
@@ -361,8 +361,9 @@ public class InstrActivity extends Activity {
                         				String key = (String)keys.next();
                         				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
                         					
-                        					Instrument instr = Common.getInstrById(data.getJSONObject(key).getLong("instrId"));
-                        					instr.addToQuoteList(key, data.getJSONObject(key));
+//                        					Instrument instr = Common.getInstrById(data.getJSONObject(key).getLong("instrId"));
+                        					Instrument instr = Common.getSelectedInstrument();
+                        					instr.modifyQuoteList(key, data.getJSONObject(key));
                         				}
                         			}
                     				

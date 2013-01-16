@@ -51,7 +51,8 @@ public class QuoteAdapter extends ArrayAdapter<Quote> {
     		bid.setTextColor(b?colorBuy:colorSell);
 
     		TextView price = (TextView) convertView.findViewById(R.id.QuotePrice);
-    		price.setText(item.price.toString());
+//    		price.setText(item.price.toString());
+    		price.setText(item.getPriceS());
     		price.setTextColor(b?colorBuy:colorSell);
 
     		TextView ask = (TextView) convertView.findViewById(R.id.QuoteSellQ);

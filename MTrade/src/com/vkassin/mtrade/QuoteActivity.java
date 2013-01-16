@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class QuoteActivity extends Activity {
 
@@ -37,6 +38,15 @@ public class QuoteActivity extends Activity {
 
     	list.setAdapter(adapter);
     	registerForContextMenu(list);
+    	
+       	list.setOnItemClickListener(new OnItemClickListener() {
+			
+    			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+    				
+    	    	    list.showContextMenuForChild(arg1);
+
+    			}
+    		});
 
 	}
 
@@ -56,6 +66,8 @@ public class QuoteActivity extends Activity {
       super.onResume();
       Log.i(TAG, "onResume");
       
+      Common.tabActivity.setTitle(Common.getSelectedInstrument().symbol);
+      
       refresh();
     }
     
@@ -64,7 +76,7 @@ public class QuoteActivity extends Activity {
     	
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             
-        	Log.d(this.getClass().getName(), "back button pressed");
+//        	Log.d(this.getClass().getName(), "back button pressed");
         	
 	    	Common.tabHost.getTabWidget().getChildAt(0).setVisibility(View.VISIBLE);
 	    	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
@@ -102,7 +114,16 @@ public class QuoteActivity extends Activity {
 	    }
 	    return true;  
    }
-   
+
+   @Override
+   public void onPause() {
+   	
+   	super.onPause();
+
+   	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
+   	
+   }
+
    @Override
    public void onStart() {
    	
@@ -119,7 +140,8 @@ public class QuoteActivity extends Activity {
    	
 //		Log.e(TAG, "++++++++++++ onStop");
 
-		Common.activities--;
+	Common.activities--;
+	
    }
   	
     @Override

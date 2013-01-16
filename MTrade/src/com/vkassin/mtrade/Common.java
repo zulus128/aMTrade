@@ -23,6 +23,7 @@ import java.util.TreeSet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
@@ -68,6 +69,8 @@ public class Common {
     public static TabHost tabHost;
 	public static TabHost.TabSpec tabspec;
 
+	public static Activity tabActivity;
+	
 	private static Instrument selectedInstrument;
 
 	private static int ordernum;
@@ -473,7 +476,8 @@ public class Common {
 
     	if(quote != null) {
     		
-    		pricetxt.setText(quote.price.toString());
+//    		pricetxt.setText(quote.price.toString());
+    		pricetxt.setText(quote.getPriceS());
     		if(quote.qtyBuy > 0) {
     			
     			quanttxt.setText(quote.qtyBuy.toString());

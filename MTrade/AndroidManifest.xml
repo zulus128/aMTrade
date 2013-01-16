@@ -5,7 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="8" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -19,12 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InstrActivity"></activity>
-        <activity android:name=".ChartActivity"></activity>
-        <activity android:name=".PosActivity"></activity>
-        <activity android:name=".HistoryActivity"></activity>
-        <activity android:name=".SelectListView"></activity>
-        <activity android:name=".QuoteActivity"></activity>
+        <activity android:name=".InstrActivity" >
+        </activity>
+        <activity android:name=".ChartActivity" >
+        </activity>
+        <activity android:name=".PosActivity" >
+        </activity>
+        <activity android:name=".HistoryActivity" >
+        </activity>
+        <activity android:name=".SelectListView" >
+        </activity>
+        <activity android:name=".QuoteActivity" >
+        </activity>
     </application>
 
 </manifest>

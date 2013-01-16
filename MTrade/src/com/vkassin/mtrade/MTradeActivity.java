@@ -19,6 +19,7 @@ public class MTradeActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
+        Common.tabActivity = this;
         Common.app_ctx = getApplicationContext();
         
 	    Resources res = getResources(); // Resource object to get Drawables

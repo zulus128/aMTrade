@@ -1,5 +1,7 @@
 package com.vkassin.mtrade;
 
+import java.text.DecimalFormat;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,8 +13,10 @@ public class Quote implements Comparable<Quote> {
 	private static final String TAG = "MTrade.Quote"; 
 
 	public String id = "";
+	
+	private DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
-	public Double price = Double.valueOf(0);
+	private Double price = Double.valueOf(0);
 	public Long qtySell = Long.valueOf(0);
 	public Long qtyBuy = Long.valueOf(0);
 	public Long instrId = Long.valueOf(0);
@@ -59,4 +63,8 @@ public class Quote implements Comparable<Quote> {
 		try{ this.instrId = obj.getLong("instrId"); }catch(JSONException e){ }
 	}
 	
+	public String getPriceS() {
+		
+		return twoDForm.format(price);
+	}
 }

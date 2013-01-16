@@ -86,15 +86,18 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
     		tstatus.setTextColor(b?colorTextSelected:colorTextUnselected);
     		
     		TextView chg = (TextView) convertView.findViewById(R.id.InstrChg);
-    		chg.setText(item.avg.toString());
+//    		chg.setText(item.avg.toString());
+    		chg.setText(item.getAvgS());
     		chg.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     		TextView bid = (TextView) convertView.findViewById(R.id.InstrBid);
-    		bid.setText(item.bid.toString());
+//    		bid.setText(item.bid.toString());
+    		bid.setText(item.getBidS());
     		bid.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     		TextView ask = (TextView) convertView.findViewById(R.id.InstrAsk);
-    		ask.setText(item.ask.toString());
+//    		ask.setText(item.ask.toString());
+    		ask.setText(item.getAskS());
     		ask.setTextColor(b?colorTextSelected:colorTextUnselected);
 
     	}
