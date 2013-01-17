@@ -3,9 +3,13 @@ package com.vkassin.mtrade;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.util.Log;
 
 public class Order implements Serializable, History {
@@ -20,6 +24,50 @@ public class Order implements Serializable, History {
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
+
+	private static enum TRANSIT_STAT {
+		
+		   trsWait,
+		   trsActive,
+		   trsActBal,
+		   trsDeal,
+		   trsDealChg,
+		   trsReject,
+		   trsDelBrok,
+		   trsDelInv,
+		   trsDelBalBrok,
+		   trsDelBalInv,
+		   trsDelOper,
+		   trsDelBalOper,
+		   trsActChg,
+		   trsActBalChg;
+		   
+	    private static final Map<Integer, TRANSIT_STAT> lookup = new HashMap<Integer, TRANSIT_STAT>();
+
+	    static{
+	      int ordinal = 0;
+	      for (TRANSIT_STAT suit : EnumSet.allOf(TRANSIT_STAT.class)) {
+	        lookup.put(ordinal, suit);
+	        ordinal+= 1;
+	      }
+	    }
+
+	    public static String fromOrdinal(Long ordinal) {
+	    	
+	    	TRANSIT_STAT ds = lookup.get(ordinal.intValue());
+	    	if(ds == null)
+	    		return "None_";
+	    	
+	    	int i = Common.app_ctx.getResources().getIdentifier(ds.toString(), "string", Common.app_ctx.getPackageName());
+	    	
+	    	if(i == 0)
+	    		return "Nope_";
+	    	
+	    	return Common.app_ctx.getResources().getString(i);
+	    	
+		    }
+
+	};
 
 	public Order(String i, JSONObject obj) {
 		
@@ -76,9 +124,10 @@ public class Order implements Serializable, History {
 		return qty.toString();
 	}
 
-	public Long getStatus() {
+	public String getStatus() {
 
-		return status;
+		return TRANSIT_STAT.fromOrdinal(status);
+//		return status;
 	}
 
 	public String getDTime() {

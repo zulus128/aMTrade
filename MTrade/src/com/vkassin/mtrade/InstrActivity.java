@@ -56,7 +56,7 @@ public class InstrActivity extends Activity {
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
 
-	private boolean onActivityResultCalledBeforeOnResume;
+//	private boolean onActivityResultCalledBeforeOnResume;
 
 	private Socket sock;
 	private Thread thrd;
@@ -469,7 +469,10 @@ public class InstrActivity extends Activity {
     	
       super.onStart();
       Log.i(TAG, "--- onStart ");
-      
+		
+      if(Common.activities == 0)
+ 			Common.login(this);
+		
       Common.activities++;
     }
     

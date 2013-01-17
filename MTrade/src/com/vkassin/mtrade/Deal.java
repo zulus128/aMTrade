@@ -3,9 +3,13 @@ package com.vkassin.mtrade;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.util.Log;
 
 public class Deal implements Serializable, History {
@@ -20,6 +24,64 @@ public class Deal implements Serializable, History {
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
+	
+
+	private static enum DEAL_STAT {
+		
+		dsConfirmed,
+		dsRejectedConf,
+		dsRejectedPart,
+		dsRejectedSys,
+		dsWaitConf,
+		dsWaitPart,
+		dsWaitSys,
+		dsWaitsBuyer,
+		dsPaidBuyer,
+		dsUnpaid,
+		dsNoteDelivered,
+		dsUndelivered,
+		dsWaitsChange,
+		dsWaitsAgree,
+		dsRejectDepo,  
+		dsRejectedSysNoMoney,
+		dsRejectedSysNoSecur,
+		dsWaitsAgreeDoubleNoMoney,
+		dsWaitsAgreeDoubleNoSecur,
+		dsNoAgreementNoMoney,
+		dsNoAgreementNoSecur,
+		dsRejectRepo,
+		dsRejectedSysNotConf,
+		dsRejectBuyer,
+		dsRejectSeller,
+		dsRejectSides, 
+		dsWaitsSettlment;
+		
+	    private static final Map<Integer, DEAL_STAT> lookup = new HashMap<Integer, DEAL_STAT>();
+
+	    static{
+	      int ordinal = 0;
+	      for (DEAL_STAT suit : EnumSet.allOf(DEAL_STAT.class)) {
+	        lookup.put(ordinal, suit);
+	        ordinal+= 1;
+	      }
+	    }
+
+	    public static String fromOrdinal(Long ordinal) {
+	    	
+	    	DEAL_STAT ds = lookup.get(ordinal.intValue());
+	    	if(ds == null)
+	    		return "None";
+	    	
+	    	int i = Common.app_ctx.getResources().getIdentifier(ds.toString(), "string", Common.app_ctx.getPackageName());
+	    	
+	    	if(i == 0)
+	    		return "Nope";
+	    	
+	    	return Common.app_ctx.getResources().getString(i);
+	    	
+		    }
+
+	};
 
 	public Deal(String i, JSONObject obj) {
 
@@ -94,9 +156,10 @@ public class Deal implements Serializable, History {
 		return qty.toString();
 	}
 
-	public Long getStatus() {
-
-		return status;
+	public String getStatus() {
+		
+		return DEAL_STAT.fromOrdinal(status);
+//		return status;
 	}
 
 	public String getDTime() {

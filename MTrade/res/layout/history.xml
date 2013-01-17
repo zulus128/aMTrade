@@ -55,14 +55,14 @@
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.15"
+                android:layout_weight="0.14"
                 android:gravity="center"
                 android:text="@string/TitleInstr" />
 
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.09"
+                android:layout_weight="0.08"
                 android:gravity="center"
                 android:text="@string/TitleDir" />
 
@@ -83,14 +83,14 @@
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.09"
+                android:layout_weight="0.12"
                 android:gravity="center"
                 android:text="@string/TitleStatus" />
 
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.23"
+                android:layout_weight="0.22"
                 android:gravity="right"
                 android:paddingRight="4dp"
                 android:text="@string/TitleDate" />

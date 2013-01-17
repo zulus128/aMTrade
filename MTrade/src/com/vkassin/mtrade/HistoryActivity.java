@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class HistoryActivity extends Activity {
 
@@ -59,6 +62,15 @@ public class HistoryActivity extends Activity {
     	adapter = new HistoryAdapter(this, R.layout.historyitem, new ArrayList<History>());
     	list.setAdapter(adapter);
 
+    	list.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				
+				String s = ((History)adapter.getItems().get(arg2)).getStatus();
+				Toast.makeText(HistoryActivity.this, s, Toast.LENGTH_SHORT).show();
+
+			}
+		});
 	}
 
 	public void refresh1() {
