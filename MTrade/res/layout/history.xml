@@ -46,49 +46,49 @@
             android:weightSum="1" >
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.14"
                 android:gravity="left"
                 android:text="@string/TitleType" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.15"
                 android:gravity="center"
                 android:text="@string/TitleInstr" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:text="@string/TitleDir" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.15"
                 android:gravity="right"
                 android:text="@string/Price" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.15"
                 android:gravity="right"
                 android:text="@string/TitleQuantity" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.09"
                 android:gravity="center"
                 android:text="@string/TitleStatus" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.23"
                 android:gravity="right"

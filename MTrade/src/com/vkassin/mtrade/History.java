@@ -6,7 +6,7 @@ public interface History extends Comparable<History> {
 	public String getDirect();
 	public String getPrice();
 	public String getQty();
-	public String getStatus();
+	public Long getStatus();
 	public String getDTime();
 	public String getOperationType();
 	public Long getLongDTime();

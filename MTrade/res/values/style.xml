@@ -15,6 +15,20 @@
         <item name="android:textSize">12dp</item>
     </style>
 
+    <style name="CodeFontHist">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+
+    <style name="CodeFontHist1">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/White</item>
+        <item name="android:textSize">9dp</item>
+    </style>
+
     <style name="CodeFontPos">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>

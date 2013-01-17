@@ -18,7 +18,7 @@
 
 		    		<TextView 
 		style="@style/CodeFont1"
-    	android:layout_weight="0.28"
+    	android:layout_weight="0.22"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:paddingLeft ="4dp"
@@ -36,7 +36,7 @@
 						
 		<TextView 
 		style="@style/CodeFont1"
-	    android:layout_weight="0.2"
+	    android:layout_weight="0.22"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="right"
@@ -45,7 +45,7 @@
 				
 		<TextView 
 		style="@style/CodeFont1"
-	    android:layout_weight="0.2"
+	    android:layout_weight="0.22"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"
 		android:gravity="right"
@@ -53,7 +53,7 @@
 		</TextView>
 				
 		<TextView 
-	    android:layout_weight="0.2"
+	    android:layout_weight="0.22"
 		style="@style/CodeFont1"
 		android:textStyle="bold"
 		android:layout_gravity="center_vertical"

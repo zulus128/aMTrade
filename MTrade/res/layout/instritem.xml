@@ -8,7 +8,7 @@
 
 <TextView 
 style="@style/CodeFont"
-android:layout_weight="0.28"
+android:layout_weight="0.22"
 android:layout_gravity="center_vertical"
 android:paddingLeft ="4dp"
 android:id="@+id/InstrName">
@@ -24,7 +24,7 @@ android:id="@+id/InstrStatus">
 
 <TextView 
 style="@style/CodeFont"
-android:layout_weight="0.2"
+android:layout_weight="0.22"
 android:layout_gravity="center_vertical"
 android:gravity="right"
 android:id="@+id/InstrChg">
@@ -32,7 +32,7 @@ android:id="@+id/InstrChg">
 
 <TextView 
 style="@style/CodeFont"
-android:layout_weight="0.2"
+android:layout_weight="0.22"
 android:layout_gravity="center_vertical"
 android:gravity="right"
 android:id="@+id/InstrBid">
@@ -40,7 +40,7 @@ android:id="@+id/InstrBid">
 
 <TextView 
 style="@style/CodeFont"
-android:layout_weight="0.2"
+android:layout_weight="0.22"
 android:layout_gravity="center_vertical"
 android:gravity="right"
 android:paddingRight ="4dp"

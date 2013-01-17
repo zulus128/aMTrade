@@ -9,49 +9,49 @@
 
     <TextView
         android:id="@+id/HistoryType"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.14"
         android:gravity="left" />
 
     <TextView
         android:id="@+id/HistoryName"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.15"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/HistoryDirect"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.09"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/HistoryPrice"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.15"
         android:gravity="right" />
 
     <TextView
         android:id="@+id/HistoryQty"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.15"
         android:gravity="right" />
 
     <TextView
         android:id="@+id/HistoryStatus"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.09"
         android:gravity="center" />
 
     <TextView
         android:id="@+id/HistoryDate"
-        style="@style/CodeFont"
+        style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
         android:layout_weight="0.23"
         android:gravity="right"

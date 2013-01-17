@@ -94,9 +94,9 @@ public class Deal implements Serializable, History {
 		return qty.toString();
 	}
 
-	public String getStatus() {
+	public Long getStatus() {
 
-		return status.toString();
+		return status;
 	}
 
 	public String getDTime() {
