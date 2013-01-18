@@ -24,6 +24,7 @@ public class Order implements Serializable, History {
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
+	public Long transSerial = Long.valueOf(0);
 
 	private static enum TRANSIT_STAT {
 		
@@ -94,6 +95,7 @@ public class Order implements Serializable, History {
 		try{ this.direct = obj.getLong("direct"); }catch(JSONException e){ }
 		try{ this.status = obj.getLong("status"); }catch(JSONException e){ }
 		try{ this.dtime = obj.getLong("dateTime"); }catch(JSONException e){ }
+		try{ this.transSerial = obj.getLong("transSerial"); }catch(JSONException e){ }
 
 	}
 
@@ -156,7 +158,12 @@ public class Order implements Serializable, History {
 		return 0;  
 	    
 	}
-	
+
+	public Long getSerial() {
+		
+		return transSerial;
+	}
+
 	public String toString() {
 		
 		return "transit";

@@ -48,7 +48,7 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.12"
         android:gravity="left"
-        android:paddingLeft="3dp" />
+        android:paddingLeft="5dp" />
 
     <TextView
         android:id="@+id/HistoryDate"

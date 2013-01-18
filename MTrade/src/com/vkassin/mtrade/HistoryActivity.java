@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,6 +23,8 @@ public class HistoryActivity extends Activity {
 	private HistoryAdapter adapter;
 
 	private int filter = 3;
+	private static final int CONTEXTMENU_DELETE = 1;
+	private int selectedRowId;
 	
 	public void onCreate(Bundle savedInstanceState) {
     	
@@ -62,6 +67,8 @@ public class HistoryActivity extends Activity {
     	adapter = new HistoryAdapter(this, R.layout.historyitem, new ArrayList<History>());
     	list.setAdapter(adapter);
 
+    	registerForContextMenu(list);
+
     	list.setOnItemClickListener(new OnItemClickListener() {
 			
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -72,7 +79,37 @@ public class HistoryActivity extends Activity {
 			}
 		});
 	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
+		
+	    AdapterView.AdapterContextMenuInfo info =
+            (AdapterView.AdapterContextMenuInfo) menuInfo;
 
+	    selectedRowId = (int)info.id;
+	    Log.i(TAG, "Selected " + selectedRowId);
+	    
+	    History item = ((History)adapter.getItems().get(selectedRowId));
+    	if(item.getOperationType().equals("Deal"))
+    		return;
+	    
+		menu.setHeaderTitle(R.string.MenuTitle);  
+	    menu.add(0, CONTEXTMENU_DELETE, 0, R.string.Delete);
+
+	    super.onCreateContextMenu(menu, v, menuInfo);  
+
+	}  
+	
+   @Override  
+   public boolean onContextItemSelected(MenuItem item) {  
+		   
+	    if (item.getItemId() == CONTEXTMENU_DELETE) {
+
+		    History it = ((History)adapter.getItems().get(selectedRowId));
+		    Common.delOrder(this, it);
+	    }
+	    return true;  
+   }
 	public void refresh1() {
 
 		switch(filter) {

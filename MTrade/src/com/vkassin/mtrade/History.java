@@ -10,6 +10,7 @@ public interface History extends Comparable<History> {
 	public String getDTime();
 	public String getOperationType();
 	public Long getLongDTime();
+	public Long getSerial();
 
 
 }

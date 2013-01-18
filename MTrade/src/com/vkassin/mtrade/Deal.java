@@ -24,7 +24,8 @@ public class Deal implements Serializable, History {
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
-	
+	public Long dealSerial = Long.valueOf(0);
+
 
 	private static enum DEAL_STAT {
 		
@@ -126,6 +127,8 @@ public class Deal implements Serializable, History {
 			this.dtime = obj.getLong("dateTime");
 		} catch (JSONException e) {
 		}
+		
+		try{ this.dealSerial = obj.getLong("dealSerial"); }catch(JSONException e){ }
 
 	}
 
@@ -189,7 +192,12 @@ public class Deal implements Serializable, History {
 		return 0;
 
 	}
-
+	
+	public Long getSerial() {
+		
+		return dealSerial;
+	}
+	
 	public String toString() {
 		
 		return "deal";

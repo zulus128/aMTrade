@@ -451,6 +451,28 @@ public class Common {
     	dialog.show();
 	}
 	
+	public static void delOrder(final Context ctx, History hist) {
+		
+		JSONObject msg = new JSONObject();
+	       try{
+	    	   
+	         msg.put("objType", Common.CREATE_REMOVE_ORDER);
+	         msg.put("time", Calendar.getInstance().getTimeInMillis());
+	         msg.put("version", Common.PROTOCOL_VERSION);
+	         msg.put("orderNum", ++ordernum);
+	         msg.put("action", "REMOVE");
+	         msg.put("transSerial", hist.getSerial());
+
+	         mainActivity.writeJSONMsg(msg);
+
+	       }
+	       catch(Exception e){
+	    	   
+	           e.printStackTrace();
+	           Log.e(TAG, "Error! Cannot create JSON order object (delOrder)", e);
+	       }
+	}
+	
 	public static void putOrder(final Context ctx, Quote quote) {
 		
 		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);

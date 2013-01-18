@@ -418,6 +418,12 @@ public class InstrActivity extends Activity {
                         				Common.historyActivity.refresh();
     							}
                         		else
+                            		if(t == Common.CREATE_REMOVE_ORDER) {
+                            			
+                            			if(Common.historyActivity != null)
+                            				Common.historyActivity.refresh();
+        							}
+                        		else
                             		if(t == Common.POSITIONS_INFO) {
                             			
                             			Iterator<String> keys = data.keys();
