@@ -100,7 +100,8 @@ public class Common {
     public static ChartActivity chartActivity;
     public static PosActivity posActivity;
     
-    
+	public static int historyFilter = 3;
+
     public static int activities = 0;
 
 	public static Instrument getSelectedInstrument() {
@@ -231,6 +232,8 @@ public class Common {
 			historyMap.put(key, new Order(key, obj));
 		else
 			old.update(obj);
+		
+//		Log.w(TAG, "History cnt = " + historyMap.size());
 	}
 
 	public static void addDealToHistoryList(String key, JSONObject obj) {
@@ -250,6 +253,11 @@ public class Common {
 	public static Collection<String> getAccountList() {
 		
 		return accMap.values();
+	}
+	
+	public static void clearAccountList() {
+		
+		accMap.clear();
 	}
 	
 	public static void validateFavourites() {

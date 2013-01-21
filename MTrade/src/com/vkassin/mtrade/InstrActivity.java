@@ -212,7 +212,8 @@ public class InstrActivity extends Activity {
       
           Log.i(TAG, "subscr = "+msg);
         }
-        catch(Exception e){
+        catch(Exception e) {
+        	
             e.printStackTrace();
             Log.e(TAG, "Error! Cannot create JSON login object", e);
         }
@@ -243,7 +244,8 @@ public class InstrActivity extends Activity {
              	writeJSONMsg(msg);
 //            }
         }
-        catch(Exception e){
+        catch(Exception e) {
+        	
             e.printStackTrace();
             Log.e(TAG, "Error! Cannot create JSON login object", e);
         }
@@ -319,24 +321,39 @@ public class InstrActivity extends Activity {
     							int s = data.getInt("status");
     							Log.e(TAG, "Logion status: " + s);
                     			if(s == 0) {
+
                     				
-                    				header.setVisibility(View.GONE);
+                        			Common.clearInstrList();
+                        			Common.clearAccountList();
+                        			Common.clearPositionList();
+                        			Common.clearHistoryList();
+                        			if(Common.historyActivity != null)
+                        				Common.historyActivity.refresh();
+                        			if(Common.posActivity != null)
+                        				Common.posActivity.refresh();
+
+                    				
+//                    				header.setVisibility(View.GONE);
                         			pb.setVisibility(View.VISIBLE);
                         			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
                         			Common.saveAccountDetails();
-
+                        			
                     			}
                     			else 
                     			if(s == 1) {
                     				
-                    				header.setVisibility(View.VISIBLE);
+                        			Common.FIRSTLOAD_FINISHED = true;
+
+                    				
+//                    				header.setVisibility(View.VISIBLE);
                     				pb.setVisibility(View.GONE);
                     				Common.validateFavourites();
                     				sendSubscription();
                     				adapter.setItems(Common.getFavInstrs());
                     				adapter.notifyDataSetChanged();
-                        			Common.FIRSTLOAD_FINISHED = true;
+
+                        			
                         			onResume1();
                     			}
                     			else {

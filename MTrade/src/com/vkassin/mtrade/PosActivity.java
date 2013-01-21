@@ -30,12 +30,12 @@ public class PosActivity extends Activity {
 
 	public void refresh() {
 
-		if(Common.FIRSTLOAD_FINISHED) {
+//		if(Common.FIRSTLOAD_FINISHED) {
 
 			adapter.setItems(Common.getAllPositions());
 	  		adapter.notifyDataSetChanged();
 	        
-		}
+//		}
 		
 	}
 	   

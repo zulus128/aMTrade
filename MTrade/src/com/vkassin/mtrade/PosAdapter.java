@@ -44,7 +44,8 @@ public class PosAdapter extends ArrayAdapter<Position> {
     		code.setText(item.acc_code);
 
     		TextView curr = (TextView) convertView.findViewById(R.id.PosCurr);
-    		curr.setText(item.currPos.toString());
+//    		curr.setText(item.currPos.toString());
+    		curr.setText(item.getCurrPos());
 
 //    		TextView buy = (TextView) convertView.findViewById(R.id.PosBuy);
 //    		buy.setText(item.buyPlanPos.toString());
@@ -53,10 +54,12 @@ public class PosAdapter extends ArrayAdapter<Position> {
 //    		sell.setText(item.sellPlanPos.toString());
 
     		TextView rest = (TextView) convertView.findViewById(R.id.PosRest);
-    		rest.setText(item.restPos.toString());
+//    		rest.setText(item.restPos.toString());
+    		rest.setText(item.getRestPos());
 
     		TextView in = (TextView) convertView.findViewById(R.id.PosIn);
-    		in.setText(item.inPos.toString());
+//    		in.setText(item.inPos.toString());
+    		in.setText(item.getInPos());
 
 
     	}

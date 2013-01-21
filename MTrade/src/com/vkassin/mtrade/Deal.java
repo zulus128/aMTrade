@@ -1,6 +1,8 @@
 package com.vkassin.mtrade;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EnumSet;
@@ -20,12 +22,20 @@ public class Deal implements Serializable, History {
 	public String id = "";
 	public Long instrId = Long.valueOf(0);
 	public Long direct = Long.valueOf(0);
-	public Double price = Double.valueOf(0);
+	private Double price = Double.valueOf(0);
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
 	public Long dealSerial = Long.valueOf(0);
 
+	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
+
+	static {
+	
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setDecimalSeparator('.');
+		twoDForm.setDecimalFormatSymbols(dfs);
+	}
 
 	private static enum DEAL_STAT {
 		
@@ -151,7 +161,9 @@ public class Deal implements Serializable, History {
 
 	public String getPrice() {
 
-		return price.toString();
+//		return price.toString();
+		return twoDForm.format(price);
+
 	}
 
 	public String getQty() {

@@ -23,7 +23,7 @@ public class HistoryActivity extends Activity {
 	private ListView list;
 	private HistoryAdapter adapter;
 
-	private int filter = 3;
+//	private int filter = 3;
 	private static final int CONTEXTMENU_DELETE = 1;
 	private int selectedRowId;
 	
@@ -36,7 +36,7 @@ public class HistoryActivity extends Activity {
     	custom1.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
     			 
-    			 filter = 1;
+    			 Common.historyFilter = 1;
     			 refresh1();
     		 }
     		    
@@ -46,7 +46,7 @@ public class HistoryActivity extends Activity {
     	custom2.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
     			 
-    			 filter = 2;
+    			 Common.historyFilter = 2;
     			 refresh1();
     		 }
     		    
@@ -56,7 +56,7 @@ public class HistoryActivity extends Activity {
     	custom3.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
     			 
-    			 filter = 3;
+    			 Common.historyFilter = 3;
     			 refresh1();
     		 }
     		    
@@ -79,6 +79,9 @@ public class HistoryActivity extends Activity {
 
 			}
 		});
+    	
+		refresh();
+
 	}
 	
 	@Override
@@ -113,7 +116,7 @@ public class HistoryActivity extends Activity {
    }
 	public void refresh1() {
 
-		switch(filter) {
+		switch(Common.historyFilter) {
       	
       	case 1: 	//list.setTextFilterEnabled(true);  
       					adapter.getFilter().filter("transit");
@@ -133,13 +136,14 @@ public class HistoryActivity extends Activity {
 	
 	public void refresh() {
 
-		if(Common.FIRSTLOAD_FINISHED) {
+//		if(Common.FIRSTLOAD_FINISHED) {
 			
 //	      	Log.i(TAG, "History count = " + Common.getAllHistory().size());
 	      	adapter.setItems(Common.getAllHistory());
 	  		adapter.notifyDataSetChanged();
-	        }
+//	        }
 		
+//		refresh1();
 	}
 	
     @Override
@@ -148,7 +152,7 @@ public class HistoryActivity extends Activity {
       super.onResume();
       Log.i(TAG, "onResume");
       
-      refresh();
+//      refresh();
       
     }
     

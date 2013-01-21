@@ -23,6 +23,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.13"
                 android:gravity="left"
+                android:paddingLeft="3dp"
                 android:text="@string/TitleInstr" />
 
             <TextView
