@@ -3,6 +3,7 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -132,7 +133,18 @@ public class QuoteActivity extends Activity {
      
      Common.activities++;
    }
-   
+
+//   @Override
+//	public void onConfigurationChanged(Configuration newConfig) {
+//	  super.onConfigurationChanged(newConfig);
+//	  
+//	  
+////     Log.e(TAG, "++++++++++++ ConfigurationChanged");
+//     
+//     Common.confChanged = true;
+//
+//	}
+
   	@Override
    public void onStop() {
    
@@ -151,8 +163,15 @@ public class QuoteActivity extends Activity {
    		
 //   		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
     
-   		if(Common.activities == 0)
-   			Common.login(this);
+//    	if(Common.confChanged) {
+//    		
+//    		Common.confChanged = false;
+//    	}
+//    	else {
+//    		
+//    		if(Common.activities == 0)
+//    			Common.login(this);
+//    	}
 
    	}
 

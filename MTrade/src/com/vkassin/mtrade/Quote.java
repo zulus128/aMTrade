@@ -1,6 +1,7 @@
 package com.vkassin.mtrade;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +15,14 @@ public class Quote implements Comparable<Quote> {
 
 	public String id = "";
 	
-	private DecimalFormat twoDForm = new DecimalFormat("#0.00");
+	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
+
+	static {
+		
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setDecimalSeparator('.');
+		twoDForm.setDecimalFormatSymbols(dfs);
+	}
 
 	private Double price = Double.valueOf(0);
 	public Long qtySell = Long.valueOf(0);

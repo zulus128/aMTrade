@@ -23,8 +23,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -56,6 +58,8 @@ public class InstrActivity extends Activity {
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
 
+	private boolean onstart = false;
+	
 //	private boolean onActivityResultCalledBeforeOnResume;
 
 	private Socket sock;
@@ -103,7 +107,20 @@ public class InstrActivity extends Activity {
 //    	Common.clearInstrList();
 //    	Common.clearOrderList();
     	
-    	refresh();
+//    	refresh();
+
+//    	Common.loadAccountDetails();
+//    	
+//    	if(Common.confChanged) {
+//    		
+//    		Common.confChanged = false;
+//    	}
+//    	else {
+//    		
+//    		if(Common.activities == 0)
+//    			Common.login(this);
+//    	}
+
     }
 
     public JSONObject getLogin() {
@@ -270,7 +287,6 @@ public class InstrActivity extends Activity {
         JSONObject login = getLogin();
         if(login == null)
         	return;
-        
         writeJSONMsg(login);
         
         thrd = new Thread(new Runnable() {
@@ -321,7 +337,7 @@ public class InstrActivity extends Activity {
                     				adapter.setItems(Common.getFavInstrs());
                     				adapter.notifyDataSetChanged();
                         			Common.FIRSTLOAD_FINISHED = true;
-                        			onResume();
+                        			onResume1();
                     			}
                     			else {
                     				
@@ -474,43 +490,100 @@ public class InstrActivity extends Activity {
     public void onStart() {
     	
       super.onStart();
-      Log.i(TAG, "--- onStart ");
+      Log.e(TAG, "--- onStart " + Common.activities);
 		
-      if(Common.activities == 0)
- 			Common.login(this);
+//      if(Common.activities == 0)
+// 			Common.login(this);
 		
-      Common.activities++;
+//    	Common.loadAccountDetails();
+//    	
+//      	if(Common.confChanged) {
+//      		
+//      		Common.confChanged = false;
+//      	}
+//      	else {
+//      		
+//      		if(Common.activities == 0)
+//      			Common.login(this);
+//      	}
+//
+//      Common.activities++;
+//      onstart = true;
+    }
+    
+    private void onResume1() {
+    	
+        if(Common.FIRSTLOAD_FINISHED) {
+      	  
+//    		Log.w(TAG, "favr2 = " + Common.getFavrList());
+
+        Common.validateFavourites();
+        
+//  		Log.w(TAG, "favr3 = " + Common.getFavrList());
+
+  		try {
+  			
+  			sendSubscription();
+  			
+  		} catch (Exception e) {
+  			// TODO Auto-generated catch block
+  			e.printStackTrace();
+  		}
+
+  		adapter.setItems(Common.getFavInstrs());
+  		adapter.notifyDataSetChanged();
+        }
+
     }
     
     @Override
     public void onResume() {
     	
       super.onResume();
-      Log.i(TAG, "--- onResume ");// + isApplicationBroughtToBackground(this));
+
+//      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+//      boolean isScreenOn = pm.isScreenOn();
+      
+//      Log.e(TAG, "--- onResume " + Common.activities + "Common.confChanged = " + Common.confChanged );// + isApplicationBroughtToBackground(this));
       
 //      Common.activities++;
 
-      if(Common.FIRSTLOAD_FINISHED) {
-    	  
-//  		Log.w(TAG, "favr2 = " + Common.getFavrList());
+//      if(!onstart) {
+//    	  
+//	  	Common.loadAccountDetails();
+//		
+//	  	if(Common.confChanged) {
+//	  		
+//	  		Common.confChanged = false;
+//	  	}
+//	  	else {
+//	  		
+////	  		if(Common.activities == 0)
+//	  			Common.login(this);
+//	  	}
+//      }
+//      onstart = false;
 
-      Common.validateFavourites();
+//      Common.loadAccountDetails();
+//	
+//  	if(Common.confChanged) {
+//  		
+//  		Common.confChanged = false;
+//  	}
+//  	else {
+//  		
+//  		if(Common.paused)
+//  			Common.login(this);
+//  	}
+//
+//  Common.paused = false;
+//	Common.paused1 = false;
+
       
-//		Log.w(TAG, "favr3 = " + Common.getFavrList());
+  	  onResume1();
+  		
+//      Common.activities++;
 
-		try {
-			
-			sendSubscription();
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		adapter.setItems(Common.getFavInstrs());
-		adapter.notifyDataSetChanged();
-      }
-      
     }
     
     @Override
@@ -518,6 +591,10 @@ public class InstrActivity extends Activity {
     	
     	super.onPause();
     	Common.saveFavrList();
+// 		Log.e(TAG, "++++++++++++ onPause " + Common.activities);
+
+//		Common.activities--;
+
     }
 
     	@Override
@@ -525,7 +602,7 @@ public class InstrActivity extends Activity {
     
     	super.onStop();
     	
-		Log.e(TAG, "++++++++++++ onStop");
+//		Log.e(TAG, "++++++++++++ onStop " + Common.activities);
 
 		Common.activities--;
 		
@@ -539,8 +616,8 @@ public class InstrActivity extends Activity {
      		
 //     		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
       
-     		if(Common.activities == 0)
-     			Common.login(this);
+//     		if(Common.activities == 0)
+//     			Common.login(this);
 
      	}
       
@@ -549,7 +626,9 @@ public class InstrActivity extends Activity {
     	
       super.onDestroy();
 
-      Log.e(TAG, "++++++++++++ onDestroy");
+      Common.inLogin = false;
+      
+//      Log.e(TAG, "++++++++++++ onDestroy");
 
   	Common.saveFavrList();
 
@@ -566,7 +645,18 @@ public class InstrActivity extends Activity {
       thrd = null;
     }
    
-    
+//	@Override
+//	public void onConfigurationChanged(Configuration newConfig) {
+//	  super.onConfigurationChanged(newConfig);
+//	  
+//	  
+////      Log.e(TAG, "++++++++++++ ConfigurationChanged");
+//      
+//      Common.confChanged = true;
+//
+//	}
+	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -581,7 +671,8 @@ public class InstrActivity extends Activity {
 	        case R.id.menuselect: 
 	        	
 	        	Intent intent = new Intent(this, SelectListView.class);
-	            startActivityForResult(intent, 0);
+//	            startActivityForResult(intent, 0);
+	        	startActivityFromChild(this, intent, -1);
 	            break;
 	        case R.id.menulogin: 
 	        	

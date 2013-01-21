@@ -2,6 +2,7 @@ package com.vkassin.mtrade;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.SortedMap;
@@ -17,8 +18,15 @@ public class Instrument implements Serializable {
 	private static final long serialVersionUID = 22L;
 	private static final String TAG = "MTrade.Instrument"; 
 	
-	private DecimalFormat twoDForm = new DecimalFormat("#0.00");
+	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
+	static {
+	
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setDecimalSeparator('.');
+		twoDForm.setDecimalFormatSymbols(dfs);
+	}
+	
 	public String id = "";
 	public String symbol = "";
 	public String tradeStatus = "";

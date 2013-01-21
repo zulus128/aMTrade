@@ -2,6 +2,7 @@ package com.vkassin.mtrade;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,6 +60,8 @@ public class MTradeActivity extends TabActivity {
 	    
     	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
 
+		Common.paused1 = false;
+
     }
     
 //	@Override
@@ -78,4 +81,60 @@ public class MTradeActivity extends TabActivity {
 //
 // 	}
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        
+ 		Log.e(TAG, "--++++++++++++ onPause");
+        
+ 		Common.paused = true;
+//  		Common.confChanged1 = false;
+ 	      Common.confChanged1 = !Common.confChanged1;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        
+ 		Log.e(TAG, "///////////////////--++++++++++++ onResume " + Common.confChanged1 + " onPause = " + Common.paused);
+        
+    	Common.loadAccountDetails();
+    	
+      	if(Common.confChanged1) {
+      		
+//      		Common.confChanged1 = false;
+      	}
+      	else {
+      		
+      		if(Common.paused)
+      			Common.login(this);
+//      		Common.confChanged1 = false;
+            Common.paused = false;
+    		Common.paused1 = false;
+
+      	}
+
+        Common.confChanged1 = !Common.confChanged1;
+
+    }
+    
+    @Override
+    public void onDestroy() {
+    	
+      super.onDestroy();
+
+      Log.e(TAG, "///////////////++++++++++++ onDestroy");
+    }
+    
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  
+	  
+      Log.e(TAG, "////////////////++++++++++++ ConfigurationChanged to " + !Common.confChanged1);
+      
+      Common.confChanged1 = !Common.confChanged1;
+
+	}
 }

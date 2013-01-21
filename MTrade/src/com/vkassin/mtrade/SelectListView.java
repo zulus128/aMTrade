@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -130,17 +131,24 @@ import android.widget.ListView;
 			mainListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
 			LoadSelections();
+			
+			Common.paused = false;
 		}
 
 		@Override
 		protected void onPause() {
 			// always handle the onPause to make sure selections are saved if user clicks back button
 
-			SaveSelections();
 
 //			Log.w(TAG, "onPause");
 			
 			super.onPause();
+
+			SaveSelections();
+			
+			Common.paused1 = true;
+	 		Log.e(TAG, "--++++++++++++ onPause");
+	        
 		}
 
 		private void ClearSelections() {
@@ -262,4 +270,36 @@ import android.widget.ListView;
 //	    	Common.saveFavrList();
 	    }
 	   	
+	    @Override
+	    protected void onResume() {
+	        super.onResume();
+	        
+	 		Log.e(TAG, "--++++++++++++ onResume");
+	        
+	    	Common.loadAccountDetails();
+	    	
+	      	if(Common.confChanged1) {
+	      		
+//	      		Common.confChanged1 = false;
+	      	}
+	      	else {
+	      		
+	      		if(Common.paused1)
+	      			Common.login(Common.mainActivity);
+	      	}
+
+	      Common.paused1 = false;
+	 		
+	    }
+	    
+		@Override
+		public void onConfigurationChanged(Configuration newConfig) {
+		  super.onConfigurationChanged(newConfig);
+		  
+		  
+	      Log.e(TAG, "++++++++++++ ConfigurationChanged");
+	      
+//	      Common.confChanged1 = true;
+
+		}
 	}

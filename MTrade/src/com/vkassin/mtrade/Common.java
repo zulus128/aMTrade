@@ -68,8 +68,14 @@ public class Common {
 
     public static TabHost tabHost;
 	public static TabHost.TabSpec tabspec;
+	public static boolean confChanged1 = false;
 
 	public static Activity tabActivity;
+	
+	public static boolean paused = true;
+	public static boolean paused1 = false;
+	
+	public static boolean inLogin = false;
 	
 	private static Instrument selectedInstrument;
 
@@ -391,13 +397,21 @@ public class Common {
 	
 	//return favourites;
 	}
-
+	
 	public static void login(Context ctx) {
+		
+//		ctx = Common.app_ctx;
+		
+		if(inLogin)
+			return;
+		
+		inLogin = true;
 		
     	final Dialog dialog = new Dialog(ctx);
     	dialog.setContentView(R.layout.login_dialog);
     	dialog.setTitle(R.string.LoginDialogTitle);
-
+    	dialog.setCancelable(false);
+    	
     	final EditText nametxt = (EditText) dialog.findViewById(R.id.loginnameedit);
     	final EditText passtxt = (EditText) dialog.findViewById(R.id.passwordedit);
 
@@ -412,7 +426,7 @@ public class Common {
     	customDialog_Dismiss.setOnClickListener(new Button.OnClickListener(){
     		 public void onClick(View arg0) {
     			 
-    			 
+    			 inLogin = false;
     			 
     			 JSONObject msg = new JSONObject();
     		      try{
@@ -449,6 +463,7 @@ public class Common {
     	});
     	
     	dialog.show();
+//    	Common.confChanged = false;
 	}
 	
 	public static void delOrder(final Context ctx, History hist) {

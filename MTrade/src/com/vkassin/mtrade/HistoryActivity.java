@@ -3,6 +3,7 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -152,6 +153,14 @@ public class HistoryActivity extends Activity {
     }
     
     @Override
+    public void onPause() {
+    	
+    	super.onPause();
+ 		Log.e(TAG, "++++++++++++ onPause");
+
+    }
+    
+    @Override
     public void onStart() {
     	
       super.onStart();
@@ -165,20 +174,38 @@ public class HistoryActivity extends Activity {
     
     	super.onStop();
     	
-// 		Log.e(TAG, "++++++++++++ onStop");
+ 		Log.e(TAG, "++++++++++++ onStop");
 
  		Common.activities--;
     }
+
+//   	@Override
+//	public void onConfigurationChanged(Configuration newConfig) {
+//	  super.onConfigurationChanged(newConfig);
+//	  
+//	  
+//      Log.e(TAG, "++++++++++++ ConfigurationChanged");
+//      
+//      Common.confChanged = true;
+//
+//	}
 
    	@Override
    	protected void onRestart() {
    		// TODO Auto-generated method stub
    		super.onRestart();
    		
-//   		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
+   		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
     
-   		if(Common.activities == 0)
-   			Common.login(this);
+//    	if(Common.confChanged) {
+//    		
+//    		Common.confChanged = false;
+//    	}
+//    	else {
+//    		
+//    		if(Common.activities == 0)
+//    			Common.login(this);
+//    	}
 
    	}
 
