@@ -35,6 +35,10 @@ public final class R {
         public static final int DarkBlue=0x7f040089;
         public static final int DarkCyan=0x7f040083;
         public static final int DarkGoldenrod=0x7f040046;
+        /**  
+ <color name="DarkGray">#A9A9A9</color>
+ 
+         */
         public static final int DarkGray=0x7f04004d;
         public static final int DarkGreen=0x7f040086;
         public static final int DarkKhaki=0x7f040043;

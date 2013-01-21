@@ -14,6 +14,7 @@
             android:id="@+id/LinLayout02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/DarkGray"
             android:orientation="horizontal"
             android:weightSum="1" >
 

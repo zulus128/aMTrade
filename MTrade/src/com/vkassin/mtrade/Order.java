@@ -32,7 +32,6 @@ public class Order implements Serializable, History {
 		   trsActive,
 		   trsActBal,
 		   trsDeal,
-		   trsDealChg,
 		   trsReject,
 		   trsDelBrok,
 		   trsDelInv,
@@ -41,7 +40,8 @@ public class Order implements Serializable, History {
 		   trsDelOper,
 		   trsDelBalOper,
 		   trsActChg,
-		   trsActBalChg;
+		   trsActBalChg,
+		   trsDealChg;
 		   
 	    private static final Map<Integer, TRANSIT_STAT> lookup = new HashMap<Integer, TRANSIT_STAT>();
 

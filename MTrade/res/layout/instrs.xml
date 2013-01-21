@@ -1,88 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:layout_width="fill_parent"
-	android:background="@color/SlateGray"
-	>
-	
-	<LinearLayout android:orientation="vertical" android:id="@+id/LinLayout01"
-		android:layout_width="fill_parent" android:layout_height="fill_parent"
-		>
-	
-		<LinearLayout
-		    android:id="@+id/LinLayout02"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    android:weightSum="1" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/SlateGray" >
 
-		    		<TextView 
-		style="@style/CodeFont1"
-    	android:layout_weight="0.22"
-		android:textStyle="bold"
-		android:layout_gravity="center_vertical"
-		android:paddingLeft ="4dp"
-		android:text = "@string/TitleInstr">
-		</TextView>
-		
-		<TextView 
-		style="@style/CodeFont1"
-	    android:layout_weight="0.12"
-		android:textStyle="bold"
-		android:layout_gravity="center_vertical"
-		android:gravity="center_horizontal"
-		android:text = "@string/TitleStatus">
-		</TextView>
-						
-		<TextView 
-		style="@style/CodeFont1"
-	    android:layout_weight="0.22"
-		android:textStyle="bold"
-		android:layout_gravity="center_vertical"
-		android:gravity="right"
-		android:text = "@string/TitleChg">
-		</TextView>
-				
-		<TextView 
-		style="@style/CodeFont1"
-	    android:layout_weight="0.22"
-		android:textStyle="bold"
-		android:layout_gravity="center_vertical"
-		android:gravity="right"
-		android:text = "@string/TitleBuy">
-		</TextView>
-				
-		<TextView 
-	    android:layout_weight="0.22"
-		style="@style/CodeFont1"
-		android:textStyle="bold"
-		android:layout_gravity="center_vertical"
-		android:gravity="right"
-		android:paddingRight ="4dp"
-		android:text = "@string/TitleSell">
-		</TextView>
-		    				
-				
-		</LinearLayout>
+    <LinearLayout
+        android:id="@+id/LinLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-	<ListView
-	    android:id="@+id/InstrList"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:choiceMode="singleChoice"
-	    android:cacheColorHint="@android:color/transparent"
-	    android:paddingBottom="5dp"
-	    android:paddingTop="0dp"
-	    android:footerDividersEnabled="true"
-	    android:headerDividersEnabled="true">
-	</ListView>
-	
-			
-	</LinearLayout>
-	
-	<ProgressBar android:id="@+id/ProgressBar01"
-		android:layout_width="wrap_content" android:layout_height="wrap_content"
-		style="@android:style/Widget.ProgressBar.Large.Inverse"
-		android:layout_centerInParent="true" android:visibility="invisible"></ProgressBar>
-	
+        <LinearLayout
+            android:id="@+id/LinLayout02"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/DarkGray"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.22"
+                android:paddingLeft="4dp"
+                android:text="@string/TitleInstr"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.12"
+                android:gravity="center_horizontal"
+                android:text="@string/TitleStatus"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.22"
+                android:gravity="right"
+                android:text="@string/TitleChg"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.22"
+                android:gravity="right"
+                android:text="@string/TitleBuy"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                style="@style/CodeFont1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.22"
+                android:gravity="right"
+                android:paddingRight="4dp"
+                android:text="@string/TitleSell"
+                android:textStyle="bold" >
+            </TextView>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/InstrList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="0dp" >
+        </ListView>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/ProgressBar01"
+        style="@android:style/Widget.ProgressBar.Large.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible" >
+    </ProgressBar>
+
 </RelativeLayout>

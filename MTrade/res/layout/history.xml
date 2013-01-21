@@ -42,6 +42,7 @@
             android:id="@+id/LinLayoutPos02"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/DarkGray"
             android:orientation="horizontal"
             android:paddingLeft="3dp"
             android:weightSum="1" >
