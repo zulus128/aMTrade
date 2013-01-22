@@ -303,6 +303,8 @@ public final class R {
         public static final int TitleSellQty=0x7f050018;
         public static final int TitleStatus=0x7f050010;
         public static final int TitleType=0x7f050027;
+        public static final int TransitStatusError=0x7f050058;
+        public static final int TransitStatusOk=0x7f050057;
         public static final int app_name=0x7f050001;
         public static final int dsConfirmed=0x7f05002e;
         public static final int dsNoAgreementNoMoney=0x7f050041;

@@ -358,7 +358,7 @@ public class InstrActivity extends Activity {
                     			}
                     			else {
                     				
-                    				Toast.makeText(InstrActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    				Toast.makeText(InstrActivity.this, "Login failed", Toast.LENGTH_LONG).show();
                     				Common.login(InstrActivity.this);
 //                    				break;
                     			}
@@ -453,6 +453,22 @@ public class InstrActivity extends Activity {
                         		else
                             		if(t == Common.CREATE_REMOVE_ORDER) {
                             			
+                       					String s = data.getString("status");
+//                       					String s1 = data.getString("action");
+                       					Long err = Long.valueOf(s.split(":")[1]);
+                       					if (err == 0) {
+                          				
+                       						Toast.makeText(InstrActivity.this, R.string.TransitStatusOk, Toast.LENGTH_LONG).show();
+                       					}
+                       					else {
+                       				    	
+                       						int i = Common.app_ctx.getResources().getIdentifier("TransitStatusError", "string", Common.app_ctx.getPackageName());
+                       				    	String ss = (i == 0)?"000":Common.app_ctx.getResources().getString(i);
+                       						Toast.makeText(InstrActivity.this, ss + " " + err, Toast.LENGTH_LONG).show();
+                       				    	
+                       					}
+                       						
+
                             			if(Common.historyActivity != null)
                             				Common.historyActivity.refresh();
         							}

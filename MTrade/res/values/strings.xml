@@ -88,5 +88,7 @@
     <string name="trsDelBalOper">Deleted balance by Operator</string>
     <string name="trsActChg">Active(Chg)</string>
     <string name="trsActBalChg">Active balance(Chg)</string>
+    <string name="TransitStatusOk">Операция прошла успешно</string>
+    <string name="TransitStatusError">Операция не прошла. Ошибка:</string>
 
 </resources>
