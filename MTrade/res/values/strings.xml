@@ -23,7 +23,7 @@
     <string name="Password">Пароль</string>
     <string name="GoLogin">Войти</string>
     <string name="LoginDialogTitle">Вход</string>
-    <string name="MenuItemRelogin">Войти под другим пользователем</string>
+    <string name="MenuItemRelogin">Подключиться с именем/паролем</string>
     <string name="TitleBuyQty">Объем покупки</string>
     <string name="TitleSellQty">Объем продажи</string>
     <string name="Clear">Очистить</string>
@@ -90,5 +90,36 @@
     <string name="trsActBalChg">Active balance(Chg)</string>
     <string name="TransitStatusOk">Операция прошла успешно</string>
     <string name="TransitStatusError">Операция не прошла. Ошибка:</string>
-
+    <string name="err_NoPermissions">не хватает полномочий</string>
+    <string name="err_OrderDisabled">запрещена подача объектов</string>
+    <string name="err_OrderTypeDisabled">запрещена подача объектов указанного типа</string>
+    <string name="err_OrderCheckLot">указано неверное количество</string>
+    <string name="err_OrderCheckMax">превышены лимиты</string>
+    <string name="err_OrderPriceStep">нарушен минимальный шаг изменения цены</string>
+    <string name="err_InstrDispLastDealPrice">отклонение цены от последней сделки</string>
+    <string name="err_InstrumentBlocked">инструмент блокирован</string>
+    <string name="err_TrdAccLimit">превышены лимиты по торговому счету</string>
+    <string name="err_TradeAccountBlocked">торговый счет заблокирован</string>
+    <string name="err_CashAccLimit">превышены лимиты по денежному счету</string>
+    <string name="err_CashAccOpenPosLimit">превышены лимиты по открытым позициям</string>
+    <string name="err_OrderWrongTrdAccID">неправильный номер торгового счета</string>
+    <string name="err_OrderAlienFirmCashAcc">указан номер денежного счета, который не принадлежит данному участнику торгов</string>
+    <string name="err_OrderNoRightsOnTrdAcc">нет прав на торговый счет</string>
+    <string name="err_OrderNoRightsOnCashAcc">нет прав на денежный счет</string>
+    <string name="err_OrderWrongExpireDate">неправильная дата истечения</string>
+    <string name="err_OrderWrongExpireTime">неправильное время истечения</string>
+    <string name="err_CmdBadSatisfyOrderID">неправильный идентификатор заявки</string>
+    <string name="err_OrderWrongDirection">неправильное направление</string>
+    <string name="err_OrderWrongPrice">неправильная цена</string>
+    <string name="err_OrderWrongQuantity">неправильное количество</string>
+    <string name="err_OrderWrongKredId">неправильный идентификатор предмета репо</string>
+    <string name="err_OrderWrongFirm">не найден код контрагента</string>
+    <string name="err_OrderWrongPriceOrQuantity">неправильная цена или количество</string>
+    <string name="err_OrderWrongRazdel">неправильный раздел счета ДЕПО</string>
+    <string name="err_CmdBadInstrumentID">указан неправильный идентификатор ("Id") инструмента</string>
+    <string name="TitleError">Ошибка</string>
+    <string name="ConnectError">Не удалось подключиться.\nПроверьте Интернет-соединение.</string>
+    <string name="ConnectError1">Пропало соединение.\nВойдите снова.</string>
+    <string name="fire">Ок</string>
+    
 </resources>

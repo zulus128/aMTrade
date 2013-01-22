@@ -71,6 +71,8 @@ public class Common {
 	public static boolean confChanged1 = false;
 
 	public static Activity tabActivity;
+
+	public static boolean connected = false;
 	
 	public static boolean paused = true;
 	public static boolean paused1 = false;
@@ -415,6 +417,8 @@ public class Common {
 		
 		inLogin = true;
 		
+//		while(true) {
+		
     	final Dialog dialog = new Dialog(ctx);
     	dialog.setContentView(R.layout.login_dialog);
     	dialog.setTitle(R.string.LoginDialogTitle);
@@ -466,12 +470,16 @@ public class Common {
 				}
     			 loginFromDialog = true;
     			 mainActivity.refresh();
+//    				 break;
     		 }
     		    
     	});
     	
     	dialog.show();
 //    	Common.confChanged = false;
+//		}//while(true);
+    	
+    	
 	}
 	
 	public static void delOrder(final Context ctx, History hist) {

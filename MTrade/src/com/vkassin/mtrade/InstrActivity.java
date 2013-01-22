@@ -6,9 +6,12 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,9 +19,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -26,9 +31,12 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -57,7 +65,9 @@ public class InstrActivity extends Activity {
 	private static final int CONTEXTMENU_GOCHART = 3;
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
-
+	
+	private static final int CREATE_PROGRESS_DIALOG = 151;
+	
 	private boolean onstart = false;
 	
 //	private boolean onActivityResultCalledBeforeOnResume;
@@ -71,6 +81,89 @@ public class InstrActivity extends Activity {
 //	private static int ordernum;
 	private LinearLayout header;
 	
+private static enum ERROR_STAT {
+		
+    err_NoPermissions(1000),
+    err_OrderDisabled(1400),
+    err_OrderTypeDisabled(1401),
+    err_OrderCheckLot(1402),
+    err_OrderCheckMax(1403),
+    err_OrderPriceStep(1404),
+    err_InstrDispLastDealPrice(1406),
+    err_InstrumentBlocked(1414),
+    err_TrdAccLimit(1501),
+    err_TradeAccountBlocked(1503),
+    err_CashAccLimit(1550),
+    err_CashAccOpenPosLimit(1551),
+    err_OrderWrongTrdAccID(1700),
+    err_OrderAlienFirmCashAcc(1701),
+    err_OrderNoRightsOnTrdAcc(1702),
+    err_OrderNoRightsOnCashAcc(1703),
+    err_OrderWrongExpireDate(1710),
+    err_OrderWrongExpireTime(1711),
+    err_CmdBadSatisfyOrderID(1712),
+    err_OrderWrongDirection(1713),
+    err_OrderWrongPrice(1714),
+    err_OrderWrongQuantity(1715),
+    err_OrderWrongKredId(1716),
+    err_OrderWrongFirm(1717),
+    err_OrderWrongPriceOrQuantity(1718),
+    err_OrderWrongRazdel(1719),
+    err_CmdBadInstrumentID(2000);
+		
+    ERROR_STAT(int num) {
+    
+    	number = num;
+    }
+    
+    private int number;
+    
+	public static String fromNumber(Long n) {
+
+	      for (ERROR_STAT suit : EnumSet.allOf(ERROR_STAT.class)) {
+	    	  
+	    	  if(suit.number == n) {
+	    		  
+	  	    	int i = Common.app_ctx.getResources().getIdentifier(suit.toString(), "string", Common.app_ctx.getPackageName());
+		    	if(i == 0)
+		    		return "_";
+		    	return Common.app_ctx.getResources().getString(i);
+	    	  }
+	      }
+	      
+	      return "+";
+		 
+	}
+	    	
+};
+	
+private Handler handler = new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        switch(msg.what){
+        case CREATE_PROGRESS_DIALOG:
+            //create the dialog
+        	AlertDialog.Builder bu = new AlertDialog.Builder(InstrActivity.this).setMessage(R.string.ConnectError1)
+			.setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					
+					Common.login(InstrActivity.this);
+				}
+			});
+
+        	AlertDialog dialog = bu.create();
+
+//			Button b = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+//			if(b != null)
+//				b.
+			
+			dialog.show();
+
+            break;
+        }
+    }
+};
+
     public void onCreate(Bundle savedInstanceState) {
     	
         super.onCreate(savedInstanceState);
@@ -256,6 +349,10 @@ public class InstrActivity extends Activity {
     public void stop() {
     	
     	Log.w(TAG, " --- Stop!!!");
+    	
+    	
+    	Common.connected = false;
+    	
 		if(thrd != null)
 			thrd.interrupt();
 		
@@ -271,13 +368,16 @@ public class InstrActivity extends Activity {
 		}
     }
     
-    public void refresh() {
+    public boolean refresh() {
      	
     	Log.w(TAG, " --- Refresh!!!");
   	  
     	if((sock != null) && sock.isConnected())
-    		return;
+    		return true;
 
+    	Common.connected = false;
+
+//    while(true) {
       try {
 
 //    	  if(sock != null)
@@ -288,12 +388,16 @@ public class InstrActivity extends Activity {
 
         JSONObject login = getLogin();
         if(login == null)
-        	return;
+        	return false;
+        
         writeJSONMsg(login);
         
         thrd = new Thread(new Runnable() {
           public void run() {
 //          	Log.w(TAG, " --- Start!!!");
+        	  
+              Common.connected = true;
+
             while (!Thread.interrupted()) {
               try {
                 final JSONObject data = readJSONMsg();
@@ -303,7 +407,13 @@ public class InstrActivity extends Activity {
                     public void run() {
 
 //                      	Log.w(TAG, " --- getData!!!");
-                    	
+//        				new AlertDialog.Builder(InstrActivity.this).setMessage(R.string.ConnectError1)
+//        				.setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+//        					public void onClick(DialogInterface dialog, int id) {
+//        					}
+//        				})
+//        				.show();
+
                     	try {
                     		
 							int t = data.getInt("objType");
@@ -464,8 +574,11 @@ public class InstrActivity extends Activity {
                        				    	
                        						int i = Common.app_ctx.getResources().getIdentifier("TransitStatusError", "string", Common.app_ctx.getPackageName());
                        				    	String ss = (i == 0)?"000":Common.app_ctx.getResources().getString(i);
-                       						Toast.makeText(InstrActivity.this, ss + " " + err, Toast.LENGTH_LONG).show();
-                       				    	
+//                       						Toast.makeText(InstrActivity.this, ss + " " + err, Toast.LENGTH_LONG).show();
+                       				    	String message = ss + " " + ERROR_STAT.fromNumber(err) + "(" + err + ")";
+                       						new AlertDialog.Builder(InstrActivity.this).setMessage(message).show();
+
+
                        					}
                        						
 
@@ -511,13 +624,46 @@ public class InstrActivity extends Activity {
                     }
                   });
    
-              } catch (Exception e) { e.printStackTrace();}
+              } catch (Exception e) {
+            	  
+            	  e.printStackTrace();
+
+            	  handler.sendMessage(Message.obtain(handler,
+            	            CREATE_PROGRESS_DIALOG));
+            	  
+            	  stop();
+            	  
+              }
+              
             }
+            
+
           }
         });
+        
         thrd.start();
-      } catch (Exception ioe) { ioe.printStackTrace();}
-    }
+        
+      }        
+//      catch (java.net.ConnectException ce) {
+//    	  
+//    	  ce.printStackTrace();
+//    	  
+//      }
+      catch (Exception ioe) {
+    	  
+    	  ioe.printStackTrace();
+
+    	  Toast toast = Toast.makeText(InstrActivity.this, R.string.ConnectError, Toast.LENGTH_LONG);
+    	  toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+    	  toast.show();
+
+    	  stop();
+    	  
+    	  return false;
+      }
+//    }//while(true)
+      return true;
+  }
    
     @Override
     public void onStart() {
