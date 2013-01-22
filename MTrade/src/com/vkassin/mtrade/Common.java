@@ -67,6 +67,11 @@ public class Common {
     public final static int ERROR_WRONG_PROTOCOL_VERSION = 203;
     public final static int ERROR_LOGIN_INFORMATION = 204;
 
+    public final static int SORT_TYPE_INSTR = 1;
+    public final static int SORT_TYPE_PRICE = 2;
+    public final static int SORT_TYPE_STATUS = 3;
+    public final static int SORT_TYPE_DATE = 4;
+    
     public static TabHost tabHost;
 	public static TabHost.TabSpec tabspec;
 	public static boolean confChanged1 = false;

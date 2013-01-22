@@ -122,5 +122,9 @@
     <string name="ConnectError1">Пропало соединение.\nВойдите снова.</string>
     <string name="fire">Ок</string>
     <string name="cancel">Отмена</string>
-    
+    <string name="SortInstr">Сортировать по инструменту</string>
+    <string name="SortStatus">По статусу</string>
+    <string name="SortPrice">По цене</string>
+    <string name="SortDate">По дате</string>
+
 </resources>

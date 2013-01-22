@@ -1,6 +1,7 @@
 package com.vkassin.mtrade;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,40 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 	private static final String TAG = "MTrade.HistoryAdapter"; 
 
 	private TracksFilter filter;
+	
+	private class HistoryComparator implements Comparator<History> {
+
+		private int orderType;
+
+		public HistoryComparator(int type) {
+
+		    this.orderType = type;
+
+		}
+
+		public int compare(History lhs, History rhs) {
+
+		    int res = 0;
+		    
+//		    res = (lhs.getPrice()).compareTo(rhs.getPrice());
+		    
+		    if (orderType == Common.SORT_TYPE_INSTR) {
+		            res = (lhs.getInstr()).compareTo(rhs.getInstr());
+		        }
+		    else if (orderType == Common.SORT_TYPE_PRICE) {
+		            res = (lhs.getPriceD()).compareTo(rhs.getPriceD());
+		        }
+		    else if (orderType == Common.SORT_TYPE_STATUS) {
+	            res = (lhs.getStatus()).compareTo(rhs.getStatus());
+	        }
+		    else if (orderType == Common.SORT_TYPE_DATE) {
+	            res = (lhs.getDTimeD()).compareTo(rhs.getDTimeD());
+	        }
+		    
+		    return res;
+		}
+
+		}
 	
 	public HistoryAdapter(Context context, int resourceId, ArrayList<History> objects) {
 		super(context, resourceId, objects);
@@ -96,16 +131,32 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 		return s.substring(0,  (t > s.length())?s.length():t) + ((t >= s.length())?"":"...");
 	}
 	
+	public void ssort(int type) {
+		
+		sort(new HistoryComparator(type));
+//		notifyDataSetChanged();
+	}
+	
+//	@Override
+//	public void notifyDataSetChanged() {
+//
+//		sort(new HistoryComparator(0));
+//
+//	    super.notifyDataSetChanged();
+//	}
+	
 	public void setItems(ArrayList<History> objects) {
 		
 		this.items.clear();
 		this.items.addAll(objects);
 		this.items1 = new ArrayList<History>(objects);
+		
 	}
 	
 	public void addItems(ArrayList<History> objects) {
 		this.items.addAll(objects);
 		this.items1 = new ArrayList<History>(objects);
+		
 	}
 
 	public ArrayList<History> getItems() {
@@ -129,7 +180,7 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 //            constraint = constraint.toString().toLowerCase();
         	
         	
-        	Log.w(TAG, "items cnt for filter = " + items.size());
+//        	Log.w(TAG, "items cnt for filter = " + items.size());
         	
             FilterResults result = new FilterResults();
             if (constraint != null && constraint.toString().length() > 0) {

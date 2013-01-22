@@ -3,10 +3,13 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -136,10 +139,14 @@ public class HistoryActivity extends Activity {
 	
 	public void refresh() {
 
+		
 //		if(Common.FIRSTLOAD_FINISHED) {
 			
 //	      	Log.i(TAG, "History count = " + Common.getAllHistory().size());
 	      	adapter.setItems(Common.getAllHistory());
+	      	
+//			adapter.ssort();
+
 	  		adapter.notifyDataSetChanged();
 //	        }
 		
@@ -212,5 +219,44 @@ public class HistoryActivity extends Activity {
 //    	}
 
    	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.histmenu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch (item.getItemId()) {
+	        case R.id.histinstr: 
+
+	        	adapter.ssort(Common.SORT_TYPE_INSTR);
+		  		adapter.notifyDataSetChanged();
+
+	            break;
+	        case R.id.histprice: 
+
+	        	adapter.ssort(Common.SORT_TYPE_PRICE);
+		  		adapter.notifyDataSetChanged();
+
+	            break;
+	        case R.id.histstatus: 
+
+	        	adapter.ssort(Common.SORT_TYPE_STATUS);
+		  		adapter.notifyDataSetChanged();
+
+	            break;
+	        case R.id.histdate: 
+
+	        	adapter.ssort(Common.SORT_TYPE_DATE);
+		  		adapter.notifyDataSetChanged();
+
+	            break;
+	    }
+	    return true;
+	}
 
 }

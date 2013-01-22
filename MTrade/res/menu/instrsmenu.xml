@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuselect" android:titleCondensed="@string/SelectInstrs" android:title="@string/SelectInstrs" android:icon="@android:drawable/ic_menu_edit"></item>
-    <item android:id="@+id/menulogin" android:titleCondensed="@string/MenuItemRelogin" android:title="@string/MenuItemRelogin" android:icon="@android:drawable/ic_menu_revert"></item>
-    
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menuselect"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="@string/SelectInstrs"
+        android:titleCondensed="@string/SelectInstrs">
+    </item>
+    <item
+        android:id="@+id/menulogin"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/MenuItemRelogin"
+        android:titleCondensed="@string/MenuItemRelogin">
+    </item>
+
 </menu>

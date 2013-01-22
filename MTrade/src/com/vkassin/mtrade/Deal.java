@@ -166,6 +166,11 @@ public class Deal implements Serializable, History {
 
 	}
 
+	public Double getPriceD() {
+		
+		return price;
+	}
+
 	public String getQty() {
 
 		return qty.toString();
@@ -182,6 +187,11 @@ public class Deal implements Serializable, History {
 		Date d = new Date(dtime);
 		return new SimpleDateFormat("HH:mm dd/MM").format(d);
 
+	}
+
+	public Date getDTimeD() {
+		
+		return new Date(dtime);
 	}
 
 	public Long getLongDTime() {

@@ -216,11 +216,15 @@ public final class R {
         public static final int hbutton1=0x7f080006;
         public static final int hbutton2=0x7f080007;
         public static final int hbutton3=0x7f080008;
+        public static final int histdate=0x7f080046;
+        public static final int histinstr=0x7f080043;
+        public static final int histprice=0x7f080045;
+        public static final int histstatus=0x7f080044;
         public static final int instrtext=0x7f080027;
         public static final int loginnameedit=0x7f08001e;
         public static final int logintext=0x7f08001d;
-        public static final int menulogin=0x7f080044;
-        public static final int menuselect=0x7f080043;
+        public static final int menulogin=0x7f080048;
+        public static final int menuselect=0x7f080047;
         public static final int orderlayout1=0x7f080025;
         public static final int orderlayout2=0x7f08001c;
         public static final int orderlayout233=0x7f08002c;
@@ -256,7 +260,8 @@ public final class R {
         public static final int select_instr=0x7f03000c;
     }
     public static final class menu {
-        public static final int instrsmenu=0x7f070000;
+        public static final int histmenu=0x7f070000;
+        public static final int instrsmenu=0x7f070001;
     }
     public static final class string {
         public static final int BuyButton=0x7f050008;
@@ -290,6 +295,10 @@ public final class R {
         public static final int Quantity=0x7f05000b;
         public static final int SelectInstrs=0x7f050002;
         public static final int SellButton=0x7f050009;
+        public static final int SortDate=0x7f05007c;
+        public static final int SortInstr=0x7f050079;
+        public static final int SortPrice=0x7f05007b;
+        public static final int SortStatus=0x7f05007a;
         public static final int TitleBuy=0x7f05000f;
         public static final int TitleBuyQty=0x7f050017;
         public static final int TitleChg=0x7f05000d;
