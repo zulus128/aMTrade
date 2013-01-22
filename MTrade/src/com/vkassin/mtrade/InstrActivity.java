@@ -66,7 +66,8 @@ public class InstrActivity extends Activity {
 //	private static final int CONTEXTMENU_RELOGIN = 3;
 	private int selectedRowId;
 	
-	private static final int CREATE_PROGRESS_DIALOG = 151;
+	public static final int CREATE_PROGRESS_DIALOG = 151;
+	public static final int DISMISS_PROGRESS_DIALOG = 152;
 	
 	private boolean onstart = false;
 	
@@ -137,7 +138,9 @@ private static enum ERROR_STAT {
 	    	
 };
 	
-private Handler handler = new Handler(){
+public Handler handler = new Handler(){
+	
+	AlertDialog dialog = null;
     @Override
     public void handleMessage(Message msg) {
         switch(msg.what){
@@ -149,9 +152,19 @@ private Handler handler = new Handler(){
 					
 					Common.login(InstrActivity.this);
 				}
+			})
+						.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					
+//					stop();
+		        	dialog = null;
+
+				}
 			});
 
-        	AlertDialog dialog = bu.create();
+			;
+
+        	dialog = bu.create();
 
 //			Button b = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
 //			if(b != null)
@@ -160,6 +173,17 @@ private Handler handler = new Handler(){
 			dialog.show();
 
             break;
+            
+        case DISMISS_PROGRESS_DIALOG:
+        	
+        	if(dialog != null)
+        		dialog.dismiss();
+        	
+        	dialog = null;
+        	
+        	break;
+        	
+
         }
     }
 };
@@ -375,7 +399,9 @@ private Handler handler = new Handler(){
     	if((sock != null) && sock.isConnected())
     		return true;
 
-    	Common.connected = false;
+    	if(Common.connected)
+    		return true;
+//    	Common.connected = false;
 
 //    while(true) {
       try {
@@ -626,12 +652,16 @@ private Handler handler = new Handler(){
    
               } catch (Exception e) {
             	  
-            	  e.printStackTrace();
-
-            	  handler.sendMessage(Message.obtain(handler,
-            	            CREATE_PROGRESS_DIALOG));
+            	  if(Common.connected) {
+            		  
+	            	  e.printStackTrace();
+	
+	            	  stop();
+	
+	            	  handler.sendMessage(Message.obtain(handler,
+	            	            CREATE_PROGRESS_DIALOG));
+            	  }
             	  
-            	  stop();
             	  
               }
               

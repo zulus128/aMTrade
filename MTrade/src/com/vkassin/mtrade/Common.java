@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -411,11 +412,17 @@ public class Common {
 	public static void login(Context ctx) {
 		
 //		ctx = Common.app_ctx;
-		
+    	Common.connected = false;
+
 		if(inLogin)
 			return;
 		
 		inLogin = true;
+
+		
+  	  if(Common.mainActivity != null)
+  		Common.mainActivity.handler.sendMessage(Message.obtain(Common.mainActivity.handler,
+  				Common.mainActivity.DISMISS_PROGRESS_DIALOG));
 		
 //		while(true) {
 		

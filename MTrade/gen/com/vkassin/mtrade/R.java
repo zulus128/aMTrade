@@ -309,6 +309,7 @@ public final class R {
         public static final int TransitStatusError=0x7f050058;
         public static final int TransitStatusOk=0x7f050057;
         public static final int app_name=0x7f050001;
+        public static final int cancel=0x7f050078;
         public static final int dsConfirmed=0x7f05002e;
         public static final int dsNoAgreementNoMoney=0x7f050041;
         public static final int dsNoAgreementNoSecur=0x7f050042;

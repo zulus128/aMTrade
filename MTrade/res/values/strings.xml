@@ -121,5 +121,6 @@
     <string name="ConnectError">Не удалось подключиться.\nПроверьте Интернет-соединение.</string>
     <string name="ConnectError1">Пропало соединение.\nВойдите снова.</string>
     <string name="fire">Ок</string>
+    <string name="cancel">Отмена</string>
     
 </resources>
