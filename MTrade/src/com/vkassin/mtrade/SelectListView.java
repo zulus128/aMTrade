@@ -237,7 +237,8 @@ import android.widget.ListView;
 			
 //			Log.w(TAG, "favr = " + Common.getFavrList());
 			
-		
+	    	Common.saveFavrList();
+
 		}
 
 		@Override
