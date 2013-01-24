@@ -1,6 +1,7 @@
 package com.vkassin.mtrade;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,6 +18,14 @@ public class PosAdapter extends ArrayAdapter<Position> {
 	private int resourceId;
 //	private final int colorPos;
 
+	private class PosComparator implements Comparator<Position> {
+
+		public int compare(Position lhs, Position rhs) {
+
+		    return Integer.valueOf(lhs.symbol.length()).compareTo(Integer.valueOf(rhs.symbol.length()));
+		}
+
+		}
 	public PosAdapter(Context context, int resourceId, ArrayList<Position> objects) {
 		
 		super(context, resourceId, objects);
@@ -71,10 +80,13 @@ public class PosAdapter extends ArrayAdapter<Position> {
 		
 		this.items.clear();
 		this.items.addAll(objects);
+		sort(new PosComparator());
+
 	}
 	
 	public void addItems(ArrayList<Position> objects) {
 		this.items.addAll(objects);
+		sort(new PosComparator());
 	}
 
 	public ArrayList<Position> getItems() {
