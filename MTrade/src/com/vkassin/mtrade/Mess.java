@@ -14,6 +14,7 @@ public class Mess implements Serializable {
 	public String from = "";
 	public String msg = "";
 	public String time = "";
+//	public Long typeTwo = Long.valueOf(0);;
 
 	public Mess(String i, JSONObject obj) {
 		
@@ -37,6 +38,7 @@ public class Mess implements Serializable {
 		try{ this.from = obj.getString("from"); }catch(JSONException e){ }
 		try{ this.msg = obj.getString("msg"); }catch(JSONException e){ }
 		try{ this.time = obj.getString("time"); }catch(JSONException e){ }
+//		try{ this.typeTwo = obj.getLong("typeTwo"); }catch(JSONException e){ }
 
 	}
 

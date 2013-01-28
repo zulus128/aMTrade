@@ -64,6 +64,11 @@ public class Order implements Serializable, History {
 	      }
 	    }
 
+	    public static TRANSIT_STAT typeFromOrdinal(Long ordinal) {
+	    
+	    	return lookup.get(ordinal.intValue());
+	    }
+	    
 	    public static String fromOrdinal(Long ordinal) {
 	    	
 	    	TRANSIT_STAT ds = lookup.get(ordinal.intValue());
@@ -194,7 +199,8 @@ public class Order implements Serializable, History {
 	
 	public int getColor() {
 		
-    	TRANSIT_STAT ds = TRANSIT_STAT.lookup.get(status);
+    	TRANSIT_STAT ds = TRANSIT_STAT.typeFromOrdinal(status);
+    	if(ds != null)
     	switch(ds) {
     	
     	case trsWait:
@@ -212,6 +218,12 @@ public class Order implements Serializable, History {
     	case trsDelOper:
     	case trsDelBalOper:
     		return Common.app_ctx.getResources().getColor(R.color.DarkRed);
+		case trsActBalChg:
+		case trsActChg:
+		case trsDeal:
+		case trsDealChg:
+		default:
+			break;
 
     	}
 		return Common.app_ctx.getResources().getColor(R.color.Yellow);

@@ -60,6 +60,8 @@ public class Common {
     public final static Integer SUBSCRIBE = 107;
     public final static Integer QUOTE_CHART_SUBSCRIPTION = 108;
     public final static Integer POSITIONS_INFO = 109;
+    public final static Integer MSG_TYPE_TS_MESSAGE = 110;
+    
     public final static String PROTOCOL_VERSION = "1.0";
     public final static int ERROR_USER_WAS_NOT_FOUND = 200;
     public final static int ERROR_USER_ALREADY_CONNECTED = 201;
@@ -108,6 +110,7 @@ public class Common {
     public static HistoryActivity historyActivity;
     public static ChartActivity chartActivity;
     public static PosActivity posActivity;
+    public static MessageActivity mesActivity;
     
 	public static int historyFilter = 3;
 
@@ -212,13 +215,20 @@ public class Common {
 		mesMap.clear();
 	}
 
-	public static void addMessageToList(String key, JSONObject obj) {
+	public static Mess addMessageToList(String key, JSONObject obj) {
 		
 		Mess old = (Mess)mesMap.get(key);
-		if(old == null)
-			mesMap.put(key, new Mess(key, obj));
-		else
+		if(old == null) {
+
+			Mess m = new Mess(key, obj);
+			mesMap.put(key, m);
+			return m;
+		}
+		else {
 			old.update(obj);
+			return old;
+		}
+		
 	}
 
 	public static ArrayList<Position> getAllPositions() {

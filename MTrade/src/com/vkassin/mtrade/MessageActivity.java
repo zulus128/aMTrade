@@ -20,7 +20,7 @@ public class MessageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.messages);
         
-//        Common.posActivity = this;
+        Common.mesActivity = this;
         
         list = (ListView)this.findViewById(R.id.MesList);
     	adapter = new MessageAdapter(this, R.layout.mesitem, new ArrayList<Mess>());

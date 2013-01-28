@@ -68,6 +68,7 @@ public class InstrActivity extends Activity {
 	
 	public static final int CREATE_PROGRESS_DIALOG = 151;
 	public static final int DISMISS_PROGRESS_DIALOG = 152;
+	public static final int CREATE_MESSAGE_DIALOG = 153;
 	
 	private boolean onstart = false;
 	
@@ -144,6 +145,9 @@ public Handler handler = new Handler(){
     @Override
     public void handleMessage(Message msg) {
         switch(msg.what){
+        case CREATE_MESSAGE_DIALOG:
+        	new AlertDialog.Builder(InstrActivity.this).setMessage(msg.getData().getString("msg")).show();
+        	break;
         case CREATE_PROGRESS_DIALOG:
             //create the dialog
         	AlertDialog.Builder bu = new AlertDialog.Builder(InstrActivity.this).setMessage(R.string.ConnectError1)
@@ -612,20 +616,45 @@ public Handler handler = new Handler(){
                             			if(Common.historyActivity != null)
                             				Common.historyActivity.refresh();
         							}
-                        		else
-                            		if(t == Common.POSITIONS_INFO) {
-                            			
-                            			Iterator<String> keys = data.keys();
-                            			while( keys.hasNext() ){
-                            				String key = (String)keys.next();
-                            				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
-                            					Common.addPositionToList(key, data.getJSONObject(key));
-                            				}
-                            			}
+                            		else
+                                		if(t == Common.POSITIONS_INFO) {
+                                			
+                                			Iterator<String> keys = data.keys();
+                                			while( keys.hasNext() ){
+                                				String key = (String)keys.next();
+                                				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                                					Common.addPositionToList(key, data.getJSONObject(key));
+                                				}
+                                			}
 
-                            			if(Common.posActivity != null)
-                            				Common.posActivity.refresh();
-        							}
+                                			if(Common.posActivity != null)
+                                				Common.posActivity.refresh();
+            							}
+                                		else
+                                    		if(t == Common.MSG_TYPE_TS_MESSAGE) {
+                                    			
+                                    			Iterator<String> keys = data.keys();
+                                    			while( keys.hasNext() ){
+                                    				String key = (String)keys.next();
+                                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                                    					
+                                    					Mess m = Common.addMessageToList(key, data.getJSONObject(key));
+                                    					
+                                    					if(Common.FIRSTLOAD_FINISHED) {
+                                    					
+                                    						Message msg = Message.obtain(handler, CREATE_MESSAGE_DIALOG);
+	                                    					String s = m.from + ": " + m.msg;
+	                                    					Bundle b = new Bundle();
+	                                    					b.putString("msg", s);
+	                                    					msg.setData(b);
+	                                  	            	  	handler.sendMessage(msg);
+                                    					}
+                                    				}
+                                    			}
+
+                                    			if(Common.mesActivity != null)
+                                    				Common.mesActivity.refresh();
+                							}
                     		else
                     		if( t == Common.TRADEACCOUNT) {
                     			
@@ -658,8 +687,9 @@ public Handler handler = new Handler(){
 	            	  e.printStackTrace();
 	
 	            	  stop();
-	
-	            	  handler.sendMessage(Message.obtain(handler,
+	            	  
+	            	  if(!Common.paused)
+	            		  handler.sendMessage(Message.obtain(handler,
 	            	            CREATE_PROGRESS_DIALOG));
             	  }
             	  

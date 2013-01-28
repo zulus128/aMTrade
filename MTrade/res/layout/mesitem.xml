@@ -18,14 +18,14 @@
         android:id="@+id/MesFrom"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.2"
+        android:layout_weight="0.15"
         android:gravity="left" />
 
     <TextView
         android:id="@+id/MesText"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.6"
+        android:layout_weight="0.65"
         android:gravity="left"
         android:paddingRight="4dp" />
 
