@@ -15,6 +15,7 @@ public interface History extends Comparable<History> {
 	public String getOperationType();
 	public Long getLongDTime();
 	public Long getSerial();
+	public int getColor();
 
 
 }

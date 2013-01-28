@@ -29,32 +29,51 @@ public class MTradeActivity extends TabActivity {
 	    Intent intent;  // Reusable Intent for each tab
 
 	    intent = new Intent().setClass(this, InstrActivity.class);
-	    Common.tabspec = Common.tabHost.newTabSpec("t_instr").setIndicator("Инструменты",
-	                      res.getDrawable(R.drawable.ic_menu_goto))
-	                  .setContent(intent);
-	    Common.tabHost.addTab(Common.tabspec);
+    	int i = Common.app_ctx.getResources().getIdentifier("TabCaption1", "string", Common.app_ctx.getPackageName());
+	    Common.tabspec = Common.tabHost.newTabSpec("t_instr").setIndicator(Common.app_ctx.getResources().getString(i),
+                res.getDrawable(android.R.drawable.ic_menu_edit))
+            .setContent(intent);
+    	Common.tabHost.addTab(Common.tabspec);
 
 	    intent = new Intent().setClass(this, QuoteActivity.class);
-	    Common.tabspec = Common.tabHost.newTabSpec("t_quote").setIndicator("Котировки",
-	                      res.getDrawable(R.drawable.ic_menu_goto))
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption2", "string", Common.app_ctx.getPackageName());
+	    Common.tabspec = Common.tabHost.newTabSpec("t_quote").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_edit))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(Common.tabspec);
 
 	    intent = new Intent().setClass(this, ChartActivity.class);
-	    spec = Common.tabHost.newTabSpec("t_chart").setIndicator("Графики",
-	                      res.getDrawable(R.drawable.chart))
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption3", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("t_chart").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_gallery))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
 
 	    intent = new Intent().setClass(this, PosActivity.class);
-	    spec = Common.tabHost.newTabSpec("t_trade").setIndicator("Портфель",
-	                      res.getDrawable(R.drawable.ic_menu_friendslist))
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption4", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("t_trade").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_agenda))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
 
 	    intent = new Intent().setClass(this, HistoryActivity.class);
-	    spec = Common.tabHost.newTabSpec("tcab").setIndicator("История",
-	                      res.getDrawable(R.drawable.ic_menu_show_list))
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption5", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("tcab").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_sort_by_size))
+	                  .setContent(intent);
+	    Common.tabHost.addTab(spec);
+
+	    intent = new Intent().setClass(this, MessageActivity.class);
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption6", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("t_mess").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_upload))
+	                  .setContent(intent);
+	    Common.tabHost.addTab(spec);
+	    
+	    intent = new Intent().setClass(this, NewsActivity.class);
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption7", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("t_mess").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_compass))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
 	    

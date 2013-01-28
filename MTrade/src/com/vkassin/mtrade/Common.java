@@ -97,6 +97,7 @@ public class Common {
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
 	private static HashMap<String, Position> posMap = new HashMap<String, Position>();
+	private static HashMap<String, Mess> mesMap = new HashMap<String, Mess>();
 	
 	public static HashMap<String, String> myaccount = new HashMap<String, String>();
 
@@ -199,10 +200,31 @@ public class Common {
 		
 	}
 
+	public static ArrayList<Mess> getAllMessages() {
+		
+		ArrayList<Mess> arr = new ArrayList<Mess>(mesMap.values());
+//		Log.w(TAG, "mes_cnt = " + arr.size());
+		return arr;
+	}
+
+	public static void clearMessageList() {
+		
+		mesMap.clear();
+	}
+
+	public static void addMessageToList(String key, JSONObject obj) {
+		
+		Mess old = (Mess)mesMap.get(key);
+		if(old == null)
+			mesMap.put(key, new Mess(key, obj));
+		else
+			old.update(obj);
+	}
+
 	public static ArrayList<Position> getAllPositions() {
 		
 		ArrayList<Position> arr = new ArrayList<Position>(posMap.values());
-		Log.w(TAG, "pos_cnt = " + arr.size());
+//		Log.w(TAG, "pos_cnt = " + arr.size());
 		return arr;
 	}
 

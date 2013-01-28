@@ -463,6 +463,7 @@ public Handler handler = new Handler(){
                         			Common.clearAccountList();
                         			Common.clearPositionList();
                         			Common.clearHistoryList();
+                        			Common.clearMessageList();
                         			if(Common.historyActivity != null)
                         				Common.historyActivity.refresh();
                         			if(Common.posActivity != null)

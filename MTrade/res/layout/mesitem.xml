@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal"
+    android:paddingLeft="3dp"
+    android:weightSum="1" >
+
+    <TextView
+        android:id="@+id/MesTime"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:gravity="left" />
+
+    <TextView
+        android:id="@+id/MesFrom"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.2"
+        android:gravity="left" />
+
+    <TextView
+        android:id="@+id/MesText"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.6"
+        android:gravity="left"
+        android:paddingRight="4dp" />
+
+</LinearLayout>

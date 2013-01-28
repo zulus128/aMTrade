@@ -24,8 +24,8 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 	private ArrayList<History> items1;
 	private Context ctx;
 	private int resourceId;
-	private final int colorDeal;
-	private final int colorTransit;
+//	private final int colorDeal;
+//	private final int colorTransit;
 	private static final String TAG = "MTrade.HistoryAdapter"; 
 
 	private TracksFilter filter;
@@ -73,8 +73,8 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 		this.ctx = context;
 		this.resourceId = resourceId;
 		
-		this.colorDeal =  ctx.getResources().getColor(R.color.Orange);
-		this.colorTransit =  ctx.getResources().getColor(R.color.Yellow);
+//		this.colorDeal =  ctx.getResources().getColor(R.color.Orange);
+//		this.colorTransit =  ctx.getResources().getColor(R.color.Yellow);
 		
 //		Log.e(TAG, "stats = " + DEAL_STAT.fromOrdinal(55));
 	}
@@ -93,32 +93,45 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 
     		TextView type = (TextView) convertView.findViewById(R.id.HistoryType);
     		type.setText(item.getOperationType());
-    		type.setTextColor(d?colorDeal:colorTransit);
+//    		type.setTextColor(d?colorDeal:colorTransit);
+    		type.setTextColor(item.getColor());
 
     		TextView name = (TextView) convertView.findViewById(R.id.HistoryName);
     		name.setText(item.getInstr());
-    		name.setTextColor(d?colorDeal:colorTransit);
+//    		name.setTextColor(d?colorDeal:colorTransit);
+    		name.setTextColor(item.getColor());
+
 
     		TextView dir = (TextView) convertView.findViewById(R.id.HistoryDirect);
     		dir.setText(item.getDirect());
-    		dir.setTextColor(d?colorDeal:colorTransit);
+//    		dir.setTextColor(d?colorDeal:colorTransit);
+    		dir.setTextColor(item.getColor());
+
 
     		TextView price = (TextView) convertView.findViewById(R.id.HistoryPrice);
     		price.setText(item.getPrice());
-    		price.setTextColor(d?colorDeal:colorTransit);
+//    		price.setTextColor(d?colorDeal:colorTransit);
+    		price.setTextColor(item.getColor());
+
 
     		TextView qty = (TextView) convertView.findViewById(R.id.HistoryQty);
     		qty.setText(item.getQty());
-    		qty.setTextColor(d?colorDeal:colorTransit);
+//    		qty.setTextColor(d?colorDeal:colorTransit);
+    		qty.setTextColor(item.getColor());
+
 
     		TextView st = (TextView) convertView.findViewById(R.id.HistoryStatus);
     		st.setText(trim(item.getStatus()));
 //    		st.setText(trim(d?DEAL_STAT.fromOrdinal(item.getStatus()):TRANSIT_STAT.fromOrdinal(item.getStatus())));
-    		st.setTextColor(d?colorDeal:colorTransit);
+//    		st.setTextColor(d?colorDeal:colorTransit);
+    		st.setTextColor(item.getColor());
+
 
     		TextView date = (TextView) convertView.findViewById(R.id.HistoryDate);
     		date.setText(item.getDTime());
-    		date.setTextColor(d?colorDeal:colorTransit);
+//    		date.setTextColor(d?colorDeal:colorTransit);
+    		date.setTextColor(item.getColor());
+
 
     	}
     	

@@ -224,4 +224,10 @@ public class Deal implements Serializable, History {
 		
 		return "deal";
 	}
+	
+	public int getColor() {
+		
+		return Common.app_ctx.getResources().getColor(R.color.Orange);
+	}
+
 }

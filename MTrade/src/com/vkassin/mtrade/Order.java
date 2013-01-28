@@ -192,4 +192,30 @@ public class Order implements Serializable, History {
 		return "transit";
 	}
 	
+	public int getColor() {
+		
+    	TRANSIT_STAT ds = TRANSIT_STAT.lookup.get(status);
+    	switch(ds) {
+    	
+    	case trsWait:
+    		return Common.app_ctx.getResources().getColor(R.color.White);
+    		
+    	case trsActive:
+    	case trsActBal:
+    		return Common.app_ctx.getResources().getColor((direct == 0)?R.color.Green:R.color.Red);
+
+    	case trsReject:
+    	case trsDelBrok:
+    	case trsDelInv:
+    	case trsDelBalBrok:
+    	case trsDelBalInv:
+    	case trsDelOper:
+    	case trsDelBalOper:
+    		return Common.app_ctx.getResources().getColor(R.color.DarkRed);
+
+    	}
+		return Common.app_ctx.getResources().getColor(R.color.Yellow);
+	}
+
+	
 }
