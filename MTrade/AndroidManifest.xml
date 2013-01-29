@@ -52,6 +52,10 @@
             android:name=".NewsActivity"
             android:configChanges="orientation" >
         </activity>
-    </application>
+        <activity
+            android:name=".NewsDetail"
+            android:configChanges="orientation" >
+        </activity>
+        </application>
 
 </manifest>

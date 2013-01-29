@@ -1,12 +1,20 @@
 package com.vkassin.mtrade;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Reader;
 import java.io.StreamCorruptedException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.AbstractSequentialList;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -20,8 +28,17 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -94,6 +111,12 @@ public class Common {
 	private static final String FLIST_FNAME = "favr_list";
 	private static final String ACCOUNT_FNAME = "myacc";
 	
+	public static final String MENU_URL = "http://www.kase.kz/ru/feed/news/kase";
+	public static final String ITEM_TAG = "item";
+	public static final String TITLE_TAG = "title";
+	public static final String DATE_TAG = "pubDate";
+	public static final String LINK_TAG = "link";
+
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
 	private static HashMap<String, History> historyMap = new HashMap<String, History>();
 	private static HashSet<String> favrList = new HashSet<String>();
@@ -111,7 +134,9 @@ public class Common {
     public static ChartActivity chartActivity;
     public static PosActivity posActivity;
     public static MessageActivity mesActivity;
-    
+
+    public static RSSItem curnews;
+
 	public static int historyFilter = 3;
 
     public static int activities = 0;
@@ -677,4 +702,83 @@ public class Common {
         dialog.getWindow().setAttributes(lp);
     }
 	
+	public static ArrayList<RSSItem> getNews() {
+
+		RSSHandler handler = new RSSHandler();
+		String errorMsg = generalWebServiceCall(MENU_URL, handler);
+
+		if(errorMsg.length() > 0)
+			Log.e(TAG, errorMsg);
+
+		return handler.getParsedData();
+	}
+	
+	public static String generalWebServiceCall(String urlStr, ContentHandler handler) {
+
+		String errorMsg = "";
+
+		try {
+			URL url = new URL(urlStr);
+
+			HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+	        urlc.setRequestProperty("User-Agent", "Android Application: aMTrade");
+	        urlc.setRequestProperty("Connection", "close");
+//	        urlc.setRequestProperty("Accept-Charset", "windows-1251");
+//	        urlc.setRequestProperty("Accept-Charset", "windows-1251,utf-8;q=0.7,*;q=0.7");
+	        urlc.setRequestProperty("Accept-Charset", "utf-8");
+
+	        urlc.setConnectTimeout(1000 * 5); // mTimeout is in seconds
+	        urlc.setDoInput(true);
+	        urlc.connect();
+
+	        if(urlc.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				// Get a SAXParser from the SAXPArserFactory.
+				SAXParserFactory spf = SAXParserFactory.newInstance();
+				SAXParser sp = spf.newSAXParser();
+
+				// Get the XMLReader of the SAXParser we created.
+				XMLReader xr = sp.getXMLReader();
+
+				// Apply the handler to the XML-Reader
+				xr.setContentHandler(handler);
+
+				// Parse the XML-data from our URL.
+				InputStream is = urlc.getInputStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                ByteArrayBuffer baf = new ByteArrayBuffer(500);
+                int current = 0;
+                while ((current = bis.read()) != -1) {
+                        baf.append((byte) current);
+                }
+                ByteArrayInputStream bais = new ByteArrayInputStream(baf.toByteArray());
+//                Reader isr = new InputStreamReader(bais, "windows-1251");
+                Reader isr = new InputStreamReader(bais, "utf-8");
+                InputSource ist = new InputSource();
+                //ist.setEncoding("UTF-8");
+                ist.setCharacterStream(isr);
+				xr.parse(ist);
+				// Parsing has finished.
+
+				bis.close();
+				baf.clear();
+				bais.close();
+				is.close();
+	        }
+
+	        urlc.disconnect();
+
+		} catch (SAXException e) {
+			// All is OK :)
+		} catch (MalformedURLException e) {
+			Log.e(TAG, errorMsg = "MalformedURLException");
+		} catch (IOException e) {
+			Log.e(TAG, errorMsg = "IOException");
+		} catch (ParserConfigurationException e) {
+			Log.e(TAG, errorMsg = "ParserConfigurationException");
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Log.e(TAG, errorMsg = "ArrayIndexOutOfBoundsException");
+		}
+
+		return errorMsg;
+	}
 }
