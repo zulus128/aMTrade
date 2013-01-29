@@ -34,12 +34,12 @@ public class Quote implements Comparable<Quote> {
 		if(this.price < arg0.price)
 	    {
 	      /* текущее меньше полученного */
-	      return -1;
+	      return 1;
 	    }   
 	    else if(this.price > arg0.price)
 	    {
 	      /* текущее больше полученного */
-	      return 1;
+	      return -1;
 	    }
 	    /* текущее равно полученному */
 	    return 0;  

@@ -173,6 +173,7 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 	}
 
 	public ArrayList<History> getItems() {
+		
 		return items;
 	}
 	

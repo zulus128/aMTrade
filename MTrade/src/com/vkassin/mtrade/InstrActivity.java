@@ -224,28 +224,17 @@ public Handler handler = new Handler(){
 
 			}
 		});
-     
-//    	Common.clearInstrList();
-//    	Common.clearOrderList();
-    	
-//    	refresh();
 
-//    	Common.loadAccountDetails();
-//    	
-//    	if(Common.confChanged) {
-//    		
-//    		Common.confChanged = false;
-//    	}
-//    	else {
-//    		
-//    		if(Common.activities == 0)
-//    			Common.login(this);
-//    	}
+       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
 
     }
 
     public JSONObject getLogin() {
     	
+    	
+       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
+
+
     	if(!Common.loginFromDialog)
     		Common.loadAccountDetails();
     	
@@ -259,7 +248,8 @@ public Handler handler = new Handler(){
 
         String name = Common.myaccount.get("name");
         String password = Common.myaccount.get("password");
-        
+
+
         if((name == null) || (password == null)) {
 
         	Common.login(this);
@@ -462,12 +452,18 @@ public Handler handler = new Handler(){
     							Log.e(TAG, "Logion status: " + s);
                     			if(s == 0) {
 
+                    		        String name = Common.myaccount.get("name");
+                    		       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name) + " " + name);
+
                     				
                         			Common.clearInstrList();
                         			Common.clearAccountList();
                         			Common.clearPositionList();
                         			Common.clearHistoryList();
                         			Common.clearMessageList();
+                        			
+//                        			Common.clearFavrList();
+                        			
                         			if(Common.historyActivity != null)
                         				Common.historyActivity.refresh();
                         			if(Common.posActivity != null)
@@ -478,6 +474,11 @@ public Handler handler = new Handler(){
                         			pb.setVisibility(View.VISIBLE);
                         			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
+                        			
+                        	        String name1 = Common.myaccount.get("name");
+                        	        if(!Common.oldName.equals(name1))
+                        	        	Common.clearFavrList();
+
                         			Common.saveAccountDetails();
                         			
                     			}

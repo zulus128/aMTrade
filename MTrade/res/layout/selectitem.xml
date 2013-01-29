@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal"
+    android:paddingLeft="3dp"
+    android:weightSum="1" >
+
+    <LinearLayout
+        android:id="@+id/LinLayoutSel01"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.9"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/SelectSymbol"
+            style="@style/CodeFontSel1"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:id="@+id/SelectDescr"
+            style="@style/CodeFontSel2"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.1"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+</LinearLayout>

@@ -186,6 +186,7 @@ public final class R {
         public static final int LinLayoutHi01=0x7f080004;
         public static final int LinLayoutHor01=0x7f080005;
         public static final int LinLayoutPos02=0x7f080009;
+        public static final int LinLayoutSel01=0x7f080047;
         public static final int LinLayout_q01=0x7f08003e;
         public static final int MesFrom=0x7f080024;
         public static final int MesList=0x7f080026;
@@ -202,11 +203,14 @@ public final class R {
         public static final int QuoteList=0x7f08003f;
         public static final int QuotePrice=0x7f080041;
         public static final int QuoteSellQ=0x7f080042;
+        public static final int SelectDescr=0x7f080049;
+        public static final int SelectSymbol=0x7f080048;
         public static final int TableLayout01=0x7f080046;
         public static final int acc_spinner=0x7f080031;
         public static final int btnClear=0x7f080045;
         public static final int buttonlayout=0x7f080043;
         public static final int cancelbutt=0x7f080037;
+        public static final int checkbox=0x7f08004a;
         public static final int customorderdialog=0x7f08001b;
         public static final int gologin=0x7f080022;
         public static final int grbutton12=0x7f080003;
@@ -216,15 +220,15 @@ public final class R {
         public static final int hbutton1=0x7f080006;
         public static final int hbutton2=0x7f080007;
         public static final int hbutton3=0x7f080008;
-        public static final int histdate=0x7f08004a;
-        public static final int histinstr=0x7f080047;
-        public static final int histprice=0x7f080049;
-        public static final int histstatus=0x7f080048;
+        public static final int histdate=0x7f08004e;
+        public static final int histinstr=0x7f08004b;
+        public static final int histprice=0x7f08004d;
+        public static final int histstatus=0x7f08004c;
         public static final int instrtext=0x7f08002b;
         public static final int loginnameedit=0x7f08001e;
         public static final int logintext=0x7f08001d;
-        public static final int menulogin=0x7f08004c;
-        public static final int menuselect=0x7f08004b;
+        public static final int menulogin=0x7f080050;
+        public static final int menuselect=0x7f08004f;
         public static final int orderlayout1=0x7f080029;
         public static final int orderlayout2=0x7f08001c;
         public static final int orderlayout233=0x7f080030;
@@ -261,6 +265,7 @@ public final class R {
         public static final int quotes=0x7f03000d;
         public static final int quotesitem=0x7f03000e;
         public static final int select_instr=0x7f03000f;
+        public static final int selectitem=0x7f030010;
     }
     public static final class menu {
         public static final int histmenu=0x7f070000;
@@ -410,6 +415,8 @@ public final class R {
         public static final int CodeFontHist1=0x7f060003;
         public static final int CodeFontOrder=0x7f060005;
         public static final int CodeFontPos=0x7f060004;
+        public static final int CodeFontSel1=0x7f060009;
+        public static final int CodeFontSel2=0x7f06000a;
         public static final int CustomTabWidget=0x7f060007;
         public static final int CustomTabWidgetText=0x7f060008;
         public static final int CustomTheme=0x7f060006;

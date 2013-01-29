@@ -115,6 +115,7 @@ public class Common {
 	public static int historyFilter = 3;
 
     public static int activities = 0;
+    public static String oldName = "x";
 
 	public static Instrument getSelectedInstrument() {
 		return selectedInstrument;
@@ -328,6 +329,13 @@ public class Common {
 		return favrList;
 	}
 
+	public static void clearFavrList() {
+		
+		favrList.clear();
+		validateFavourites();
+		saveFavrList();
+	}
+	
 	public static void setFavrList(HashSet<String> a) {
 		
 		favrList = a;
@@ -472,7 +480,9 @@ public class Common {
     	final EditText passtxt = (EditText) dialog.findViewById(R.id.passwordedit);
 
     	String nam = myaccount.get("name");
-    	if(nam != null) {
+       	Common.oldName = nam;
+
+       	if(nam != null) {
     		
     		nametxt.setText(nam);
     		passtxt.requestFocus();
@@ -498,6 +508,7 @@ public class Common {
     		          Log.e(TAG, "Error! Cannot create JSON logout object", e);
     		      }
     		      
+
     			 myaccount.put("name", nametxt.getText().toString());
     			 myaccount.put("password", passtxt.getText().toString());
 
