@@ -101,7 +101,7 @@
     <string name="TransitStatusOk">Операция прошла успешно</string>
     <string name="TransitStatusError">Операция не прошла. Ошибка:</string>
     <string name="err_NoPermissions">не хватает полномочий</string>
-    <string name="err_OrderDisabled">запрещена подача объектов</string>
+    <string name="err_OrderDisabled">запрещена подача заявок</string>
     <string name="err_OrderTypeDisabled">запрещена подача объектов указанного типа</string>
     <string name="err_OrderCheckLot">указано неверное количество</string>
     <string name="err_OrderCheckMax">превышены лимиты</string>

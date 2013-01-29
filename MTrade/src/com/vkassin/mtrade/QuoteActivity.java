@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
@@ -55,8 +57,17 @@ public class QuoteActivity extends Activity {
 		
 	      if(Common.FIRSTLOAD_FINISHED) {
 	      	
-        	adapter.setItems(Common.getSelectedInstrument().getQuotes());
-	  		adapter.notifyDataSetChanged();
+	    	ArrayList<Quote> qq = Common.getSelectedInstrument().getQuotes();
+        	adapter.setItems(qq);
+        	adapter.notifyDataSetChanged();
+        	
+        	int c = 0;
+        	for(Quote q: qq)
+        		if(q.qtySell > 0)
+        			c++;
+        	int pos = ((c - 3) < 0)?0:(c - 3);
+        	list.setSelection(pos);
+	  		
 	        }
 
 	}

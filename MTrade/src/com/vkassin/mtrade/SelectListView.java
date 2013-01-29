@@ -178,6 +178,7 @@ public class SelectListView extends ListActivity {
 
 		SaveSelections();
 
+		adapter.notifyDataSetChanged();
 	}
 
 	public void LoadSelections() {
