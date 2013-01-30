@@ -79,6 +79,9 @@ public class MTradeActivity extends TabActivity {
 	    
     	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.GONE);
 
+    	Common.tabHost.getTabWidget().getChildAt(2).setVisibility(View.GONE);
+//    	Common.tabHost.getTabWidget().getChildAt(2).setEnabled(false);
+
 		Common.paused1 = false;
 
     }
@@ -104,7 +107,7 @@ public class MTradeActivity extends TabActivity {
     protected void onPause() {
         super.onPause();
         
- 		Log.e(TAG, "--++++++++++++ onPause");
+// 		Log.e(TAG, "--++++++++++++ onPause");
         
  		Common.paused = true;
 //  		Common.confChanged1 = false;
@@ -116,7 +119,7 @@ public class MTradeActivity extends TabActivity {
     protected void onResume() {
         super.onResume();
         
- 		Log.e(TAG, "///////////////////--++++++++++++ onResume " + Common.confChanged1 + " onPause = " + Common.paused);
+// 		Log.e(TAG, "///////////////////--++++++++++++ onResume " + Common.confChanged1 + " onPause = " + Common.paused);
         
     	Common.loadAccountDetails();
     	
@@ -143,7 +146,7 @@ public class MTradeActivity extends TabActivity {
     	
       super.onDestroy();
 
-      Log.e(TAG, "///////////////++++++++++++ onDestroy");
+//      Log.e(TAG, "///////////////++++++++++++ onDestroy");
     }
     
 	@Override
@@ -151,7 +154,7 @@ public class MTradeActivity extends TabActivity {
 	  super.onConfigurationChanged(newConfig);
 	  
 	  
-      Log.e(TAG, "////////////////++++++++++++ ConfigurationChanged to " + !Common.confChanged1);
+//      Log.e(TAG, "////////////////++++++++++++ ConfigurationChanged to " + !Common.confChanged1);
       
       Common.confChanged1 = !Common.confChanged1;
 

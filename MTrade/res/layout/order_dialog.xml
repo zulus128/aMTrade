@@ -86,6 +86,31 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/orderlayout26"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/expdatetext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:text="@string/ExpDate"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/expdateedit"
+                style="@style/CodeFontOrder"
+                android:layout_weight="0.5"
+                android:focusableInTouchMode="false"
+                android:inputType="date" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/orderlayout233"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -95,10 +120,9 @@
 
             <Spinner
                 android:id="@+id/acc_spinner"
-                style="@style/CodeFont1" 
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-                />
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/Account" />
 
             <RadioGroup
                 android:id="@+id/radioGroup1"

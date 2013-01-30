@@ -74,8 +74,8 @@ public class Instrument implements Serializable {
 		
 //		Log.i(TAG, symbol + " : " + description);
 		
-		if(Common.getSelectedInstrument() == null)
-			Common.setSelectedInstrument(this);
+//		if(Common.getSelectedInstrument() == null)
+//			Common.setSelectedInstrument(this);
 		
 	}
 		

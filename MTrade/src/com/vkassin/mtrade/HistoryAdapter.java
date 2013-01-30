@@ -132,6 +132,9 @@ public class HistoryAdapter extends ArrayAdapter<History> {
 //    		date.setTextColor(d?colorDeal:colorTransit);
     		date.setTextColor(item.getColor());
 
+    		TextView rest = (TextView) convertView.findViewById(R.id.HistoryRest);
+    		rest.setText(item.getRest());
+    		rest.setTextColor(item.getColor());
 
     	}
     	

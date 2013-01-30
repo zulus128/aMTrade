@@ -275,7 +275,7 @@ public Handler handler = new Handler(){
 
     public void writeJSONMsg(JSONObject msg) throws Exception {
     	
-//    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
+    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
         byte[] array = msg.toString().getBytes();
         ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
         buff.putInt(array.length);
@@ -461,6 +461,7 @@ public Handler handler = new Handler(){
                         			Common.clearPositionList();
                         			Common.clearHistoryList();
                         			Common.clearMessageList();
+//                        			Common.setSelectedInstrument(null);
                         			
 //                        			Common.clearFavrList();
                         			
@@ -498,11 +499,24 @@ public Handler handler = new Handler(){
                         			
                         			onResume1();
                     			}
+                    			else 
+                    			if((s == 200)||(s == 202)) {
+                    			
+                    				Toast.makeText(InstrActivity.this, R.string.LoginFailed200202, Toast.LENGTH_LONG).show();
+                    				Common.login(InstrActivity.this);
+
+                    			}
+                        		else 
+                            	if(s == 201) {
+                            				
+                    				Toast.makeText(InstrActivity.this, R.string.LoginFailed201, Toast.LENGTH_LONG).show();
+                    				Common.login(InstrActivity.this);
+
+                            	}
                     			else {
                     				
-                    				Toast.makeText(InstrActivity.this, "Login failed", Toast.LENGTH_LONG).show();
+                    				Toast.makeText(InstrActivity.this, R.string.LoginFailed, Toast.LENGTH_LONG).show();
                     				Common.login(InstrActivity.this);
-//                    				break;
                     			}
 
                     		}
@@ -716,42 +730,19 @@ public Handler handler = new Handler(){
     	  ioe.printStackTrace();
 
     	  Toast toast = Toast.makeText(InstrActivity.this, R.string.ConnectError, Toast.LENGTH_LONG);
-    	  toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
+//    	  toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0, 0);
     	  toast.show();
 
     	  stop();
-    	  
+
+    	  Common.login(InstrActivity.this);
+
     	  return false;
       }
 //    }//while(true)
       return true;
   }
    
-    @Override
-    public void onStart() {
-    	
-      super.onStart();
-      Log.e(TAG, "--- onStart " + Common.activities);
-		
-//      if(Common.activities == 0)
-// 			Common.login(this);
-		
-//    	Common.loadAccountDetails();
-//    	
-//      	if(Common.confChanged) {
-//      		
-//      		Common.confChanged = false;
-//      	}
-//      	else {
-//      		
-//      		if(Common.activities == 0)
-//      			Common.login(this);
-//      	}
-//
-//      Common.activities++;
-//      onstart = true;
-    }
-    
     private void onResume1() {
     	
         if(Common.FIRSTLOAD_FINISHED) {

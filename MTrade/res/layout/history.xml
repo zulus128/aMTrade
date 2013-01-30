@@ -44,20 +44,20 @@
             android:layout_height="wrap_content"
             android:background="@color/DarkGray"
             android:orientation="horizontal"
-            android:paddingLeft="3dp"
+            android:padding="3dp"
             android:weightSum="1" >
 
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.14"
+                android:layout_weight="0.10"
                 android:gravity="left"
                 android:text="@string/TitleType" />
 
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.14"
+                android:layout_weight="0.10"
                 android:gravity="center"
                 android:text="@string/TitleInstr" />
 
@@ -78,9 +78,16 @@
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.15"
+                android:layout_weight="0.13"
                 android:gravity="right"
                 android:text="@string/TitleQuantity" />
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.13"
+                android:gravity="right"
+                android:text="@string/TitleRestCut" />
 
             <TextView
                 style="@style/CodeFontHist1"
@@ -92,9 +99,8 @@
             <TextView
                 style="@style/CodeFontHist1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.22"
-                android:gravity="right"
-                android:paddingRight="4dp"
+                android:layout_weight="0.17"
+                android:gravity="center"
                 android:text="@string/TitleDate" />
         </LinearLayout>
 
@@ -106,7 +112,6 @@
             android:choiceMode="singleChoice"
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="true"
-            android:paddingBottom="5dp"
             android:paddingTop="0dp" >
         </ListView>
     </LinearLayout>

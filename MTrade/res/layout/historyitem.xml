@@ -4,21 +4,20 @@
     android:layout_height="wrap_content"
     android:background="@android:color/transparent"
     android:orientation="horizontal"
-    android:paddingLeft="3dp"
     android:weightSum="1" >
 
     <TextView
         android:id="@+id/HistoryType"
         style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.14"
+        android:layout_weight="0.10"
         android:gravity="left" />
 
     <TextView
         android:id="@+id/HistoryName"
         style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.14"
+        android:layout_weight="0.10"
         android:gravity="center" />
 
     <TextView
@@ -39,7 +38,14 @@
         android:id="@+id/HistoryQty"
         style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.15"
+        android:layout_weight="0.13"
+        android:gravity="right" />
+
+    <TextView
+        android:id="@+id/HistoryRest"
+        style="@style/CodeFontHist"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.13"
         android:gravity="right" />
 
     <TextView
@@ -48,14 +54,14 @@
         android:layout_gravity="center_vertical"
         android:layout_weight="0.12"
         android:gravity="left"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="5dp" />
 
     <TextView
         android:id="@+id/HistoryDate"
         style="@style/CodeFontHist"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.22"
+        android:layout_weight="0.17"
         android:gravity="right"
-        android:paddingRight="4dp" />
+         />
 
 </LinearLayout>

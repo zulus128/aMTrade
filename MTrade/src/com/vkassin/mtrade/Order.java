@@ -24,9 +24,11 @@ public class Order implements Serializable, History {
 	public Long direct = Long.valueOf(0);
 	private Double price = Double.valueOf(0);
 	public Long qty = Long.valueOf(0);
+	public Long reminder = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
 	public Long transSerial = Long.valueOf(0);
+	public Long ordSerial = Long.valueOf(0);
 	
 	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
@@ -107,11 +109,13 @@ public class Order implements Serializable, History {
 
 		try{ this.price = obj.getDouble("price"); }catch(JSONException e){ }
 		try{ this.qty = obj.getLong("quantity"); }catch(JSONException e){ }
+		try{ this.reminder = obj.getLong("remainder"); }catch(JSONException e){ }
 		try{ this.instrId = obj.getLong("instrId"); }catch(JSONException e){ }
 		try{ this.direct = obj.getLong("direct"); }catch(JSONException e){ }
 		try{ this.status = obj.getLong("status"); }catch(JSONException e){ }
 		try{ this.dtime = obj.getLong("dateTime"); }catch(JSONException e){ }
 		try{ this.transSerial = obj.getLong("transSerial"); }catch(JSONException e){ }
+		try{ this.ordSerial = obj.getLong("ordSerial"); }catch(JSONException e){ }
 
 	}
 
@@ -137,6 +141,11 @@ public class Order implements Serializable, History {
 //		return price.toString();
 		return twoDForm.format(price);
 
+	}
+
+	public String getRest() {
+		
+		return reminder.toString();
 	}
 
 	public Double getPriceD() {
@@ -194,9 +203,14 @@ public class Order implements Serializable, History {
 
 	public String toString() {
 		
-		return "transit";
+		return "transit ." + ordSerial + ".";
 	}
-	
+
+	public Long getOrdSerial() {
+		
+		return ordSerial;
+	}
+
 	public int getColor() {
 		
     	TRANSIT_STAT ds = TRANSIT_STAT.typeFromOrdinal(status);
@@ -208,7 +222,9 @@ public class Order implements Serializable, History {
     		
     	case trsActive:
     	case trsActBal:
-    		return Common.app_ctx.getResources().getColor((direct == 0)?R.color.Green:R.color.Red);
+		case trsActBalChg:
+		case trsActChg:
+    		return Common.app_ctx.getResources().getColor((direct == 0)?R.color.LimeGreen:R.color.Red);
 
     	case trsReject:
     	case trsDelBrok:
@@ -218,8 +234,6 @@ public class Order implements Serializable, History {
     	case trsDelOper:
     	case trsDelBalOper:
     		return Common.app_ctx.getResources().getColor(R.color.DarkRed);
-		case trsActBalChg:
-		case trsActChg:
 		case trsDeal:
 		case trsDealChg:
 		default:
@@ -227,6 +241,23 @@ public class Order implements Serializable, History {
 
     	}
 		return Common.app_ctx.getResources().getColor(R.color.Yellow);
+	}
+
+	public boolean canBeDeleted() {
+
+		TRANSIT_STAT ds = TRANSIT_STAT.typeFromOrdinal(status);
+    	if(ds != null)
+    	switch(ds) {
+    	
+    	case trsWait:
+    	case trsActive:
+    	case trsActBal:
+		case trsActBalChg:
+		case trsActChg:
+			return true;
+    	}
+    	
+		return false;
 	}
 
 	

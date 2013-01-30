@@ -110,8 +110,19 @@ public class InstrsAdapter extends ArrayAdapter<Instrument> {
 		this.items.clear();
 		this.items.addAll(objects);
 		
-		if((selectedPos < 0) && (objects.size() > 0))
+		if(objects.size() == 0) {
+		
+			setSelectedPosition(-1);
+			Common.setSelectedInstrument(null);
+
+		}
+
+		if((selectedPos < 0) && (objects.size() > 0)) {
+			
 			setSelectedPosition(0);
+			Common.setSelectedInstrument(this.getItem(0));
+		}
+
 	}
 	
 	public void addItems(ArrayList<Instrument> objects) {

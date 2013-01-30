@@ -27,6 +27,7 @@ public class Deal implements Serializable, History {
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
 	public Long dealSerial = Long.valueOf(0);
+	private Long ordSerial = Long.valueOf(0);
 
 	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
@@ -139,6 +140,7 @@ public class Deal implements Serializable, History {
 		}
 		
 		try{ this.dealSerial = obj.getLong("dealSerial"); }catch(JSONException e){ }
+		try{ this.ordSerial = obj.getLong("ordSerial"); }catch(JSONException e){ }
 
 	}
 
@@ -222,12 +224,28 @@ public class Deal implements Serializable, History {
 	
 	public String toString() {
 		
-		return "deal";
+		return "deal ." + ordSerial + ".";
 	}
 	
+	public Long getOrdSerial() {
+		
+		return ordSerial;
+	}
+
 	public int getColor() {
 		
 		return Common.app_ctx.getResources().getColor(R.color.Orange);
 	}
+
+	public boolean canBeDeleted() {
+		
+		return false;
+	}
+	
+	public String getRest() {
+		
+		return "";
+	}
+
 
 }
