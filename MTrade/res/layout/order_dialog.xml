@@ -55,11 +55,30 @@
                 android:text="@string/Price"
                 android:textColor="#FFFFFF" />
 
+            <Button
+                android:id="@+id/buttonPriceMinus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="-" />
+
             <EditText
                 android:id="@+id/priceedit"
                 style="@style/CodeFontOrder"
-                android:layout_weight="0.5"
-                android:inputType="numberDecimal" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.34"
+                android:gravity="center_vertical|right"
+                android:inputType="numberDecimal"
+                android:text="0.00" />
+
+            <Button
+                android:id="@+id/buttonPricePlus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="+" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,11 +97,30 @@
                 android:text="@string/Quantity"
                 android:textColor="#FFFFFF" />
 
+            <Button
+                android:id="@+id/buttonQtyMinus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="-" />
+
             <EditText
                 android:id="@+id/quantedit"
                 style="@style/CodeFontOrder"
-                android:layout_weight="0.5"
-                android:inputType="numberDecimal" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.34"
+                android:gravity="right|center_vertical"
+                android:inputType="numberDecimal"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/buttonQtyPlus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="+" />
         </LinearLayout>
 
         <LinearLayout

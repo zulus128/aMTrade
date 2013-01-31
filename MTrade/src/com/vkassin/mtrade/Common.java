@@ -15,6 +15,8 @@ import java.io.StreamCorruptedException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.AbstractSequentialList;
 import java.util.AbstractSet;
@@ -69,7 +71,16 @@ public class Common {
 	public enum item_type {
 		IT_NONE, IT_INSTR
 	};
+	
+	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
+	static {
+	
+		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+		dfs.setDecimalSeparator('.');
+		twoDForm.setDecimalFormatSymbols(dfs);
+	}
+	
 	public final static Integer NO_ERRORS = 0;
 	public final static Integer INITIAL_LOADING_COMPLITE = 1;
 	public final static Integer HEARTBEAT = 10;
@@ -641,12 +652,11 @@ public class Common {
 		final Dialog dialog = new Dialog(ctx);
 		dialog.setContentView(R.layout.order_dialog);
 		dialog.setTitle(R.string.OrderDialogTitle);
-
 		
 		datetxt = (EditText) dialog
 				.findViewById(R.id.expdateedit);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		Date dat = new Date();
+		final Date dat = new Date();
 		datetxt.setText(sdf.format(dat));
 		mYear = dat.getYear() + 1900;
 		mMonth = dat.getMonth();
@@ -676,6 +686,82 @@ public class Common {
 				.findViewById(R.id.priceedit);
 		final EditText quanttxt = (EditText) dialog
 				.findViewById(R.id.quantedit);
+
+		
+		final Button buttonpm = (Button) dialog.findViewById(R.id.buttonPriceMinus);
+        buttonpm.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	
+            	try {
+
+					double price = Double.valueOf(pricetxt.getText().toString());
+					price -= 0.01;
+					if(price < 0)
+						price = 0;
+					pricetxt.setText(twoDForm.format(price));
+					
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectPrice, 	Toast.LENGTH_SHORT).show();
+				}
+            }
+        });
+
+        final Button buttonpp = (Button) dialog.findViewById(R.id.buttonPricePlus);
+        buttonpp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	
+            	try {
+
+					double price = Double.valueOf(pricetxt.getText().toString());
+					price += 0.01;
+					pricetxt.setText(twoDForm.format(price));
+					
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectPrice, 	Toast.LENGTH_SHORT).show();
+				}
+            }
+        });
+
+        final Button buttonqm = (Button) dialog.findViewById(R.id.buttonQtyMinus);
+        buttonqm.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	
+            	try {
+
+					long qty = Long.valueOf(quanttxt.getText().toString());
+					qty -= 1;
+					if(qty < 0)
+						qty = 0;
+					quanttxt.setText(String.valueOf(qty));
+					
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectQty, 	Toast.LENGTH_SHORT).show();
+				}
+            }
+        });
+
+        final Button buttonqp = (Button) dialog.findViewById(R.id.buttonQtyPlus);
+        buttonqp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+            	
+            	try {
+
+					long qty = Long.valueOf(quanttxt.getText().toString());
+					qty += 1;
+					quanttxt.setText(String.valueOf(qty));
+					
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectQty, 	Toast.LENGTH_SHORT).show();
+				}
+            }
+        });
+
+		
+		
 		final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
 		final RadioButton bu1 = (RadioButton) dialog.findViewById(R.id.radio1);
 
@@ -749,7 +835,9 @@ public class Common {
 					msg.put("orderNum", ++ordernum);
 					msg.put("action", "CREATE");
 //					msg.put("expireDate", new GregorianCalendar(mYear, mMonth, mDay).getTimeInMillis());
-					if(new GregorianCalendar(mYear, mMonth, mDay).getTimeInMillis() != new Date().getDate())
+				
+					boolean b = (((mYear - 1900)== dat.getYear())&&(mMonth == dat.getMonth())&&(mDay == dat.getDate()));
+					if(!b)
 						msg.put("expired", String.format("%02d.%02d.%04d", mDay, mMonth + 1, mYear));
 
 					mainActivity.writeJSONMsg(msg);
