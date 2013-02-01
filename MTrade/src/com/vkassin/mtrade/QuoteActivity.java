@@ -51,25 +51,42 @@ public class QuoteActivity extends Activity {
     			}
     		});
 
+
 	}
 
 	public void refresh() {
 		
-	      if(Common.FIRSTLOAD_FINISHED) {
+//	      if(Common.FIRSTLOAD_FINISHED) {
 	      	
 	    	ArrayList<Quote> qq = Common.getSelectedInstrument().getQuotes();
         	adapter.setItems(qq);
+        	
         	adapter.notifyDataSetChanged();
         	
-        	int c = 0;
-        	for(Quote q: qq)
-        		if(q.qtySell > 0)
-        			c++;
-        	int pos = ((c - 3) < 0)?0:(c - 3);
-        	list.setSelection(pos);
-	  		
-	        }
+        	setPos();
+	}
 
+	public void setPos() {
+	
+    	int c = 0;
+    	for(Quote q: adapter.getItems())
+    		if(q.qtySell > 0)
+    			c++;
+    	final int pos = ((c - 3) < 0)?0:(c - 3);
+//   		list.setSelection(pos);
+   		
+//   		list.smoothScrollToPosition(pos);
+//  		Log.i(TAG, "---pos = " + pos);
+
+//    	list.clearFocus();
+    	list.post(new Runnable() {
+    		
+    	    public void run() {
+//    	        list.requestFocusFromTouch();
+    	        list.setSelection(pos);
+//    	        list.requestFocus();
+    	    }
+    	});
 	}
 	
     @Override
@@ -84,8 +101,7 @@ public class QuoteActivity extends Activity {
     }
     
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-    	
+    public boolean onKeyDown(int keyCode, KeyEvent event) {    	
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             
 //        	Log.d(this.getClass().getName(), "back button pressed");
@@ -135,55 +151,5 @@ public class QuoteActivity extends Activity {
    	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
    	
    }
-
-   @Override
-   public void onStart() {
-   	
-     super.onStart();
-//     Log.i(TAG, "--- onStart ");// + isApplicationBroughtToBackground(this));
-     
-     Common.activities++;
-   }
-
-//   @Override
-//	public void onConfigurationChanged(Configuration newConfig) {
-//	  super.onConfigurationChanged(newConfig);
-//	  
-//	  
-////     Log.e(TAG, "++++++++++++ ConfigurationChanged");
-//     
-//     Common.confChanged = true;
-//
-//	}
-
-  	@Override
-   public void onStop() {
-   
-   	super.onStop();
-   	
-//		Log.e(TAG, "++++++++++++ onStop");
-
-	Common.activities--;
-	
-   }
-  	
-    @Override
-   	protected void onRestart() {
-   		// TODO Auto-generated method stub
-   		super.onRestart();
-   		
-//   		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
-    
-//    	if(Common.confChanged) {
-//    		
-//    		Common.confChanged = false;
-//    	}
-//    	else {
-//    		
-//    		if(Common.activities == 0)
-//    			Common.login(this);
-//    	}
-
-   	}
 
 }

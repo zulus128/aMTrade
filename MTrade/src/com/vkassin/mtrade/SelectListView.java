@@ -276,27 +276,6 @@ public class SelectListView extends ListActivity {
 	}
 
 	@Override
-	public void onStart() {
-
-		super.onStart();
-		Log.i(TAG, "--- onStart ");// + isApplicationBroughtToBackground(this));
-
-		Common.activities++;
-	}
-
-	@Override
-	public void onStop() {
-
-		super.onStop();
-
-		Log.e(TAG, "++++++++++++ onStop");
-
-		Common.activities--;
-
-		// Common.saveFavrList();
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 

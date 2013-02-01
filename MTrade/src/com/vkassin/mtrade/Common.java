@@ -158,7 +158,7 @@ public class Common {
 
 	public static int historyFilter = 3;
 
-	public static int activities = 0;
+//	public static int activities = 0;
 	public static String oldName = "x";
 
 	private static int mYear;
@@ -656,12 +656,13 @@ public class Common {
 		datetxt = (EditText) dialog
 				.findViewById(R.id.expdateedit);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-		final Date dat = new Date();
-		datetxt.setText(sdf.format(dat));
-		mYear = dat.getYear() + 1900;
-		mMonth = dat.getMonth();
-		mDay = dat.getDate();
-
+		Date dat1 = new Date();
+		datetxt.setText(sdf.format(dat1));
+		mYear = dat1.getYear() + 1900;
+		mMonth = dat1.getMonth();
+		mDay = dat1.getDate();
+		final Date dat = new GregorianCalendar(mYear, mMonth, mDay).getTime();
+				
 		datetxt.setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {
 				Log.i(TAG, "Show DatePickerDialog");
@@ -820,6 +821,15 @@ public class Common {
 					return;
 				}
 
+				if(dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay).getTime()) > 0) {
+					
+					Toast.makeText(ctx, R.string.CorrectDate, Toast.LENGTH_SHORT)
+					.show();
+
+					return;
+
+				}
+					
 				JSONObject msg = new JSONObject();
 				try {
 

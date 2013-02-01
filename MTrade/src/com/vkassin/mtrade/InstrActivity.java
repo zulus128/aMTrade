@@ -156,6 +156,9 @@ public Handler handler = new Handler(){
         	break;
         case CREATE_PROGRESS_DIALOG:
 
+        	if(Common.inLogin)
+        		break;
+        	
         	if(dialog != null)
         		dialog.dismiss();
         	//create the dialog
@@ -478,7 +481,7 @@ public Handler handler = new Handler(){
 							}
 							else {
 
-//								Log.i(TAG, "---!!! Heartbeat !!!");
+								Log.i(TAG, "---!!! Heartbeat !!!");
 
 								resetHBTimer();
 
@@ -871,30 +874,6 @@ public Handler handler = new Handler(){
 
     }
 
-    	@Override
-    public void onStop() {
-    
-    	super.onStop();
-    	
-//		Log.e(TAG, "++++++++++++ onStop " + Common.activities);
-
-		Common.activities--;
-		
-//    	Common.saveFavrList();
-    }
-    
-      @Override
-     	protected void onRestart() {
-     		// TODO Auto-generated method stub
-     		super.onRestart();
-     		
-//     		Log.e(TAG, "++++++++++++ onRestart " + Common.activities);
-      
-//     		if(Common.activities == 0)
-//     			Common.login(this);
-
-     	}
-      
     @Override
     public void onDestroy() {
     	
@@ -919,18 +898,6 @@ public Handler handler = new Handler(){
       thrd = null;
     }
    
-//	@Override
-//	public void onConfigurationChanged(Configuration newConfig) {
-//	  super.onConfigurationChanged(newConfig);
-//	  
-//	  
-////      Log.e(TAG, "++++++++++++ ConfigurationChanged");
-//      
-//      Common.confChanged = true;
-//
-//	}
-	
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
@@ -998,9 +965,16 @@ public Handler handler = new Handler(){
 
 	   if (item.getItemId() == CONTEXTMENU_GOGLASS) {
 	    	
-	    	Common.tabHost.getTabWidget().getChildAt(0).setVisibility(View.GONE);
+//			if(Common.quoteActivity != null) {
+//				
+//				Common.quoteActivity.refresh();
+//			}
+
+		   
+		   Common.tabHost.getTabWidget().getChildAt(0).setVisibility(View.GONE);
 	    	Common.tabHost.getTabWidget().getChildAt(1).setVisibility(View.VISIBLE);
 	    	Common.tabHost.setCurrentTab(1);
+
 
 	    }
 	    
