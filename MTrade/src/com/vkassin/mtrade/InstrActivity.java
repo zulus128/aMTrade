@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,9 +71,13 @@ public class InstrActivity extends Activity {
 	public static final int CREATE_PROGRESS_DIALOG = 151;
 	public static final int DISMISS_PROGRESS_DIALOG = 152;
 	public static final int CREATE_MESSAGE_DIALOG = 153;
-	
+
+    private final int HEARTBEAT_TOCLIENT_DELAY = 30000;
+
 	private boolean onstart = false;
-	
+   
+	private Timer hbTimer = new Timer();
+
 //	private boolean onActivityResultCalledBeforeOnResume;
 
 	private Socket sock;
@@ -149,7 +155,10 @@ public Handler handler = new Handler(){
         	new AlertDialog.Builder(InstrActivity.this).setMessage(msg.getData().getString("msg")).show();
         	break;
         case CREATE_PROGRESS_DIALOG:
-            //create the dialog
+
+        	if(dialog != null)
+        		dialog.dismiss();
+        	//create the dialog
         	AlertDialog.Builder bu = new AlertDialog.Builder(InstrActivity.this).setMessage(R.string.ConnectError1)
 			.setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -157,14 +166,14 @@ public Handler handler = new Handler(){
 					Common.login(InstrActivity.this);
 				}
 			})
-						.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					
-//					stop();
-		        	dialog = null;
-
-				}
-			});
+//						.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//				public void onClick(DialogInterface dialog, int id) {
+//					
+////					stop();
+//		        	dialog = null;
+//
+//				}
+//			});
 
 			;
 
@@ -364,6 +373,28 @@ public Handler handler = new Handler(){
    
     }
     
+    private void resetHBTimer() {
+
+        hbTimer.cancel();
+        hbTimer = new Timer();
+
+        hbTimer.schedule(new TimerTask() {
+
+            public void run() {
+
+          	Log.i(TAG, "-- NO HEARTBEAT!!");
+            	
+            stop();
+        	  
+          	  if(!Common.paused)
+          		  handler.sendMessage(Message.obtain(handler,
+          	            CREATE_PROGRESS_DIALOG));
+            }
+        },
+        HEARTBEAT_TOCLIENT_DELAY, HEARTBEAT_TOCLIENT_DELAY);
+
+    }
+    
     public void stop() {
     	
     	Log.w(TAG, " --- Stop!!!");
@@ -374,6 +405,8 @@ public Handler handler = new Handler(){
 		if(thrd != null)
 			thrd.interrupt();
 		
+        hbTimer.cancel();
+
 		if(sock != null) {
 			
 			try {
@@ -443,8 +476,15 @@ public Handler handler = new Handler(){
 								Log.i(TAG, "readMsg: " + data);
 								
 							}
-							else
+							else {
+
+//								Log.i(TAG, "---!!! Heartbeat !!!");
+
+								resetHBTimer();
+
 								writeJSONMsg(data);
+								
+							}
 
                     		if( t == Common.LOGIN) {
                     		
@@ -487,6 +527,8 @@ public Handler handler = new Handler(){
                     			if(s == 1) {
                     				
                         			Common.FIRSTLOAD_FINISHED = true;
+
+                        			resetHBTimer();
 
                     				
 //                    				header.setVisibility(View.VISIBLE);
