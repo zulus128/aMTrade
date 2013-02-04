@@ -289,10 +289,11 @@ public class SelectListView extends ListActivity {
 		} else {
 
 			if (Common.paused1)
-				Common.login(Common.mainActivity);
+				Common.login(this);
 		}
 
 		Common.paused1 = false;
+		Common.paused = false;
 
 	}
 
