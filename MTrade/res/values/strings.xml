@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, MTradeActivity!</string>
-    <string name="app_name">MTrade v.1.0.14</string>
+    <string name="app_name">MTrade v.1.0.15</string>
     <string name="TabCaption1">Инструменты</string>
     <string name="TabCaption2">Котировки</string>
     <string name="TabCaption3">Графики</string>

@@ -1,6 +1,8 @@
 package com.vkassin.mtrade;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
@@ -8,9 +10,14 @@ import android.webkit.WebViewClient;
 
 public class NewsDetail extends Activity {
 
+	private static final String TAG = "MTrade.NewsDetail"; 
+
+//	private static boolean page1;
 
 	public static void prepare() {
 
+		Common.paused1 = false;
+//		page1 = false;
 	}
 
 	// Called when the activity is first created.
@@ -21,7 +28,7 @@ public class NewsDetail extends Activity {
 
 		WebView engine = (WebView) findViewById(R.id.web_detail);
 		engine.setWebViewClient(new HelloWebViewClient());
-//		engine.getSettings().setJavaScriptEnabled(true);
+		engine.getSettings().setJavaScriptEnabled(true);
 		engine.loadUrl(Common.curnews.clink);
 
  		Common.paused = false;
@@ -32,8 +39,24 @@ public class NewsDetail extends Activity {
 	private class HelloWebViewClient extends WebViewClient {
 	    @Override
 	    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	        view.loadUrl(url);
-	        return true;
+	
+	    	
+	    	if(url.endsWith(".pdf")) {
+	    	
+	    		if (!url.startsWith("http://") && !url.startsWith("https://"))
+	    		   url = "http://" + url;
+	    		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	    		startActivity(browserIntent);
+	    	
+	    		return true;
+	    	}
+	    	else {
+	    		
+	    		view.loadUrl(url);
+	    		return true;
+	    		
+	    	}
+	    	
 	    }
 
 	}
