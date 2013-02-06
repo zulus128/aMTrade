@@ -439,7 +439,7 @@ public Handler handler = new Handler(){
 //    	  if(sock != null)
 //    		  sock.close();
     	  
-        sock = new Socket("212.19.144.126", 9800);
+        sock = new Socket("212.19.144.19", 9800);
 //        sock = new Socket("192.168.111.12", 9800);
 
         JSONObject login = getLogin();
