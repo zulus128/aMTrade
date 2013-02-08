@@ -152,7 +152,7 @@ public class Deal implements Serializable, History {
 	public String getInstr() {
 
 		Instrument i = Common.getInstrById(instrId);
-		return i.symbol;
+		return (i == null)?".":i.symbol;
 
 	}
 
