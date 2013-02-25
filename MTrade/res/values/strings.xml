@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, MTradeActivity!</string>
-    <string name="app_name">MTrade v.1.17</string>
+    <string name="app_name">MTrade v.1.18</string>
     <string name="TabCaption1">Инструменты</string>
     <string name="TabCaption2">Котировки</string>
     <string name="TabCaption3">Графики</string>
@@ -28,8 +28,13 @@
     <string name="MenuItemGoGlass">Открыть стакан</string>
     <string name="LoginName">Имя</string>
     <string name="Password">Пароль</string>
+    <string name="Password1">Еще раз</string>
+    <string name="Email">e-mail</string>
     <string name="GoLogin">Войти</string>
+    <string name="GoRegister">Зарегистрироваться</string>
+    <string name="GoRegister1">Отправить</string>
     <string name="LoginDialogTitle">Вход</string>
+    <string name="LoginDialogTitle1">Регистрация</string>
     <string name="MenuItemRelogin">Подключиться с именем/паролем</string>
     <string name="TitleBuyQty">Объем покупки</string>
     <string name="TitleSellQty">Объем продажи</string>

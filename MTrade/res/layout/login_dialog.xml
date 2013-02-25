@@ -1,60 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/customorderdialog"
-    android:layout_width="200dip"
+    android:layout_width="250dip"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
     <LinearLayout
-    android:id="@+id/orderlayout2" android:orientation="horizontal"
-    android:layout_width="fill_parent" android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:padding="7dp"
-    >
-    
-        
-    <TextView android:id="@+id/logintext"
-              android:layout_height="fill_parent"
-              android:textColor="#FFFFFF"
-              android:layout_width="100dip" 
-              android:text="@string/LoginName"
-              />
-    
-    <EditText 	android:id="@+id/loginnameedit"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:inputType="text"
-				/>
-    
-	</LinearLayout>
-    
+        android:id="@+id/loginlayout543"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/orderlayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/logintext"
+                android:layout_width="100dip"
+                android:layout_height="fill_parent"
+                android:text="@string/LoginName"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/loginnameedit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/passtext"
+                android:layout_width="100dip"
+                android:layout_height="fill_parent"
+                android:text="@string/Password"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/passwordedit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/gologin"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/GoLogin" />
+
+        <Button
+            android:id="@+id/goregister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/GoRegister" />
+    </LinearLayout>
+
     <LinearLayout
-    android:id="@+id/orderlayout3" android:orientation="horizontal"
-    android:layout_width="fill_parent" android:layout_height="wrap_content"
-    android:padding="7dp"
-    android:background="@android:color/transparent">
-    
-        
-    <TextView android:id="@+id/passtext"
-              android:layout_height="fill_parent"
-              android:textColor="#FFFFFF"
-              android:layout_width="100dip" 
-              android:text="@string/Password"
-              />
-    
-    <EditText 	android:id="@+id/passwordedit"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:inputType ="textPassword"
-				/>
-    
-	</LinearLayout>
-        
-<Button
-android:id="@+id/gologin"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:text="@string/GoLogin"
-/>
-    
+        android:id="@+id/reglayout354"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:padding="7dp"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/orderlayout39812"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/emailtext"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:text="@string/Email"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/emailedit2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout398"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/passtext1"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:text="@string/Password"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/passwordedit1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout3981"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/passtext2"
+                android:layout_width="60dip"
+                android:layout_height="fill_parent"
+                android:text="@string/Password1"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/passwordedit2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout39813"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+             android:weightSum="1"
+            android:padding="7dp" >
+
+            <Button
+                android:id="@+id/goregister1"
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                
+                android:text="@string/GoRegister1" />
+
+            <Button
+                android:id="@+id/cancelreg"
+                android:layout_width="0dip"
+                android:layout_weight="0.5"
+                
+                android:layout_height="wrap_content"
+                android:text="@string/CancelOrder" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

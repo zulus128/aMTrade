@@ -58,6 +58,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TabHost;//
@@ -558,6 +559,55 @@ public class Common {
 			passtxt.requestFocus();
 		}
 
+		Button customDialog_Register = (Button) dialog
+				.findViewById(R.id.goregister);
+		customDialog_Register.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+
+				dialog.setTitle(R.string.LoginDialogTitle1);
+				final LinearLayout layreg = (LinearLayout) dialog
+						.findViewById(R.id.reglayout354);
+//				boolean b = layreg.getVisibility() == View.VISIBLE;
+
+				layreg.setVisibility(View.VISIBLE);
+				
+				final LinearLayout laylog = (LinearLayout) dialog
+						.findViewById(R.id.loginlayout543);
+
+//				laylog.setVisibility((layreg.getVisibility() == View.VISIBLE)?View.GONE:View.VISIBLE);
+				laylog.setVisibility(View.GONE);
+
+			}
+
+		});
+
+		Button customDialog_Register1 = (Button) dialog
+				.findViewById(R.id.goregister1);
+		customDialog_Register1.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+
+
+			}
+
+		});
+
+		Button customDialog_CancelReg = (Button) dialog
+				.findViewById(R.id.cancelreg);
+		customDialog_CancelReg.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+
+				dialog.setTitle(R.string.LoginDialogTitle);
+				final LinearLayout layreg = (LinearLayout) dialog
+						.findViewById(R.id.reglayout354);
+				layreg.setVisibility(View.GONE);
+				final LinearLayout laylog = (LinearLayout) dialog
+						.findViewById(R.id.loginlayout543);
+				laylog.setVisibility(View.VISIBLE);
+
+			}
+
+		});
+		
 		Button customDialog_Dismiss = (Button) dialog
 				.findViewById(R.id.gologin);
 		customDialog_Dismiss.setOnClickListener(new Button.OnClickListener() {
