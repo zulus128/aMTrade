@@ -97,7 +97,7 @@
                 android:id="@+id/emailedit2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -150,23 +150,21 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:orientation="horizontal"
-             android:weightSum="1"
-            android:padding="7dp" >
+            android:padding="7dp"
+            android:weightSum="1" >
 
             <Button
                 android:id="@+id/goregister1"
                 android:layout_width="0dip"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                
                 android:text="@string/GoRegister1" />
 
             <Button
                 android:id="@+id/cancelreg"
                 android:layout_width="0dip"
-                android:layout_weight="0.5"
-                
                 android:layout_height="wrap_content"
+                android:layout_weight="0.5"
                 android:text="@string/CancelOrder" />
         </LinearLayout>
     </LinearLayout>

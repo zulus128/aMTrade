@@ -3,6 +3,9 @@
 
     <string name="hello">Hello World, MTradeActivity!</string>
     <string name="app_name">MTrade v.1.18</string>
+    <string name="RegisterStatus1">Регистрация прошла успешно!</string>
+    <string name="RegisterStatus2">Не удалось зарегистрировать пользователя!</string>
+    <string name="RegisterStatus3">Такой пользователь уже зарегистрирован!</string>
     <string name="TabCaption1">Инструменты</string>
     <string name="TabCaption2">Котировки</string>
     <string name="TabCaption3">Графики</string>
@@ -45,6 +48,9 @@
     <string name="CorrectPrice">Введите корректую цену</string>
     <string name="CorrectQty">Введите корректное количество</string>
     <string name="CorrectDate">Введите корректную дату</string>
+    <string name="CorrectEmail">Введите e-mail</string>
+    <string name="CorrectPassword">Введите пароль</string>
+    <string name="CorrectPassword1">Пароли не совпадают</string>
     <string name="FilterHint">Поиск</string>
     <string name="Month3">3 мес</string>
     <string name="Month6">6 мес</string>

@@ -14,7 +14,9 @@ import java.io.Reader;
 import java.io.StreamCorruptedException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.Socket;
 import java.net.URL;
+import java.nio.ByteBuffer;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -51,6 +53,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -72,16 +75,20 @@ public class Common {
 	public enum item_type {
 		IT_NONE, IT_INSTR
 	};
-	
+
 	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
 	static {
-	
+
 		DecimalFormatSymbols dfs = new DecimalFormatSymbols();
 		dfs.setDecimalSeparator('.');
 		twoDForm.setDecimalFormatSymbols(dfs);
 	}
-	
+
+	public final static String ip_addr = "192.168.111.19";
+	public final static int port_login = 9800;
+	public final static int port_register = 9802;
+
 	public final static Integer NO_ERRORS = 0;
 	public final static Integer INITIAL_LOADING_COMPLITE = 1;
 	public final static Integer HEARTBEAT = 10;
@@ -98,6 +105,7 @@ public class Common {
 	public final static Integer QUOTE_CHART_SUBSCRIPTION = 108;
 	public final static Integer POSITIONS_INFO = 109;
 	public final static Integer MSG_TYPE_TS_MESSAGE = 110;
+	public final static Integer MSG_REGISTER = 111;
 
 	public final static String PROTOCOL_VERSION = "1.0";
 	public final static int ERROR_USER_WAS_NOT_FOUND = 200;
@@ -159,16 +167,17 @@ public class Common {
 
 	public static int historyFilter = 3;
 
-//	public static int activities = 0;
+	// public static int activities = 0;
 	public static String oldName = "x";
 
 	private static int mYear;
 	private static int mMonth;
 	private static int mDay;
-//	static final int DATE_DIALOG_ID = 10;
+	// static final int DATE_DIALOG_ID = 10;
 	static EditText datetxt = null;
-//	static boolean expchanged = false;
-	
+
+	// static boolean expchanged = false;
+
 	public static Instrument getSelectedInstrument() {
 		return selectedInstrument;
 	}
@@ -522,7 +531,16 @@ public class Common {
 
 		// return favourites;
 	}
-
+    
+	private static byte[] readMsg(InputStream inStream, int remainingToRead) throws IOException{
+        byte[] buffer = new byte[remainingToRead];
+        while (remainingToRead != 0) {
+           int len = inStream.read(buffer, buffer.length - remainingToRead, remainingToRead);
+           remainingToRead -= len;
+        }
+        return buffer;
+     }
+    
 	public static void login(Context ctx) {
 
 		// ctx = Common.app_ctx;
@@ -549,6 +567,12 @@ public class Common {
 				.findViewById(R.id.loginnameedit);
 		final EditText passtxt = (EditText) dialog
 				.findViewById(R.id.passwordedit);
+		final EditText passtxt1 = (EditText) dialog
+				.findViewById(R.id.passwordedit1);
+		final EditText passtxt2 = (EditText) dialog
+				.findViewById(R.id.passwordedit2);
+		final EditText mailtxt = (EditText) dialog
+				.findViewById(R.id.emailedit2);
 
 		String nam = myaccount.get("name");
 		Common.oldName = nam;
@@ -567,16 +591,10 @@ public class Common {
 				dialog.setTitle(R.string.LoginDialogTitle1);
 				final LinearLayout layreg = (LinearLayout) dialog
 						.findViewById(R.id.reglayout354);
-//				boolean b = layreg.getVisibility() == View.VISIBLE;
-
 				layreg.setVisibility(View.VISIBLE);
-				
 				final LinearLayout laylog = (LinearLayout) dialog
 						.findViewById(R.id.loginlayout543);
-
-//				laylog.setVisibility((layreg.getVisibility() == View.VISIBLE)?View.GONE:View.VISIBLE);
 				laylog.setVisibility(View.GONE);
-
 			}
 
 		});
@@ -586,6 +604,120 @@ public class Common {
 		customDialog_Register1.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 
+				if (mailtxt.getText().length() < 1) {
+
+					Toast toast = Toast.makeText(mainActivity,
+							R.string.CorrectEmail, Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, 0);
+					toast.show();
+
+					return;
+				}
+
+				if (passtxt1.getText().length() < 1) {
+
+					Toast toast = Toast.makeText(mainActivity,
+							R.string.CorrectPassword, Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, 0);
+					toast.show();
+					return;
+				}
+
+				if (!passtxt2.getText().toString()
+						.equals(passtxt1.getText().toString())) {
+
+					Toast toast = Toast.makeText(mainActivity,
+							R.string.CorrectPassword1, Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, 0);
+					toast.show();
+					return;
+				}
+
+				try {
+
+					Socket sock = new Socket(ip_addr, port_register);
+
+					JSONObject msg = new JSONObject();
+					msg.put("objType", Common.MSG_REGISTER);
+					msg.put("time", Calendar.getInstance().getTimeInMillis());
+					msg.put("user", mailtxt.getText().toString());
+					msg.put("passwd", passtxt1.getText().toString());
+					msg.put("version", Common.PROTOCOL_VERSION);
+
+					byte[] array = msg.toString().getBytes();
+					ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
+					buff.putInt(array.length);
+					buff.put(array);
+					sock.getOutputStream().write(buff.array());
+
+					ByteBuffer buff1 = ByteBuffer.allocate(4);
+					buff1.put(readMsg(sock.getInputStream(), 4));
+					buff1.position(0);
+					int pkgSize = buff1.getInt();
+					// Log.i(TAG, "size = "+pkgSize);
+					String s = new String(readMsg(sock.getInputStream(),
+							pkgSize));
+					
+					sock.close();
+					
+					JSONObject jo = new JSONObject(s);
+					
+					Log.i(TAG, "register answer = "+ jo);
+
+					int t = jo.getInt("status");
+					switch(t) {
+					
+					case 1:
+						Toast toast = Toast.makeText(mainActivity,
+								R.string.RegisterStatus1, Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+								0, 0);
+						toast.show();
+						
+						dialog.setTitle(R.string.LoginDialogTitle);
+						final LinearLayout layreg = (LinearLayout) dialog
+								.findViewById(R.id.reglayout354);
+						layreg.setVisibility(View.GONE);
+						final LinearLayout laylog = (LinearLayout) dialog
+								.findViewById(R.id.loginlayout543);
+						laylog.setVisibility(View.VISIBLE);
+						
+						nametxt.setText(mailtxt.getText());
+						break;
+						
+					case -2:
+						Toast toast1 = Toast.makeText(mainActivity,
+								R.string.RegisterStatus3, Toast.LENGTH_LONG);
+						toast1.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+								0, 0);
+						toast1.show();
+						break;
+
+					default:
+						Toast toast2 = Toast.makeText(mainActivity,
+								R.string.RegisterStatus2, Toast.LENGTH_LONG);
+						toast2.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+								0, 0);
+						toast2.show();
+						break;
+							
+					}
+
+				} catch (Exception e) {
+
+					e.printStackTrace();
+					Log.e(TAG, "Error in registration process!!", e);
+
+					Toast toast = Toast.makeText(mainActivity,
+							R.string.ConnectError, Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, 0);
+					toast.show();
+
+				}
 
 			}
 
@@ -607,7 +739,7 @@ public class Common {
 			}
 
 		});
-		
+
 		Button customDialog_Dismiss = (Button) dialog
 				.findViewById(R.id.gologin);
 		customDialog_Dismiss.setOnClickListener(new Button.OnClickListener() {
@@ -684,12 +816,13 @@ public class Common {
 			mYear = year;
 			mMonth = monthOfYear;
 			mDay = dayOfMonth;
-			
-			if(datetxt != null) {
-				
+
+			if (datetxt != null) {
+
 				SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-				
-				datetxt.setText(sdf.format(new GregorianCalendar(mYear, mMonth, mDay).getTime()));
+
+				datetxt.setText(sdf.format(new GregorianCalendar(mYear, mMonth,
+						mDay).getTime()));
 
 			}
 		}
@@ -702,9 +835,8 @@ public class Common {
 		final Dialog dialog = new Dialog(ctx);
 		dialog.setContentView(R.layout.order_dialog);
 		dialog.setTitle(R.string.OrderDialogTitle);
-		
-		datetxt = (EditText) dialog
-				.findViewById(R.id.expdateedit);
+
+		datetxt = (EditText) dialog.findViewById(R.id.expdateedit);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
 		Date dat1 = new Date();
 		datetxt.setText(sdf.format(dat1));
@@ -712,13 +844,14 @@ public class Common {
 		mMonth = dat1.getMonth();
 		mDay = dat1.getDate();
 		final Date dat = new GregorianCalendar(mYear, mMonth, mDay).getTime();
-				
+
 		datetxt.setOnClickListener(new View.OnClickListener() {
-		    public void onClick(View v) {
+			public void onClick(View v) {
 				Log.i(TAG, "Show DatePickerDialog");
-				DatePickerDialog dpd = new DatePickerDialog(ctx, mDateSetListener, mYear, mMonth, mDay);
+				DatePickerDialog dpd = new DatePickerDialog(ctx,
+						mDateSetListener, mYear, mMonth, mDay);
 				dpd.show();
-		    }
+			}
 		});
 
 		TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
@@ -738,81 +871,88 @@ public class Common {
 		final EditText quanttxt = (EditText) dialog
 				.findViewById(R.id.quantedit);
 
-		
-		final Button buttonpm = (Button) dialog.findViewById(R.id.buttonPriceMinus);
-        buttonpm.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	
-            	try {
+		final Button buttonpm = (Button) dialog
+				.findViewById(R.id.buttonPriceMinus);
+		buttonpm.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 
-					double price = Double.valueOf(pricetxt.getText().toString());
+				try {
+
+					double price = Double
+							.valueOf(pricetxt.getText().toString());
 					price -= 0.01;
-					if(price < 0)
+					if (price < 0)
 						price = 0;
 					pricetxt.setText(twoDForm.format(price));
-					
+
 				} catch (Exception e) {
 
-					Toast.makeText(ctx, R.string.CorrectPrice, 	Toast.LENGTH_SHORT).show();
+					Toast.makeText(ctx, R.string.CorrectPrice,
+							Toast.LENGTH_SHORT).show();
 				}
-            }
-        });
+			}
+		});
 
-        final Button buttonpp = (Button) dialog.findViewById(R.id.buttonPricePlus);
-        buttonpp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	
-            	try {
+		final Button buttonpp = (Button) dialog
+				.findViewById(R.id.buttonPricePlus);
+		buttonpp.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 
-					double price = Double.valueOf(pricetxt.getText().toString());
+				try {
+
+					double price = Double
+							.valueOf(pricetxt.getText().toString());
 					price += 0.01;
 					pricetxt.setText(twoDForm.format(price));
-					
+
 				} catch (Exception e) {
 
-					Toast.makeText(ctx, R.string.CorrectPrice, 	Toast.LENGTH_SHORT).show();
+					Toast.makeText(ctx, R.string.CorrectPrice,
+							Toast.LENGTH_SHORT).show();
 				}
-            }
-        });
+			}
+		});
 
-        final Button buttonqm = (Button) dialog.findViewById(R.id.buttonQtyMinus);
-        buttonqm.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	
-            	try {
+		final Button buttonqm = (Button) dialog
+				.findViewById(R.id.buttonQtyMinus);
+		buttonqm.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				try {
 
 					long qty = Long.valueOf(quanttxt.getText().toString());
 					qty -= 1;
-					if(qty < 0)
+					if (qty < 0)
 						qty = 0;
 					quanttxt.setText(String.valueOf(qty));
-					
+
 				} catch (Exception e) {
 
-					Toast.makeText(ctx, R.string.CorrectQty, 	Toast.LENGTH_SHORT).show();
+					Toast.makeText(ctx, R.string.CorrectQty, Toast.LENGTH_SHORT)
+							.show();
 				}
-            }
-        });
+			}
+		});
 
-        final Button buttonqp = (Button) dialog.findViewById(R.id.buttonQtyPlus);
-        buttonqp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	
-            	try {
+		final Button buttonqp = (Button) dialog
+				.findViewById(R.id.buttonQtyPlus);
+		buttonqp.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+
+				try {
 
 					long qty = Long.valueOf(quanttxt.getText().toString());
 					qty += 1;
 					quanttxt.setText(String.valueOf(qty));
-					
+
 				} catch (Exception e) {
 
-					Toast.makeText(ctx, R.string.CorrectQty, 	Toast.LENGTH_SHORT).show();
+					Toast.makeText(ctx, R.string.CorrectQty, Toast.LENGTH_SHORT)
+							.show();
 				}
-            }
-        });
+			}
+		});
 
-		
-		
 		final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
 		final RadioButton bu1 = (RadioButton) dialog.findViewById(R.id.radio1);
 
@@ -871,15 +1011,16 @@ public class Common {
 					return;
 				}
 
-				if(dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay).getTime()) > 0) {
-					
-					Toast.makeText(ctx, R.string.CorrectDate, Toast.LENGTH_SHORT)
-					.show();
+				if (dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay)
+						.getTime()) > 0) {
+
+					Toast.makeText(ctx, R.string.CorrectDate,
+							Toast.LENGTH_SHORT).show();
 
 					return;
 
 				}
-					
+
 				JSONObject msg = new JSONObject();
 				try {
 
@@ -894,11 +1035,15 @@ public class Common {
 					msg.put("code", String.valueOf(aspinner.getSelectedItem()));
 					msg.put("orderNum", ++ordernum);
 					msg.put("action", "CREATE");
-//					msg.put("expireDate", new GregorianCalendar(mYear, mMonth, mDay).getTimeInMillis());
-				
-					boolean b = (((mYear - 1900)== dat.getYear())&&(mMonth == dat.getMonth())&&(mDay == dat.getDate()));
-					if(!b)
-						msg.put("expired", String.format("%02d.%02d.%04d", mDay, mMonth + 1, mYear));
+					// msg.put("expireDate", new GregorianCalendar(mYear,
+					// mMonth, mDay).getTimeInMillis());
+
+					boolean b = (((mYear - 1900) == dat.getYear())
+							&& (mMonth == dat.getMonth()) && (mDay == dat
+							.getDate()));
+					if (!b)
+						msg.put("expired", String.format("%02d.%02d.%04d",
+								mDay, mMonth + 1, mYear));
 
 					mainActivity.writeJSONMsg(msg);
 

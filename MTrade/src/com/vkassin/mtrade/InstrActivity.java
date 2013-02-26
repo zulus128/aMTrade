@@ -287,7 +287,7 @@ public Handler handler = new Handler(){
 
     public void writeJSONMsg(JSONObject msg) throws Exception {
     	
-    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
+//    	Log.i(TAG, "writeJSONMsg:" + msg.toString());
         byte[] array = msg.toString().getBytes();
         ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
         buff.putInt(array.length);
@@ -440,7 +440,7 @@ public Handler handler = new Handler(){
 //    		  sock.close();
     	  
 //          sock = new Socket("212.19.144.19", 9800);
-        sock = new Socket("192.168.111.19", 9800);
+        sock = new Socket(Common.ip_addr, Common.port_login);
 
         JSONObject login = getLogin();
         if(login == null)
@@ -481,7 +481,7 @@ public Handler handler = new Handler(){
 							}
 							else {
 
-								Log.i(TAG, "---!!! Heartbeat !!!");
+//								Log.i(TAG, "---!!! Heartbeat !!!");
 
 								resetHBTimer();
 
