@@ -17,6 +17,9 @@ import java.net.MalformedURLException;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -33,6 +36,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TimeZone;
 import java.util.TreeSet;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -531,16 +535,44 @@ public class Common {
 
 		// return favourites;
 	}
-    
-	private static byte[] readMsg(InputStream inStream, int remainingToRead) throws IOException{
-        byte[] buffer = new byte[remainingToRead];
-        while (remainingToRead != 0) {
-           int len = inStream.read(buffer, buffer.length - remainingToRead, remainingToRead);
-           remainingToRead -= len;
-        }
-        return buffer;
-     }
-    
+
+	private static byte[] readMsg(InputStream inStream, int remainingToRead)
+			throws IOException {
+		byte[] buffer = new byte[remainingToRead];
+		while (remainingToRead != 0) {
+			int len = inStream.read(buffer, buffer.length - remainingToRead,
+					remainingToRead);
+			remainingToRead -= len;
+		}
+		return buffer;
+	}
+
+	public static String getMd5(String txt) {
+		StringBuffer result = new StringBuffer();
+		try {
+			MessageDigest m = MessageDigest.getInstance("MD5");
+			m.reset();
+//			m.update(txt.getBytes(Charset.forName("UTF-8")));
+			m.update(txt.getBytes());
+			byte[] digest = m.digest();
+			for (int i = 0; i < digest.length; i++)
+				result.append(String.format("%02x", digest[i]));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			Log.e(TAG, "Error in getMd5!!", e);		}
+		return result.toString();
+	}
+
+	public static String sign(String login, String passwd) {
+		String msgKey = "aW3f!@Jm<h&*9>?g";
+		SimpleDateFormat sdf = new SimpleDateFormat("|yyyy|(MM)[dd*HH]");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		Calendar currentTime = Calendar.getInstance();
+		String currDateTime = sdf.format(currentTime.getTime());
+		return getMd5(login + "-" + passwd + "-" + currDateTime + "-"
+				+ msgKey);
+	}
+
 	public static void login(Context ctx) {
 
 		// ctx = Common.app_ctx;
@@ -646,6 +678,7 @@ public class Common {
 					msg.put("user", mailtxt.getText().toString());
 					msg.put("passwd", passtxt1.getText().toString());
 					msg.put("version", Common.PROTOCOL_VERSION);
+					msg.put("sign", sign(mailtxt.getText().toString(),  passtxt1.getText().toString() ));
 
 					byte[] array = msg.toString().getBytes();
 					ByteBuffer buff = ByteBuffer.allocate(array.length + 4);
@@ -660,23 +693,23 @@ public class Common {
 					// Log.i(TAG, "size = "+pkgSize);
 					String s = new String(readMsg(sock.getInputStream(),
 							pkgSize));
-					
+
 					sock.close();
-					
+
 					JSONObject jo = new JSONObject(s);
-					
-					Log.i(TAG, "register answer = "+ jo);
+
+					Log.i(TAG, "register answer = " + jo);
 
 					int t = jo.getInt("status");
-					switch(t) {
-					
+					switch (t) {
+
 					case 1:
 						Toast toast = Toast.makeText(mainActivity,
 								R.string.RegisterStatus1, Toast.LENGTH_LONG);
-						toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
-								0, 0);
+						toast.setGravity(Gravity.TOP
+								| Gravity.CENTER_HORIZONTAL, 0, 0);
 						toast.show();
-						
+
 						dialog.setTitle(R.string.LoginDialogTitle);
 						final LinearLayout layreg = (LinearLayout) dialog
 								.findViewById(R.id.reglayout354);
@@ -684,26 +717,26 @@ public class Common {
 						final LinearLayout laylog = (LinearLayout) dialog
 								.findViewById(R.id.loginlayout543);
 						laylog.setVisibility(View.VISIBLE);
-						
+
 						nametxt.setText(mailtxt.getText());
 						break;
-						
+
 					case -2:
 						Toast toast1 = Toast.makeText(mainActivity,
 								R.string.RegisterStatus3, Toast.LENGTH_LONG);
-						toast1.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
-								0, 0);
+						toast1.setGravity(Gravity.TOP
+								| Gravity.CENTER_HORIZONTAL, 0, 0);
 						toast1.show();
 						break;
 
 					default:
 						Toast toast2 = Toast.makeText(mainActivity,
 								R.string.RegisterStatus2, Toast.LENGTH_LONG);
-						toast2.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL,
-								0, 0);
+						toast2.setGravity(Gravity.TOP
+								| Gravity.CENTER_HORIZONTAL, 0, 0);
 						toast2.show();
 						break;
-							
+
 					}
 
 				} catch (Exception e) {

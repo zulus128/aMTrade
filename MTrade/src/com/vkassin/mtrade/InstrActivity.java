@@ -92,6 +92,7 @@ public class InstrActivity extends Activity {
 private static enum ERROR_STAT {
 		
     err_NoPermissions(1000),
+    err_NoRights(1304),
     err_OrderDisabled(1400),
     err_OrderTypeDisabled(1401),
     err_OrderCheckLot(1402),
@@ -273,6 +274,8 @@ public Handler handler = new Handler(){
         
 //        msg.put("password", "1");
 //        msg.put("login", "133b06");
+
+      msg.put("sign", Common.sign(name, password));
 
       Log.i(TAG, "Login message: " + msg);
 
