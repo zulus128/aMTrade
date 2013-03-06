@@ -89,8 +89,8 @@ public class Common {
 		twoDForm.setDecimalFormatSymbols(dfs);
 	}
 
-//	public final static String ip_addr = "192.168.111.19";
-	public final static String ip_addr = "212.19.144.19"; //real ip
+	public final static String ip_addr = "192.168.111.19";
+//	public final static String ip_addr = "212.19.144.19"; //real ip
 	public final static int port_login = 9800;
 	public final static int port_register = 9802;
 
