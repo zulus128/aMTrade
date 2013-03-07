@@ -35,7 +35,7 @@ import android.widget.TextView;
 			this.ctx = context;
 			this.resourceId = resourceId;
 		}
-		
+			
 		public View getView(int position, View convertView, ViewGroup parent) {
 	    	
 	    	LayoutInflater vi = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

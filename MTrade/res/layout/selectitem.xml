@@ -11,7 +11,7 @@
         android:id="@+id/LinLayoutSel01"
         android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_weight="0.9"
+        android:layout_weight="0.89"
         android:orientation="vertical" >
 
         <TextView
@@ -34,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0.1"
+        android:layout_weight="0.11"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false" />

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SelectListView extends ListActivity {
 
@@ -62,8 +63,9 @@ public class SelectListView extends ListActivity {
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent event) {
 
-		View v = getCurrentFocus();
-		boolean ret = super.dispatchTouchEvent(event);
+//		View v = getCurrentFocus();
+//		boolean ret = super.dispatchTouchEvent(event);
+		
 		View w = getCurrentFocus();
 		int scrcoords[] = new int[2];
 		w.getLocationOnScreen(scrcoords);
@@ -80,6 +82,7 @@ public class SelectListView extends ListActivity {
 			imm.hideSoftInputFromWindow(getWindow().getCurrentFocus()
 					.getWindowToken(), 0);
 		}
+		boolean ret = super.dispatchTouchEvent(event);
 		return ret;
 	}
 
@@ -141,13 +144,20 @@ public class SelectListView extends ListActivity {
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
+		
 		super.onListItemClick(l, v, position, id);
-		ViewGroup row = (ViewGroup) v;
-		CheckBox check = (CheckBox) row.findViewById(R.id.checkbox);
-		check.toggle();
+//		ViewGroup row = (ViewGroup) v;
+
+//		CheckBox check = (CheckBox) v.findViewById(R.id.checkbox);
+//		TextView ttt = (TextView) v.findViewById(R.id.SelectSymbol);
+//		check.toggle();
+
 		Instrument ins = adapter.getItem(position);
 		ins.favourite = !ins.favourite;
-		Log.i(TAG, ins.symbol + " " + ins.favourite);
+		
+		adapter.notifyDataSetChanged();
+		
+//		Log.i(TAG, ins.symbol + " " + ins.favourite + " position = " + position + " " + ttt.getText());
 	}
 
 	@Override
