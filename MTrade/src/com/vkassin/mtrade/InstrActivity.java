@@ -1,9 +1,26 @@
 package com.vkassin.mtrade;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.BufferedInputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.EnumSet;
@@ -80,7 +97,10 @@ public class InstrActivity extends Activity {
 
 //	private boolean onActivityResultCalledBeforeOnResume;
 
-	private Socket sock;
+//	private Socket sock;
+	private SSLSocket sock;
+	private SSLContext sslcontext;
+	
 	private Thread thrd;
 	public ListView list;
 	private InstrsAdapter adapter;
@@ -240,6 +260,62 @@ public Handler handler = new Handler(){
 
        	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
 
+       	
+       	InputStream caInput = null;
+//       	Certificate ca = null;
+       	
+    try {
+  	
+    	CertificateFactory cf = CertificateFactory.getInstance("X.509");
+//    	caInput = new BufferedInputStream(new FileInputStream("server_pub.crt"));
+    	caInput = new BufferedInputStream(this.getAssets().open("server_pub.crt"));
+    	Certificate ca = cf.generateCertificate(caInput);
+    	System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+
+    	 // Create a KeyStore containing our trusted CAs
+        String keyStoreType = KeyStore.getDefaultType();
+        KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+        keyStore.load(null, null);
+        keyStore.setCertificateEntry("ca", ca);
+
+        // Create a TrustManager that trusts the CAs in our KeyStore
+        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+        tmf.init(keyStore);
+
+        // Create an SSLContext that uses our TrustManager
+        sslcontext = SSLContext.getInstance("TLS");
+        sslcontext.init(null, tmf.getTrustManagers(), null);
+
+    } catch (CertificateException e) {
+		e.printStackTrace();
+	} 
+	catch (FileNotFoundException e) {
+		e.printStackTrace();
+	}
+	catch (IOException e) {
+		e.printStackTrace();
+	} catch (KeyStoreException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (NoSuchAlgorithmException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (KeyManagementException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+     finally {
+         try {
+			caInput.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+     }
+    
+    
+    
     }
 
     public JSONObject getLogin() {
@@ -434,17 +510,17 @@ public Handler handler = new Handler(){
 
     	if(Common.connected)
     		return true;
-//    	Common.connected = false;
 
-//    while(true) {
-      try {
+    	try {
 
-//    	  if(sock != null)
-//    		  sock.close();
-    	  
-//          sock = new Socket("212.19.144.19", 9800);
-        sock = new Socket(Common.ip_addr, Common.port_login);
+//        sock = new Socket(Common.ip_addr, Common.port_login);
 
+//    		SocketFactory sf = SSLSocketFactory.getDefault();
+//    		sock = (SSLSocket) sf.createSocket(Common.ip_addr, Common.port_login_ssl);	
+
+    		sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);	
+    		
+    		
         JSONObject login = getLogin();
         if(login == null)
         	return false;
