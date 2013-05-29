@@ -91,8 +91,9 @@ public class Common {
 
 	public final static String ip_addr = "192.168.111.19";
 //	public final static String ip_addr = "212.19.144.19"; //real ip
-	public final static int port_login = 9803;
+	public final static int port_login = 9804;
 	public final static int port_register = 9802;
+	public final static boolean isSSL = true;
 
 	public final static Integer NO_ERRORS = 0;
 	public final static Integer INITIAL_LOADING_COMPLITE = 1;
