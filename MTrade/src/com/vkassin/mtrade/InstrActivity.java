@@ -323,10 +323,28 @@ public Handler handler = new Handler(){
     
     TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
     
-    signText("key.p12", "12345".getBytes(), true);
+    String prof = createProfile("file:///android_asset", "key", "12345");
+    signText(prof, "texttosign".getBytes(), true);
     
     }
 
+    /**
+     * Функция генерации профайла
+     * @param path - путь к файлу с ключами (обязательно должен быть доступ к нему)
+     * @param fName - имя ключевого контейнера
+     * @param pass - пароль
+     * @return Возвращает сформированный профайл
+     */
+    public static String createProfile(String path, String fName, String pass){
+        String profile = "";
+        Number hProvLocal = TumarCspFunctions.cpAcquireContext("", LibraryWrapper.CRYPT_VERIFYCONTEXT,
+                LibraryWrapper.PV_TABLE);
+        profile = TumarCspFunctions.cpCreateUrl(fName, "file", fName,
+                pass, path, "p12", 0xA045, 0xAA3A, hProvLocal);
+        TumarCspFunctions.cpReleaseContext(hProvLocal, 0);
+        return profile;
+    }
+    
     /**
      * Функция формирование подписи
      * @param profile - Профайл с ключами для подписи
