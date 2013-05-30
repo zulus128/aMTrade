@@ -9,5 +9,6 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/Zulus/workspace/afreechart0.0.4/afreechart-0.0.4-javadocs.zip!/afreechart-0.0.4-javadocs"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="libs/mobile.crypto.gammaprov.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

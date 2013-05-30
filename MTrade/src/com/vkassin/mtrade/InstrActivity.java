@@ -32,6 +32,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import kz.gamma.tumarcsp.LibraryWrapper;
+import kz.gamma.tumarcsp.TumarCspFunctions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,8 +100,8 @@ public class InstrActivity extends Activity {
 
 //	private boolean onActivityResultCalledBeforeOnResume;
 
-//	private Socket sock;
-	private SSLSocket sock;
+	private Socket sock;
+//	private SSLSocket sock;
 	private SSLContext sslcontext;
 	
 	private Thread thrd;
@@ -263,8 +266,11 @@ public Handler handler = new Handler(){
        	
        	InputStream caInput = null;
 //       	Certificate ca = null;
+      
+       	sslcontext = null;
        	
-    try {
+    if(Common.isSSL)
+       	try {
   	
     	CertificateFactory cf = CertificateFactory.getInstance("X.509");
 //    	caInput = new BufferedInputStream(new FileInputStream("server_pub.crt"));
@@ -315,9 +321,49 @@ public Handler handler = new Handler(){
      }
     
     
+    TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
+    
+    signText("key.p12", "12345".getBytes(), true);
     
     }
 
+    /**
+     * Функция формирование подписи
+     * @param profile - Профайл с ключами для подписи
+     * @param text - Блок данных для подписи
+     * @param isPKCS7 - Формат подписи
+     *                true - Формировать подпись в формате PKCS#7
+     *                false - Простая подпись
+     * @return Возвращает подпись.
+     */
+    public static byte [] signText(String profile, byte[] text, boolean isPKCS7){
+        byte[]ret = null;
+        Number hProv = 0;
+        Number hHash = 0;
+        try{
+            hProv = TumarCspFunctions.cpAcquireContext(profile, 0, 0);
+            hHash = TumarCspFunctions.cpCreateHash(hProv, 0x801d, 0, 0);
+            TumarCspFunctions.cpHashData(hProv, hHash, text, text.length, 0);
+            if(isPKCS7){
+                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, LibraryWrapper.CRYPT_SIGN_PKCS7);
+            }else{
+                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, 0);
+            }
+            TumarCspFunctions.cpDestroyHash(hProv, hHash); hHash = 0;
+            TumarCspFunctions.cpReleaseContext(hProv, 0); hProv = 0;
+        }
+        catch (Exception ex){
+            if(hHash.intValue()!=0){
+                TumarCspFunctions.cpDestroyHash(hProv, hHash);
+            }
+            if(hProv.intValue()!=0){
+                TumarCspFunctions.cpReleaseContext(hProv, 0);
+            }
+            ex.printStackTrace();
+        }
+        return ret;
+    }
+    
     public JSONObject getLogin() {
     	
     	
@@ -331,12 +377,13 @@ public Handler handler = new Handler(){
     	
       JSONObject msg = new JSONObject();
       try{
-        msg.put("objType", Common.LOGIN);
-        msg.put("time", Calendar.getInstance().getTimeInMillis());
-        msg.put("version", Common.PROTOCOL_VERSION);
+          msg.put("objType", Common.LOGIN);
+          msg.put("device", "Android");
+          msg.put("time", Calendar.getInstance().getTimeInMillis());
+          msg.put("version", Common.PROTOCOL_VERSION);
 
-        String name = Common.myaccount.get("name");
-        String password = Common.myaccount.get("password");
+          String name = Common.myaccount.get("name");
+          String password = Common.myaccount.get("password");
 
 
         if((name == null) || (password == null)) {
@@ -347,10 +394,6 @@ public Handler handler = new Handler(){
 
       msg.put("password", password);
       msg.put("login", name);
-        
-//        msg.put("password", "1");
-//        msg.put("login", "133b06");
-
       msg.put("sign", Common.sign(name, password));
 
       Log.i(TAG, "Login message: " + msg);
@@ -513,12 +556,14 @@ public Handler handler = new Handler(){
 
     	try {
 
-//        sock = new Socket(Common.ip_addr, Common.port_login);
+    		if(Common.isSSL)
+    			sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);
+    		else
+    			sock = new Socket(Common.ip_addr, Common.port_login);
 
 //    		SocketFactory sf = SSLSocketFactory.getDefault();
 //    		sock = (SSLSocket) sf.createSocket(Common.ip_addr, Common.port_login_ssl);	
 
-    		sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);	
     		
     		
         JSONObject login = getLogin();

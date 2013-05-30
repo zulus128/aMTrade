@@ -1,0 +1,9 @@
+REGEDIT4
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography\Defaults\Provider\Tumar CSP\RegInfo\cptumar]
+"User"="cptumar"
+"Created"="20120301235959Z"
+"Expires"="20130831235959Z"
+"Name"="eTrade"
+"OS"="Android"
+"Sign"=hex:a0,d0,4b,11,df,19,c2,18,77,33,f7,4f,57,b5,61,2c,3d,d2,dd,ed,6a,17,48,09,ef,33,2d,b4,a1,32,30,fa
