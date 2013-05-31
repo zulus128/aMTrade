@@ -1,7 +1,10 @@
 package com.vkassin.mtrade;
 
 import javax.net.SocketFactory;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
@@ -53,9 +56,11 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -103,7 +108,8 @@ public class InstrActivity extends Activity {
 	private Socket sock;
 //	private SSLSocket sock;
 	private SSLContext sslcontext;
-	
+    private String prof;
+
 	private Thread thrd;
 	public ListView list;
 	private InstrsAdapter adapter;
@@ -322,9 +328,8 @@ public Handler handler = new Handler(){
     
     
     TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
-    
-    String prof = createProfile("file:///android_asset", "key", "12345");
-    signText(prof, "texttosign".getBytes(), true);
+    prof = createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", "12345");
+//    signText(prof, "texttosign".getBytes(), true);
     
     }
 
@@ -412,7 +417,11 @@ public Handler handler = new Handler(){
 
       msg.put("password", password);
       msg.put("login", name);
-      msg.put("sign", Common.sign(name, password));
+      String md5 = Common.sign(name, password);
+      msg.put("sign", md5);
+      byte[] signed = signText(prof, md5.getBytes(), true);
+      String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
+      msg.put("gostSign", gsign);
 
       Log.i(TAG, "Login message: " + msg);
 
@@ -574,10 +583,27 @@ public Handler handler = new Handler(){
 
     	try {
 
-    		if(Common.isSSL)
+    		if(Common.isSSL) {
+    			
     			sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);
-    		else
+    			
+    			HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+    			SSLSession s = ((SSLSocket) sock).getSession();
+
+    			// Verify that the certicate hostname is for mail.google.com
+    			// This is due to lack of SNI support in the current SSLSocket.
+    			if (!hv.verify("etrade.kz", s)) {
+//    			    throw new SSLHandshakeException("Expected mail.google.com, "
+//                            "found " + s.getPeerPrincipal());
+    			    Log.w(TAG, "Expected etrade.kz, found " + s.getPeerPrincipal());
+    			}
+
+    			Log.i(TAG, "At this point SSLSocket performed certificate verificaiton and we have performed hostname verification, so it is safe to proceed.");
+
+    		}
+    		else {
     			sock = new Socket(Common.ip_addr, Common.port_login);
+    		}
 
 //    		SocketFactory sf = SSLSocketFactory.getDefault();
 //    		sock = (SSLSocket) sf.createSocket(Common.ip_addr, Common.port_login_ssl);	
@@ -722,7 +748,7 @@ public Handler handler = new Handler(){
                     			Iterator<String> keys = data.keys();
                     			while( keys.hasNext() ){
                     				String key = (String)keys.next();
-                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                     					Common.addToInstrList(key, data.getJSONObject(key));
                     				}
                     			}
@@ -735,7 +761,7 @@ public Handler handler = new Handler(){
                         			if(Common.getSelectedInstrument() != null)
                         			while( keys.hasNext() ) {
                         				String key = (String)keys.next();
-                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                         					
 //                        					Instrument instr = Common.getInstrById(data.getJSONObject(key).getLong("instrId"));
                         					Instrument instr = Common.getSelectedInstrument();
@@ -754,7 +780,7 @@ public Handler handler = new Handler(){
                         			Iterator<String> keys = data.keys();
                         			while( keys.hasNext() ){
                         				String key = (String)keys.next();
-                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                         					Common.addToCharts(key, data.getJSONObject(key));
                         				}
                         			}
@@ -772,7 +798,7 @@ public Handler handler = new Handler(){
                             			Iterator<String> keys = data.keys();
                             			while( keys.hasNext() ){
                             				String key = (String)keys.next();
-                            				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                            				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                             					Common.addDealToHistoryList(key, data.getJSONObject(key));
                             				}
                             			}
@@ -786,7 +812,7 @@ public Handler handler = new Handler(){
                         			Iterator<String> keys = data.keys();
                         			while( keys.hasNext() ){
                         				String key = (String)keys.next();
-                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                        				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                         					Common.addOrderToHistoryList(key, data.getJSONObject(key));
                         				}
                         			}
@@ -824,7 +850,7 @@ public Handler handler = new Handler(){
                                 			Iterator<String> keys = data.keys();
                                 			while( keys.hasNext() ){
                                 				String key = (String)keys.next();
-                                				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                                				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                                 					Common.addPositionToList(key, data.getJSONObject(key));
                                 				}
                                 			}
@@ -838,7 +864,7 @@ public Handler handler = new Handler(){
                                     			Iterator<String> keys = data.keys();
                                     			while( keys.hasNext() ){
                                     				String key = (String)keys.next();
-                                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                                     					
                                     					Mess m = Common.addMessageToList(key, data.getJSONObject(key));
                                     					
@@ -863,7 +889,7 @@ public Handler handler = new Handler(){
                     			Iterator<String> keys = data.keys();
                     			while( keys.hasNext() ){
                     				String key = (String)keys.next();
-                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")) {
+                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
                     			
                     					Common.addToAccountList(key, data.getJSONObject(key));
                     				}
