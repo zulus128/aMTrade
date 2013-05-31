@@ -93,11 +93,17 @@ public class Common {
 		twoDForm.setDecimalFormatSymbols(dfs);
 	}
 
-	public final static String ip_addr = "192.168.111.19";
+//	public final static String ip_addr = "192.168.111.19";
+	public final static String ip_addr = "172.16.0.108";
 //	public final static String ip_addr = "212.19.144.19"; //real ip
-	public final static int port_login = 9803;
-	public final static int port_login_ssl = 9804;
+	
+//	public final static int port_login = 9803;
+//	public final static int port_login_ssl = 9804;
+	public final static int port_login = 9800;
+	public final static int port_login_ssl = 9801;
+	
 	public final static int port_register = 9802;
+
 	public final static boolean isSSL = true;
 
 	public final static Integer NO_ERRORS = 0;
@@ -1138,7 +1144,7 @@ public class Common {
 
 //					Строка для подписи: 	newOrder-orderNum-instrumId-side-price-qty-code-ordType
 //					Пример:						newOrder-16807-20594623-0-1150-13-1027700451-1
-					String forsign = "newOrder-" + ordernum + "-" + msg.getString("instrumId") + "-" + msg.getString("side") + "-" + msg.getString("price") +
+					String forsign = "newOrder-" + ordernum + "-" + msg.getString("instrumId") + "-" + msg.getString("side") + "-" + JSONObject.numberToString(Double.valueOf(msg.getDouble("price"))) +
 							"-"  + msg.getString("qty") + "-" + msg.getString("code") + "-" + msg.getString("ordType");
 					byte[] signed = Common.signText(Common.signProfile, forsign.getBytes(), true);
 				    String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
