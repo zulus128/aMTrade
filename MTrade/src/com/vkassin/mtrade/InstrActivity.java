@@ -108,7 +108,6 @@ public class InstrActivity extends Activity {
 	private Socket sock;
 //	private SSLSocket sock;
 	private SSLContext sslcontext;
-    private String prof;
 
 	private Thread thrd;
 	public ListView list;
@@ -328,65 +327,9 @@ public Handler handler = new Handler(){
     
     
     TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
-    prof = createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", "12345");
-//    signText(prof, "texttosign".getBytes(), true);
-    
+    Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", "12345");
     }
 
-    /**
-     * Функция генерации профайла
-     * @param path - путь к файлу с ключами (обязательно должен быть доступ к нему)
-     * @param fName - имя ключевого контейнера
-     * @param pass - пароль
-     * @return Возвращает сформированный профайл
-     */
-    public static String createProfile(String path, String fName, String pass){
-        String profile = "";
-        Number hProvLocal = TumarCspFunctions.cpAcquireContext("", LibraryWrapper.CRYPT_VERIFYCONTEXT,
-                LibraryWrapper.PV_TABLE);
-        profile = TumarCspFunctions.cpCreateUrl(fName, "file", fName,
-                pass, path, "p12", 0xA045, 0xAA3A, hProvLocal);
-        TumarCspFunctions.cpReleaseContext(hProvLocal, 0);
-        return profile;
-    }
-    
-    /**
-     * Функция формирование подписи
-     * @param profile - Профайл с ключами для подписи
-     * @param text - Блок данных для подписи
-     * @param isPKCS7 - Формат подписи
-     *                true - Формировать подпись в формате PKCS#7
-     *                false - Простая подпись
-     * @return Возвращает подпись.
-     */
-    public static byte [] signText(String profile, byte[] text, boolean isPKCS7){
-        byte[]ret = null;
-        Number hProv = 0;
-        Number hHash = 0;
-        try{
-            hProv = TumarCspFunctions.cpAcquireContext(profile, 0, 0);
-            hHash = TumarCspFunctions.cpCreateHash(hProv, 0x801d, 0, 0);
-            TumarCspFunctions.cpHashData(hProv, hHash, text, text.length, 0);
-            if(isPKCS7){
-                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, LibraryWrapper.CRYPT_SIGN_PKCS7);
-            }else{
-                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, 0);
-            }
-            TumarCspFunctions.cpDestroyHash(hProv, hHash); hHash = 0;
-            TumarCspFunctions.cpReleaseContext(hProv, 0); hProv = 0;
-        }
-        catch (Exception ex){
-            if(hHash.intValue()!=0){
-                TumarCspFunctions.cpDestroyHash(hProv, hHash);
-            }
-            if(hProv.intValue()!=0){
-                TumarCspFunctions.cpReleaseContext(hProv, 0);
-            }
-            ex.printStackTrace();
-        }
-        return ret;
-    }
-    
     public JSONObject getLogin() {
     	
     	
@@ -419,7 +362,7 @@ public Handler handler = new Handler(){
       msg.put("login", name);
       String md5 = Common.sign(name, password);
       msg.put("sign", md5);
-      byte[] signed = signText(prof, md5.getBytes(), true);
+      byte[] signed = Common.signText(Common.signProfile, md5.getBytes(), true);
       String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
       msg.put("gostSign", gsign);
 

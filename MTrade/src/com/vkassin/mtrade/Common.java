@@ -43,6 +43,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import kz.gamma.tumarcsp.LibraryWrapper;
+import kz.gamma.tumarcsp.TumarCspFunctions;
+
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +59,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -89,8 +93,8 @@ public class Common {
 		twoDForm.setDecimalFormatSymbols(dfs);
 	}
 
-//	public final static String ip_addr = "192.168.111.19";
-	public final static String ip_addr = "212.19.144.19"; //real ip
+	public final static String ip_addr = "192.168.111.19";
+//	public final static String ip_addr = "212.19.144.19"; //real ip
 	public final static int port_login = 9803;
 	public final static int port_login_ssl = 9804;
 	public final static int port_register = 9802;
@@ -158,9 +162,7 @@ public class Common {
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
 	private static HashMap<String, Position> posMap = new HashMap<String, Position>();
 	private static HashMap<String, Mess> mesMap = new HashMap<String, Mess>();
-
 	public static HashMap<String, String> myaccount = new HashMap<String, String>();
-
 	public static boolean FIRSTLOAD_FINISHED = false;
 	public static boolean loginFromDialog = false;
 	public static InstrActivity mainActivity;
@@ -169,21 +171,69 @@ public class Common {
 	public static ChartActivity chartActivity;
 	public static PosActivity posActivity;
 	public static MessageActivity mesActivity;
-
 	public static RSSItem curnews;
-
 	public static int historyFilter = 3;
-
-	// public static int activities = 0;
 	public static String oldName = "x";
-
 	private static int mYear;
 	private static int mMonth;
 	private static int mDay;
-	// static final int DATE_DIALOG_ID = 10;
 	static EditText datetxt = null;
 
-	// static boolean expchanged = false;
+	public static String signProfile;
+
+    /**
+     * Функция генерации профайла
+     * @param path - путь к файлу с ключами (обязательно должен быть доступ к нему)
+     * @param fName - имя ключевого контейнера
+     * @param pass - пароль
+     * @return Возвращает сформированный профайл
+     */
+    public static String createProfile(String path, String fName, String pass){
+        String profile = "";
+        Number hProvLocal = TumarCspFunctions.cpAcquireContext("", LibraryWrapper.CRYPT_VERIFYCONTEXT,
+                LibraryWrapper.PV_TABLE);
+        profile = TumarCspFunctions.cpCreateUrl(fName, "file", fName,
+                pass, path, "p12", 0xA045, 0xAA3A, hProvLocal);
+        TumarCspFunctions.cpReleaseContext(hProvLocal, 0);
+        return profile;
+    }
+    
+    /**
+     * Функция формирование подписи
+     * @param profile - Профайл с ключами для подписи
+     * @param text - Блок данных для подписи
+     * @param isPKCS7 - Формат подписи
+     *                true - Формировать подпись в формате PKCS#7
+     *                false - Простая подпись
+     * @return Возвращает подпись.
+     */
+    public static byte [] signText(String profile, byte[] text, boolean isPKCS7){
+        byte[]ret = null;
+        Number hProv = 0;
+        Number hHash = 0;
+        try{
+            hProv = TumarCspFunctions.cpAcquireContext(profile, 0, 0);
+            hHash = TumarCspFunctions.cpCreateHash(hProv, 0x801d, 0, 0);
+            TumarCspFunctions.cpHashData(hProv, hHash, text, text.length, 0);
+            if(isPKCS7){
+                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, LibraryWrapper.CRYPT_SIGN_PKCS7);
+            }else{
+                ret = TumarCspFunctions.cpSignHashData(hProv, hHash, LibraryWrapper.AT_SIGNATURE, null, 0);
+            }
+            TumarCspFunctions.cpDestroyHash(hProv, hHash); hHash = 0;
+            TumarCspFunctions.cpReleaseContext(hProv, 0); hProv = 0;
+        }
+        catch (Exception ex){
+            if(hHash.intValue()!=0){
+                TumarCspFunctions.cpDestroyHash(hProv, hHash);
+            }
+            if(hProv.intValue()!=0){
+                TumarCspFunctions.cpReleaseContext(hProv, 0);
+            }
+            ex.printStackTrace();
+        }
+        return ret;
+    }
 
 	public static Instrument getSelectedInstrument() {
 		return selectedInstrument;
@@ -836,6 +886,13 @@ public class Common {
 			msg.put("action", "REMOVE");
 			msg.put("transSerial", hist.getSerial());
 
+//			Строка для подписи: 	reject-orderNum-transitSerial
+//			Пример:						reject-50249-107683
+			String forsign = "reject-" + msg.getString("orderNum") + "-" + msg.getString("transSerial");
+			byte[] signed = Common.signText(Common.signProfile, forsign.getBytes(), true);
+		    String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
+		    msg.put("gostSign", gsign);
+
 			mainActivity.writeJSONMsg(msg);
 
 		} catch (Exception e) {
@@ -1063,6 +1120,7 @@ public class Common {
 					msg.put("objType", Common.CREATE_REMOVE_ORDER);
 					msg.put("time", Calendar.getInstance().getTimeInMillis());
 					msg.put("version", Common.PROTOCOL_VERSION);
+					msg.put("device", "Android");
 					msg.put("instrumId", Long.valueOf(it.id));
 					msg.put("price", price);
 					msg.put("qty", qval);
@@ -1071,15 +1129,20 @@ public class Common {
 					msg.put("code", String.valueOf(aspinner.getSelectedItem()));
 					msg.put("orderNum", ++ordernum);
 					msg.put("action", "CREATE");
-					// msg.put("expireDate", new GregorianCalendar(mYear,
-					// mMonth, mDay).getTimeInMillis());
-
 					boolean b = (((mYear - 1900) == dat.getYear())
 							&& (mMonth == dat.getMonth()) && (mDay == dat
 							.getDate()));
 					if (!b)
 						msg.put("expired", String.format("%02d.%02d.%04d",
 								mDay, mMonth + 1, mYear));
+
+//					Строка для подписи: 	newOrder-orderNum-instrumId-side-price-qty-code-ordType
+//					Пример:						newOrder-16807-20594623-0-1150-13-1027700451-1
+					String forsign = "newOrder-" + ordernum + "-" + msg.getString("instrumId") + "-" + msg.getString("side") + "-" + msg.getString("price") +
+							"-"  + msg.getString("qty") + "-" + msg.getString("code") + "-" + msg.getString("ordType");
+					byte[] signed = Common.signText(Common.signProfile, forsign.getBytes(), true);
+				    String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
+				    msg.put("gostSign", gsign);
 
 					mainActivity.writeJSONMsg(msg);
 
