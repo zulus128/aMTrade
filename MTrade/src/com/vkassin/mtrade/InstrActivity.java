@@ -325,9 +325,10 @@ public Handler handler = new Handler(){
 		}
      }
     
-    
+	Common.loadAccountDetails();
+	
     TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
-    Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", "12345");
+//    Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
     }
 
     public JSONObject getLogin() {
@@ -929,49 +930,8 @@ public Handler handler = new Handler(){
     	
       super.onResume();
 
-//      PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//      boolean isScreenOn = pm.isScreenOn();
-      
-//      Log.e(TAG, "--- onResume " + Common.activities + "Common.confChanged = " + Common.confChanged );// + isApplicationBroughtToBackground(this));
-      
-//      Common.activities++;
-
-//      if(!onstart) {
-//    	  
-//	  	Common.loadAccountDetails();
-//		
-//	  	if(Common.confChanged) {
-//	  		
-//	  		Common.confChanged = false;
-//	  	}
-//	  	else {
-//	  		
-////	  		if(Common.activities == 0)
-//	  			Common.login(this);
-//	  	}
-//      }
-//      onstart = false;
-
-//      Common.loadAccountDetails();
-//	
-//  	if(Common.confChanged) {
-//  		
-//  		Common.confChanged = false;
-//  	}
-//  	else {
-//  		
-//  		if(Common.paused)
-//  			Common.login(this);
-//  	}
-//
-//  Common.paused = false;
-//	Common.paused1 = false;
-
-      
   	  onResume1();
-  		
-//      Common.activities++;
-
+  	  
     }
     
     @Override

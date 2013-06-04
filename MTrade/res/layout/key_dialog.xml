@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customorderdialog"
+    android:layout_width="250dip"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/loginlayout5438"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/orderlayout28"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="7dp" >
+
+            <TextView
+                android:id="@+id/keytext"
+                android:layout_width="100dip"
+                android:layout_height="fill_parent"
+                android:text="@string/Password"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/keyedit"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/gokey"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fire" />
+
+    </LinearLayout>
+
+</LinearLayout>

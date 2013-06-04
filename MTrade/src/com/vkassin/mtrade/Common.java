@@ -58,6 +58,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Environment;
 import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
@@ -548,7 +549,7 @@ public class Common {
 			os.close();
 			fos.close();
 			Log.i(TAG, "saved username: " + myaccount.get("name")
-					+ " password: " + myaccount.get("password"));
+					+ " password: " + myaccount.get("password")	+ " keypassword: " + myaccount.get("keypassword"));
 		} catch (FileNotFoundException e) {
 
 			Toast.makeText(app_ctx, "Файл не записан " + e.toString(),
@@ -632,7 +633,7 @@ public class Common {
 				+ msgKey);
 	}
 
-	public static void login(Context ctx) {
+	public static void login(final Context ctx) {
 
 		// ctx = Common.app_ctx;
 		Common.connected = false;
@@ -868,8 +869,9 @@ public class Common {
 					e.printStackTrace();
 				}
 				loginFromDialog = true;
-				mainActivity.refresh();
-				// break;
+//				mainActivity.refresh();
+				
+				Common.keypassword(ctx);
 			}
 
 		});
@@ -880,6 +882,49 @@ public class Common {
 
 	}
 
+	private static void keypassword (Context ctx) {
+
+		String kpass = Common.myaccount.get("keypassword");
+
+		if(Common.isSSL) {
+			if(kpass == null) {
+				
+				final Dialog dialog = new Dialog(ctx);
+				dialog.setContentView(R.layout.key_dialog);
+				dialog.setTitle(R.string.KeyDialogTitle);
+				dialog.setCancelable(false);
+
+				final EditText keytxt = (EditText) dialog
+						.findViewById(R.id.keyedit);
+
+				Button customDialog_Register = (Button) dialog
+						.findViewById(R.id.gokey);
+				customDialog_Register.setOnClickListener(new Button.OnClickListener() {
+					public void onClick(View arg0) {
+
+						Common.myaccount.put("keypassword", keytxt.getText().toString());
+//						Common.saveAccountDetails();
+						dialog.dismiss();
+						Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
+						mainActivity.refresh();
+
+					}
+
+				});
+				dialog.show();
+
+			}
+			else {
+
+				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
+				mainActivity.refresh();
+
+			}
+		}
+
+
+	}
+	
 	public static void delOrder(final Context ctx, History hist) {
 
 		JSONObject msg = new JSONObject();
