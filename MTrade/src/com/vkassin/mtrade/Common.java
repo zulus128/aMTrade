@@ -921,6 +921,11 @@ public class Common {
 
 			}
 		}
+		else {//noSSL
+
+			mainActivity.refresh();
+	
+		}
 
 
 	}
