@@ -38,6 +38,10 @@
             android:name=".HistoryActivity"
             android:configChanges="orientation" >
         </activity>
+        <activity
+            android:name=".ArchiveActivity"
+            android:configChanges="orientation" >
+        </activity>
         <activity android:name=".SelectListView" >
         </activity>
         <activity

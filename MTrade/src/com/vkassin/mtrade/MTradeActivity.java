@@ -56,6 +56,13 @@ public class MTradeActivity extends TabActivity {
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);
 
+	    intent = new Intent().setClass(this, ArchiveActivity.class);
+    	i = Common.app_ctx.getResources().getIdentifier("TabCaption4_1", "string", Common.app_ctx.getPackageName());
+	    spec = Common.tabHost.newTabSpec("t_arctrade").setIndicator(Common.app_ctx.getResources().getString(i),
+	                      res.getDrawable(android.R.drawable.ic_menu_agenda))
+	                  .setContent(intent);
+	    Common.tabHost.addTab(spec);
+
 	    intent = new Intent().setClass(this, HistoryActivity.class);
     	i = Common.app_ctx.getResources().getIdentifier("TabCaption5", "string", Common.app_ctx.getPackageName());
 	    spec = Common.tabHost.newTabSpec("tcab").setIndicator(Common.app_ctx.getResources().getString(i),

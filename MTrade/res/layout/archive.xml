@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/SlateGray" >
+
+    <LinearLayout
+        android:id="@+id/LinLayoutHi01_1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/LinLayoutPos02_1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/DarkGray"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.25"
+                android:gravity="center"
+                android:text="@string/TitleInstr" />
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.10"
+                android:gravity="center"
+                android:text="@string/TitleDir" />
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.25"
+                android:gravity="right"
+                android:text="@string/Price" />
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.2"
+                android:gravity="right"
+                android:text="@string/TitleQuantity" />
+
+            <TextView
+                style="@style/CodeFontHist1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:text="@string/TitleDate" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/ArchiveList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:choiceMode="singleChoice"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:paddingTop="0dp" >
+        </ListView>
+    </LinearLayout>
+
+</RelativeLayout>
