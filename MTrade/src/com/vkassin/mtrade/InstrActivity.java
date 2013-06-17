@@ -687,6 +687,19 @@ public Handler handler = new Handler(){
                     				
                     		}
                     		else
+                    		if( t == Common.MSG_TYPE_ARC_DEALS) {
+                    			
+                    			Iterator<String> keys = data.keys();
+                    			while( keys.hasNext() ){
+                    				String key = (String)keys.next();
+                    				if(!key.equals("time") && !key.equals("objType")&& !key.equals("version")&& !key.equals("device")) {
+                    					Common.addToArcDealList(key, data.getJSONObject(key));
+                    				}
+                    			}
+//                				adapter.notifyDataSetChanged();
+                    			Common.validatePortfel();
+							}
+                    		else
                     		if( t == Common.INSTRUMENT) {
                     			
                     			Iterator<String> keys = data.keys();

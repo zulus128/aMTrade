@@ -3,9 +3,13 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 public class PosActivity extends Activity {
@@ -39,6 +43,26 @@ public class PosActivity extends Activity {
 		
 	}
 	   
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.portmenu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch (item.getItemId()) {
+	        case R.id.menuport: 
+	        	
+	        	Common.askArcDeals();
+	        	
+	            break;
+	    }
+	    return true;
+	}
+
     @Override
     public void onResume() {
     	

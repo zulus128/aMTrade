@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menuport"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="@string/MenuItemPort"
+        android:titleCondensed="@string/MenuItemPort">
+    </item>
+
+</menu>

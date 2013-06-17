@@ -258,6 +258,7 @@ public final class R {
         public static final int loginnameedit=0x7f08000b;
         public static final int logintext=0x7f08000a;
         public static final int menulogin=0x7f08007a;
+        public static final int menuport=0x7f08007c;
         public static final int menuselect=0x7f080079;
         public static final int orderlayout1=0x7f08004c;
         public static final int orderlayout2=0x7f080009;
@@ -320,6 +321,7 @@ public final class R {
         public static final int histmenu=0x7f070000;
         public static final int instrsmenu=0x7f070001;
         public static final int newsmenu=0x7f070002;
+        public static final int portmenu=0x7f070003;
     }
     public static final class string {
         public static final int Account=0x7f05009b;
@@ -353,6 +355,7 @@ public final class R {
         public static final int LoginName=0x7f05001d;
         public static final int MenuItemGoChart=0x7f05002b;
         public static final int MenuItemGoGlass=0x7f05001c;
+        public static final int MenuItemPort=0x7f05009e;
         public static final int MenuItemPutOrder=0x7f050011;
         public static final int MenuItemRelogin=0x7f050026;
         public static final int MenuTitle=0x7f050010;

@@ -126,6 +126,8 @@ public class Common {
 	public final static Integer MSG_TYPE_TS_MESSAGE = 110;
 	public final static Integer MSG_REGISTER = 111;
 
+	public final static Integer MSG_TYPE_ARC_DEALS = 112;
+
 	public final static String PROTOCOL_VERSION = "1.0";
 	public final static int ERROR_USER_WAS_NOT_FOUND = 200;
 	public final static int ERROR_USER_ALREADY_CONNECTED = 201;
@@ -165,6 +167,7 @@ public class Common {
 	public static final String LINK_TAG = "link";
 
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
+	private static HashMap<String, Deal> arcdealMap = new HashMap<String, Deal>();
 	private static HashMap<String, History> historyMap = new HashMap<String, History>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();
@@ -179,6 +182,7 @@ public class Common {
 	public static ChartActivity chartActivity;
 	public static PosActivity posActivity;
 	public static MessageActivity mesActivity;
+	public static ArchiveActivity arcActivity;
 	public static RSSItem curnews;
 	public static int historyFilter = 3;
 	public static String oldName = "x";
@@ -320,6 +324,37 @@ public class Common {
 			instrMap.put(key, new Instrument(key, obj));
 		else
 			old.update(obj);
+	}
+
+	public static void validatePortfel() {
+
+		Iterator<String> itr = posMap.keySet().iterator();
+		while (itr.hasNext()) {
+			String key = itr.next();
+			Position p = posMap.get(key);
+			Log.i(TAG, "pos = " + p.symbol);
+		}
+
+//		Iterator<String> itr = arcdealMap.keySet().iterator();
+//		while (itr.hasNext()) {
+//			String key = itr.next();
+//			arcdealMap.get(key);
+//		}
+
+	}
+	
+	public static void addToArcDealList(String key, JSONObject obj) {
+
+		Deal old = arcdealMap.get(key);
+		if (old == null)
+			arcdealMap.put(key, new Deal(key, obj));
+		else
+			old.update(obj);
+	}
+
+	public static ArrayList<Deal> getAllArcDeals() {
+
+		return new ArrayList<Deal>(arcdealMap.values());
 	}
 
 	public static void addToCharts(String key, JSONObject obj) {
@@ -956,6 +991,25 @@ public class Common {
 
 			e.printStackTrace();
 			Log.e(TAG, "Error! Cannot create JSON order object (delOrder)", e);
+		}
+	}
+
+	public static void askArcDeals() {
+
+		JSONObject msg = new JSONObject();
+		try {
+
+			msg.put("objType", Common.MSG_TYPE_ARC_DEALS);
+			msg.put("time", Calendar.getInstance().getTimeInMillis());
+			msg.put("version", Common.PROTOCOL_VERSION);
+			msg.put("device", "Android");
+
+			mainActivity.writeJSONMsg(msg);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			Log.e(TAG, "Error! Cannot create JSON order object (askArcDeals)", e);
 		}
 	}
 

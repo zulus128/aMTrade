@@ -160,5 +160,6 @@
     <string name="ExpDate">Дата истечения</string>
     
     <string name="KeyDialogTitle">Активизация ключа</string>
+    <string name="MenuItemPort">Загрузить архив</string>
     
 </resources>
