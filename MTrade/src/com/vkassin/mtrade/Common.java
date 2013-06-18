@@ -328,19 +328,43 @@ public class Common {
 
 	public static void validatePortfel() {
 
-		Iterator<String> itr = posMap.keySet().iterator();
+		long maxkey = 0;
+		Iterator<String> itr2 = posMap.keySet().iterator();
+		while (itr2.hasNext()) {
+			String key1 = itr2.next();
+			long k = Long.parseLong(key1);
+			if(k > maxkey)
+				maxkey = k;
+		}
+		
+		Iterator<String> itr = arcdealMap.keySet().iterator();
 		while (itr.hasNext()) {
 			String key = itr.next();
-			Position p = posMap.get(key);
-			Log.i(TAG, "pos = " + p.symbol);
+			Deal d =arcdealMap.get(key);
+
+			boolean found = false;
+			
+			Iterator<String> itr1 = posMap.keySet().iterator();
+			while (itr1.hasNext()) {
+				String key1 = itr1.next();
+				Position p = posMap.get(key1);
+//				Log.i(TAG, "pos = " + p.symbol);
+				if(p.symbol.equals(d.getInstr()) && p.acc_code.equals(d.account)) {
+					
+					found = true;
+				}
+			}
+			
+			if(!found) {
+				
+				posMap.put(String.valueOf(maxkey++), new Position(key, d.account, d.getInstr()));
+
+			}
+
 		}
 
-//		Iterator<String> itr = arcdealMap.keySet().iterator();
-//		while (itr.hasNext()) {
-//			String key = itr.next();
-//			arcdealMap.get(key);
-//		}
-
+		posActivity.refresh();
+		
 	}
 	
 	public static void addToArcDealList(String key, JSONObject obj) {

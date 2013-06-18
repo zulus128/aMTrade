@@ -41,6 +41,15 @@ public class Position implements Serializable {
 		Log.i(TAG, "Position created id:" + i);
 		
 	}
+
+	public Position(String i, String acc, String instr) {
+		
+		this.id = i;
+		this.acc_code = acc;
+		this.symbol = instr;
+		Log.i(TAG, "Position created id:" + i + " acc: " + acc + "instr: " + instr);
+		
+	}
 		
 	public void update(JSONObject obj) {
 		

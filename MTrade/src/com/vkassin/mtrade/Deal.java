@@ -28,6 +28,8 @@ public class Deal implements Serializable, History {
 	public Long dtime = Long.valueOf(0);
 	public Long dealSerial = Long.valueOf(0);
 	private Long ordSerial = Long.valueOf(0);
+	public String account = "";
+
 
 	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
@@ -141,6 +143,7 @@ public class Deal implements Serializable, History {
 		
 		try{ this.dealSerial = obj.getLong("dealSerial"); }catch(JSONException e){ }
 		try{ this.ordSerial = obj.getLong("ordSerial"); }catch(JSONException e){ }
+		try{ this.account = obj.getString("account"); }catch(JSONException e){ }
 
 	}
 
