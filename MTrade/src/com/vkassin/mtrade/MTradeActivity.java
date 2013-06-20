@@ -89,6 +89,8 @@ public class MTradeActivity extends TabActivity {
     	Common.tabHost.getTabWidget().getChildAt(2).setVisibility(View.GONE);
 //    	Common.tabHost.getTabWidget().getChildAt(2).setEnabled(false);
 
+    	Common.tabHost.getTabWidget().getChildAt(4).setVisibility(View.GONE);
+
 		Common.paused1 = false;
 
     }

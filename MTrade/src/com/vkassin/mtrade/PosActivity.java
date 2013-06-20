@@ -7,9 +7,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class PosActivity extends Activity {
@@ -18,6 +22,7 @@ public class PosActivity extends Activity {
 
 	private ListView list;
 	private PosAdapter adapter;
+	private static final int CONTEXTMENU_GOARCHIVE = 1;
 
 	public void onCreate(Bundle savedInstanceState) {
     	
@@ -29,6 +34,8 @@ public class PosActivity extends Activity {
         list = (ListView)this.findViewById(R.id.PosList);
     	adapter = new PosAdapter(this, R.layout.positem, new ArrayList<Position>());
     	list.setAdapter(adapter);
+
+    	registerForContextMenu(list);
 
 	}
 
@@ -73,4 +80,30 @@ public class PosActivity extends Activity {
 
     }
     
+    @Override
+	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
+		
+		menu.setHeaderTitle(R.string.MenuTitle);  
+	    menu.add(0, CONTEXTMENU_GOARCHIVE, 0, R.string.MenuItemGoArchive);
+	    
+		super.onCreateContextMenu(menu, v, menuInfo);  
+
+	}
+    
+    @Override  
+    public boolean onContextItemSelected(MenuItem item) {  
+ 		   
+
+ 	   if (item.getItemId() == CONTEXTMENU_GOARCHIVE) {
+ 	    	
+ 		   Common.tabHost.getTabWidget().getChildAt(3).setVisibility(View.GONE);
+ 	    	Common.tabHost.getTabWidget().getChildAt(4).setVisibility(View.VISIBLE);
+ 	    	Common.tabHost.setCurrentTab(4);
+
+
+ 	    }
+ 	    
+ 	    return true;  
+    }  
+
 }

@@ -161,5 +161,6 @@
     
     <string name="KeyDialogTitle">Активизация ключа</string>
     <string name="MenuItemPort">Загрузить архив</string>
+    <string name="MenuItemGoArchive">Открыть архив</string>
     
 </resources>

@@ -353,6 +353,7 @@ public final class R {
         public static final int LoginFailed200202=0x7f050097;
         public static final int LoginFailed201=0x7f050098;
         public static final int LoginName=0x7f05001d;
+        public static final int MenuItemGoArchive=0x7f05009f;
         public static final int MenuItemGoChart=0x7f05002b;
         public static final int MenuItemGoGlass=0x7f05001c;
         public static final int MenuItemPort=0x7f05009e;
