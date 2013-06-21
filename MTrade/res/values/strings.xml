@@ -163,5 +163,7 @@
     <string name="MenuItemPort">Загрузить архив</string>
     <string name="MenuItemArcDeal">Добавить сделку вручную</string>
     <string name="MenuItemGoArchive">Открыть архив</string>
+    <string name="WarButton">Реальные торги</string>
+    <string name="TestButton">Тестовые торги</string>
     
 </resources>
