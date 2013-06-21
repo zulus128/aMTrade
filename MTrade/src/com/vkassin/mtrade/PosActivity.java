@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 public class PosActivity extends Activity {
 
@@ -23,6 +24,8 @@ public class PosActivity extends Activity {
 	private ListView list;
 	private PosAdapter adapter;
 	private static final int CONTEXTMENU_GOARCHIVE = 1;
+	private int selectedRowId;
+	private ProgressBar pb;
 
 	public void onCreate(Bundle savedInstanceState) {
     	
@@ -37,6 +40,9 @@ public class PosActivity extends Activity {
 
     	registerForContextMenu(list);
 
+    	pb = (ProgressBar)findViewById(R.id.ProgressBarArc01);
+
+//    	refresh();
 	}
 
 	public void refresh() {
@@ -46,6 +52,8 @@ public class PosActivity extends Activity {
 			adapter.setItems(Common.getAllPositions());
 	  		adapter.notifyDataSetChanged();
 	        
+//			adapter.getFilter().filter("KZTKp");
+
 //		}
 		
 	}
@@ -64,12 +72,19 @@ public class PosActivity extends Activity {
 	        case R.id.menuport: 
 	        	
 	        	Common.askArcDeals();
-	        	
+    			pb.setVisibility(View.VISIBLE);
+
 	            break;
 	    }
 	    return true;
 	}
 
+	public void hideProgressBar() {
+
+		pb.setVisibility(View.GONE);
+
+	}
+	
     @Override
     public void onResume() {
     	
@@ -88,6 +103,14 @@ public class PosActivity extends Activity {
 	    
 		super.onCreateContextMenu(menu, v, menuInfo);  
 
+		AdapterView.AdapterContextMenuInfo info =
+            (AdapterView.AdapterContextMenuInfo) menuInfo;
+
+	    selectedRowId = (int)info.id;
+		Position p =  adapter.getItems().get(selectedRowId);
+		Log.i(TAG, "ppp = " + p.symbol);
+		
+		Common.arcfilter = p.symbol;
 	}
     
     @Override  
@@ -96,10 +119,15 @@ public class PosActivity extends Activity {
 
  	   if (item.getItemId() == CONTEXTMENU_GOARCHIVE) {
  	    	
- 		   Common.tabHost.getTabWidget().getChildAt(3).setVisibility(View.GONE);
+
+//	    	Common.arcfilter = "KZTK";
+
+	    	Common.tabHost.getTabWidget().getChildAt(3).setVisibility(View.GONE);
  	    	Common.tabHost.getTabWidget().getChildAt(4).setVisibility(View.VISIBLE);
  	    	Common.tabHost.setCurrentTab(4);
 
+
+// 	    	refresh();
 
  	    }
  	    

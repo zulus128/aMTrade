@@ -191,6 +191,8 @@ public class Common {
 	private static int mDay;
 	static EditText datetxt = null;
 
+	public static String arcfilter = "";
+
 	public static String signProfile;
 
     /**
@@ -317,6 +319,11 @@ public class Common {
 		instrMap.clear();
 	}
 
+	public static void clearArcDealList() {
+
+		arcdealMap.clear();
+	}
+
 	public static void addToInstrList(String key, JSONObject obj) {
 
 		Instrument old = instrMap.get(key);
@@ -379,6 +386,20 @@ public class Common {
 	public static ArrayList<Deal> getAllArcDeals() {
 
 		return new ArrayList<Deal>(arcdealMap.values());
+	}
+
+	public static ArrayList<Deal> getArcDealsWithFilter() {
+
+		ArrayList<Deal> res = new ArrayList<Deal>();
+		Iterator<String> itr1 = arcdealMap.keySet().iterator();
+		while (itr1.hasNext()) {
+
+			String key1 = itr1.next();
+			Deal d = arcdealMap.get(key1);
+			if(d.getInstr().equals(arcfilter))
+				res.add(d);
+		}
+		return res;//new ArrayList<Deal>(arcdealMap.values());
 	}
 
 	public static void addToCharts(String key, JSONObject obj) {

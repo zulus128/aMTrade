@@ -79,7 +79,7 @@ public class MTradeActivity extends TabActivity {
 	    
 	    intent = new Intent().setClass(this, NewsActivity.class);
     	i = Common.app_ctx.getResources().getIdentifier("TabCaption7", "string", Common.app_ctx.getPackageName());
-	    spec = Common.tabHost.newTabSpec("t_mess").setIndicator(Common.app_ctx.getResources().getString(i),
+	    spec = Common.tabHost.newTabSpec("t_news").setIndicator(Common.app_ctx.getResources().getString(i),
 	                      res.getDrawable(android.R.drawable.ic_menu_compass))
 	                  .setContent(intent);
 	    Common.tabHost.addTab(spec);

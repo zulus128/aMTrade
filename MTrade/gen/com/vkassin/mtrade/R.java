@@ -195,9 +195,9 @@ public final class R {
         public static final int LinLayoutHor01=0x7f080015;
         public static final int LinLayoutPos02=0x7f080019;
         public static final int LinLayoutPos02_1=0x7f080001;
-        public static final int LinLayoutSel01=0x7f080071;
+        public static final int LinLayoutSel01=0x7f080072;
         public static final int LinLayout_news01=0x7f080044;
-        public static final int LinLayout_q01=0x7f080068;
+        public static final int LinLayout_q01=0x7f080069;
         public static final int MesFrom=0x7f080041;
         public static final int MesList=0x7f080043;
         public static final int MesText=0x7f080042;
@@ -213,23 +213,24 @@ public final class R {
         public static final int PosRest=0x7f080066;
         public static final int PosSymbol=0x7f080062;
         public static final int ProgressBar01=0x7f08002b;
-        public static final int QuoteBidQ=0x7f08006a;
-        public static final int QuoteList=0x7f080069;
-        public static final int QuotePrice=0x7f08006b;
-        public static final int QuoteSellQ=0x7f08006c;
-        public static final int SelectDescr=0x7f080073;
-        public static final int SelectSymbol=0x7f080072;
-        public static final int TableLayout01=0x7f080070;
+        public static final int ProgressBarArc01=0x7f080068;
+        public static final int QuoteBidQ=0x7f08006b;
+        public static final int QuoteList=0x7f08006a;
+        public static final int QuotePrice=0x7f08006c;
+        public static final int QuoteSellQ=0x7f08006d;
+        public static final int SelectDescr=0x7f080074;
+        public static final int SelectSymbol=0x7f080073;
+        public static final int TableLayout01=0x7f080071;
         public static final int acc_spinner=0x7f08005b;
-        public static final int btnClear=0x7f08006f;
+        public static final int btnClear=0x7f080070;
         public static final int buttonPriceMinus=0x7f080050;
         public static final int buttonPricePlus=0x7f080052;
         public static final int buttonQtyMinus=0x7f080054;
         public static final int buttonQtyPlus=0x7f080056;
-        public static final int buttonlayout=0x7f08006d;
+        public static final int buttonlayout=0x7f08006e;
         public static final int cancelbutt=0x7f080061;
         public static final int cancelreg=0x7f08003f;
-        public static final int checkbox=0x7f080074;
+        public static final int checkbox=0x7f080075;
         public static final int customorderdialog=0x7f080008;
         public static final int emailedit2=0x7f080036;
         public static final int emailtext=0x7f080035;
@@ -246,10 +247,10 @@ public final class R {
         public static final int hbutton1=0x7f080016;
         public static final int hbutton2=0x7f080017;
         public static final int hbutton3=0x7f080018;
-        public static final int histdate=0x7f080078;
-        public static final int histinstr=0x7f080075;
-        public static final int histprice=0x7f080077;
-        public static final int histstatus=0x7f080076;
+        public static final int histdate=0x7f08007a;
+        public static final int histinstr=0x7f080077;
+        public static final int histprice=0x7f080079;
+        public static final int histstatus=0x7f080078;
         public static final int instrtext=0x7f08004e;
         public static final int keyedit=0x7f08002f;
         public static final int keytext=0x7f08002e;
@@ -257,9 +258,10 @@ public final class R {
         public static final int loginlayout5438=0x7f08002c;
         public static final int loginnameedit=0x7f08000b;
         public static final int logintext=0x7f08000a;
-        public static final int menulogin=0x7f08007a;
-        public static final int menuport=0x7f08007c;
-        public static final int menuselect=0x7f080079;
+        public static final int menuarcdeal=0x7f080076;
+        public static final int menulogin=0x7f08007c;
+        public static final int menuport=0x7f08007e;
+        public static final int menuselect=0x7f08007b;
         public static final int orderlayout1=0x7f08004c;
         public static final int orderlayout2=0x7f080009;
         public static final int orderlayout233=0x7f08005a;
@@ -286,10 +288,10 @@ public final class R {
         public static final int radio0=0x7f08005d;
         public static final int radio1=0x7f08005e;
         public static final int radioGroup1=0x7f08005c;
-        public static final int refreshitem=0x7f08007b;
+        public static final int refreshitem=0x7f08007d;
         public static final int reglayout354=0x7f080033;
         public static final int scrollviewinfo=0x7f08004a;
-        public static final int search_box=0x7f08006e;
+        public static final int search_box=0x7f08006f;
         public static final int web_detail=0x7f080047;
     }
     public static final class layout {
@@ -318,10 +320,11 @@ public final class R {
         public static final int selectitem=0x7f030016;
     }
     public static final class menu {
-        public static final int histmenu=0x7f070000;
-        public static final int instrsmenu=0x7f070001;
-        public static final int newsmenu=0x7f070002;
-        public static final int portmenu=0x7f070003;
+        public static final int arcdealmenu=0x7f070000;
+        public static final int histmenu=0x7f070001;
+        public static final int instrsmenu=0x7f070002;
+        public static final int newsmenu=0x7f070003;
+        public static final int portmenu=0x7f070004;
     }
     public static final class string {
         public static final int Account=0x7f05009b;
@@ -353,7 +356,8 @@ public final class R {
         public static final int LoginFailed200202=0x7f050097;
         public static final int LoginFailed201=0x7f050098;
         public static final int LoginName=0x7f05001d;
-        public static final int MenuItemGoArchive=0x7f05009f;
+        public static final int MenuItemArcDeal=0x7f05009f;
+        public static final int MenuItemGoArchive=0x7f0500a0;
         public static final int MenuItemGoChart=0x7f05002b;
         public static final int MenuItemGoGlass=0x7f05001c;
         public static final int MenuItemPort=0x7f05009e;

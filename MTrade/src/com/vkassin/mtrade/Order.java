@@ -127,6 +127,10 @@ public class Order implements Serializable, History {
 	public String getInstr() {
 		
 		Instrument i = Common.getInstrById(instrId);
+		
+		if(i == null)
+			return "---";
+		
 		return i.symbol;
 		
 	}

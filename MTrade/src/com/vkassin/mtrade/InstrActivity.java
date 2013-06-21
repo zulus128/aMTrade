@@ -689,6 +689,8 @@ public Handler handler = new Handler(){
                     		else
                     		if( t == Common.MSG_TYPE_ARC_DEALS) {
                     			
+            					Common.clearArcDealList();
+
                     			Iterator<String> keys = data.keys();
                     			while( keys.hasNext() ){
                     				String key = (String)keys.next();
@@ -698,6 +700,7 @@ public Handler handler = new Handler(){
                     			}
 //                				adapter.notifyDataSetChanged();
                     			Common.validatePortfel();
+                    			Common.posActivity.hideProgressBar();
 							}
                     		else
                     		if( t == Common.INSTRUMENT) {
