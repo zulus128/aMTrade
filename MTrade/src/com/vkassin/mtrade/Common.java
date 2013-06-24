@@ -106,7 +106,7 @@ public class Common {
 	
 	public final static int port_register = 9802;
 
-	public final static boolean isSSL = true;
+	public static boolean isSSL = false;
 
 	public final static Integer NO_ERRORS = 0;
 	public final static Integer INITIAL_LOADING_COMPLITE = 1;
@@ -736,6 +736,7 @@ public class Common {
 		dialog.setTitle(R.string.LoginDialogTitle);
 		dialog.setCancelable(false);
 
+
 		final EditText nametxt = (EditText) dialog
 				.findViewById(R.id.loginnameedit);
 		final EditText passtxt = (EditText) dialog
@@ -919,6 +920,9 @@ public class Common {
 		customDialog_Dismiss.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View arg0) {
 
+				final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.lradio0);
+				Common.isSSL = bu0.isChecked(); 
+						
 				inLogin = false;
 
 				JSONObject msg = new JSONObject();

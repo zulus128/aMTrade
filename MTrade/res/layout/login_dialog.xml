@@ -177,7 +177,7 @@
                 android:weightSum="1" >
 
                 <RadioButton
-                    android:id="@+id/radio0"
+                    android:id="@+id/lradio0"
                     style="@style/CodeFont1"
                     android:layout_weight="0.5"
                     android:checked="true"
@@ -186,7 +186,7 @@
                 <!-- android:button="@drawable/checkbox_selector" -->
 
                 <RadioButton
-                    android:id="@+id/radio1"
+                    android:id="@+id/lradio1"
                     style="@style/CodeFont1"
                     android:layout_weight="0.5"
                     android:text="@string/TestButton" />

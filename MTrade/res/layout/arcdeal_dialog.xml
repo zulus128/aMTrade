@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollviewinfo"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/ImageView01"
+    android:layout_weight="1.0"
+    android:background="@android:color/transparent" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/customorderdialog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:padding="7dp" >
+
+        <LinearLayout
+            android:id="@+id/orderlayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/ordertext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:text="@string/OrderDialogInstrument"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/instrtext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/pricetext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:text="@string/Price"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonPriceMinus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/priceedit"
+                style="@style/CodeFontOrder"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.34"
+                android:gravity="center_vertical|right"
+                android:inputType="numberDecimal"
+                android:text="0.00" />
+
+            <Button
+                android:id="@+id/buttonPricePlus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/quanttext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:text="@string/Quantity"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonQtyMinus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="-" />
+
+            <EditText
+                android:id="@+id/quantedit"
+                style="@style/CodeFontOrder"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.34"
+                android:gravity="right|center_vertical"
+                android:inputType="numberDecimal"
+                android:text="0" />
+
+            <Button
+                android:id="@+id/buttonQtyPlus"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.08"
+                android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout26"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="horizontal"
+            android:padding="3dp"
+            android:weightSum="1" >
+
+            <TextView
+                android:id="@+id/expdatetext"
+                style="@style/CodeFont1"
+                android:layout_weight="0.5"
+                android:text="@string/ExpDate"
+                android:textColor="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/expdateedit"
+                style="@style/CodeFontOrder"
+                android:layout_weight="0.5"
+                android:focusableInTouchMode="false"
+                android:inputType="date" >
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout233"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <Spinner
+                android:id="@+id/acc_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/Account" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="7dp"
+                android:weightSum="1" >
+
+                <RadioButton
+                    android:id="@+id/radio0"
+                    style="@style/CodeFont1"
+                    android:layout_weight="0.5"
+                    android:checked="true"
+                    android:text="@string/BuyButton" />
+
+                <!-- android:button="@drawable/checkbox_selector" -->
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    style="@style/CodeFont1"
+                    android:layout_weight="0.5"
+                    android:text="@string/SellButton" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/orderlayout333"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <Button
+                android:id="@+id/putorder"
+                style="@style/CodeFontOrder"
+                android:layout_weight="0.5"
+                android:text="@string/PutOrder" />
+
+            <Button
+                android:id="@+id/cancelbutt"
+                style="@style/CodeFontOrder"
+                android:layout_weight="0.5"
+                android:text="@string/CancelOrder" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

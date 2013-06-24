@@ -274,7 +274,7 @@ public Handler handler = new Handler(){
       
        	sslcontext = null;
        	
-    if(Common.isSSL)
+//    if(Common.isSSL)
        	try {
   	
     	CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -527,6 +527,10 @@ public Handler handler = new Handler(){
 
     	try {
 
+            JSONObject login = getLogin();
+            if(login == null)
+            	return false;
+
     		if(Common.isSSL) {
     			
     			sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);
@@ -554,9 +558,6 @@ public Handler handler = new Handler(){
 
     		
     		
-        JSONObject login = getLogin();
-        if(login == null)
-        	return false;
         
         writeJSONMsg(login);
         
