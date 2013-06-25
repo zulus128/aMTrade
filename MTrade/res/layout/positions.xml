@@ -19,43 +19,67 @@
             android:weightSum="1" >
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.13"
+                android:layout_weight="0.1"
                 android:gravity="left"
                 android:paddingLeft="3dp"
                 android:text="@string/TitleInstr" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.2"
+                android:layout_weight="0.18"
                 android:gravity="center"
                 android:text="@string/TitleCode" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.22"
+                android:layout_weight="0.12"
                 android:gravity="right"
                 android:text="@string/TitleCurr" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.22"
+                android:layout_weight="0.12"
                 android:gravity="right"
                 android:paddingRight="4dp"
                 android:text="@string/TitleIn" />
 
             <TextView
-                style="@style/CodeFont1"
+                style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.23"
+                android:layout_weight="0.12"
                 android:gravity="right"
                 android:paddingRight="4dp"
                 android:text="@string/TitleRest" />
-        </LinearLayout>
+
+            <TextView
+                style="@style/CodeFontP1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.12"
+                android:gravity="right"
+                android:paddingRight="4dp"
+                android:text="@string/TitleAVG" />
+            
+            <TextView
+                style="@style/CodeFontP1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.12"
+                android:gravity="right"
+                android:paddingRight="4dp"
+                android:text="@string/TitleIncome" />
+            
+            <TextView
+                style="@style/CodeFontP1"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.12"
+                android:gravity="right"
+                android:paddingRight="4dp"
+                android:text="@string/TitleIncomeProc" />
+            </LinearLayout>
 
         <ListView
             android:id="@+id/PosList"

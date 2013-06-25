@@ -169,5 +169,8 @@
     <string name="SellButton1">Продажа</string>
     <string name="PutArcDeal">Добавить</string>
     <string name="DealDate">Дата сделки</string>
-    
+    <string name="TitleAVG">AVG</string>
+    <string name="TitleIncome">Доход</string>
+    <string name="TitleIncomeProc">Доход, %</string>
+
 </resources>

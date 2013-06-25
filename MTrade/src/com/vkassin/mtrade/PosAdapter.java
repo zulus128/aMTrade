@@ -70,6 +70,15 @@ public class PosAdapter extends ArrayAdapter<Position> {
 //    		in.setText(item.inPos.toString());
     		in.setText(item.getInPos());
 
+    		TextView avg = (TextView) convertView.findViewById(R.id.PosAVG);
+    		avg.setText("0-0");
+
+    		TextView inc = (TextView) convertView.findViewById(R.id.PosIncome);
+    		inc.setText("0-0");
+
+    		TextView incp = (TextView) convertView.findViewById(R.id.PosIncomeProc);
+    		incp.setText("0-0");
+
 
     	}
     	

@@ -11,28 +11,28 @@
         android:id="@+id/PosSymbol"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.13"
+        android:layout_weight="0.1"
         android:gravity="left" />
 
     <TextView
         android:id="@+id/PosCode"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.2"
+        android:layout_weight="0.18"
         android:gravity="left" />
 
     <TextView
         android:id="@+id/PosCurr"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.22"
+        android:layout_weight="0.12"
         android:gravity="right" />
 
     <TextView
         android:id="@+id/PosIn"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.22"
+        android:layout_weight="0.12"
         android:gravity="right"
         android:paddingRight="4dp" />
 
@@ -40,7 +40,31 @@
         android:id="@+id/PosRest"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.23"
+        android:layout_weight="0.12"
+        android:gravity="right"
+        android:paddingRight="4dp" />
+
+    <TextView
+        android:id="@+id/PosAVG"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.12"
+        android:gravity="right"
+        android:paddingRight="4dp" />
+
+    <TextView
+        android:id="@+id/PosIncome"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.12"
+        android:gravity="right"
+        android:paddingRight="4dp" />
+
+    <TextView
+        android:id="@+id/PosIncomeProc"
+        style="@style/CodeFontPos"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.12"
         android:gravity="right"
         android:paddingRight="4dp" />
 
