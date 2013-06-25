@@ -192,6 +192,7 @@ public class Common {
 	static EditText datetxt = null;
 
 	public static String arcfilter = "";
+//	public static Long arcfilterId = 0;
 
 	public static String signProfile;
 
@@ -396,6 +397,7 @@ public class Common {
 
 			String key1 = itr1.next();
 			Deal d = arcdealMap.get(key1);
+			Log.i(TAG, "d.instr = " + d.getInstr());
 			if(d.getInstr().equals(arcfilter))
 				res.add(d);
 		}
@@ -1081,6 +1083,123 @@ public class Common {
 		}
 	};
 
+	public static void putArcDeal(final Context ctx) {
+
+		final Dialog dialog = new Dialog(ctx);
+		dialog.setContentView(R.layout.arcdeal_dialog);
+		dialog.setTitle(R.string.ArcDealDialogTitle);
+
+		datetxt = (EditText) dialog.findViewById(R.id.expdateedit);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		Date dat1 = new Date();
+		datetxt.setText(sdf.format(dat1));
+		mYear = dat1.getYear() + 1900;
+		mMonth = dat1.getMonth();
+		mDay = dat1.getDate();
+		final Date dat = new GregorianCalendar(mYear, mMonth, mDay).getTime();
+
+		datetxt.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Log.i(TAG, "Show DatePickerDialog");
+				DatePickerDialog dpd = new DatePickerDialog(ctx,
+						mDateSetListener, mYear, mMonth, mDay);
+				dpd.show();
+			}
+		});
+
+		TextView itext = (TextView) dialog.findViewById(R.id.instrtext);
+		itext.setText(Common.arcfilter);
+
+		Button customDialog_Cancel = (Button) dialog
+				.findViewById(R.id.cancelbutt);
+		customDialog_Cancel.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+
+				dialog.dismiss();
+			}
+
+		});
+
+		Button customDialog_Put = (Button) dialog.findViewById(R.id.putorder);
+		customDialog_Put.setOnClickListener(new Button.OnClickListener() {
+			public void onClick(View arg0) {
+
+				Double price = new Double(0);
+				Long qval = new Long(0);
+				final EditText pricetxt = (EditText) dialog.findViewById(R.id.priceedit);
+				final EditText quanttxt = (EditText) dialog.findViewById(R.id.quantedit);
+
+				try {
+
+					price = Double.valueOf(pricetxt.getText().toString());
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectPrice,
+							Toast.LENGTH_SHORT).show();
+					return;
+				}
+				try {
+
+					qval = Long.valueOf(quanttxt.getText().toString());
+				} catch (Exception e) {
+
+					Toast.makeText(ctx, R.string.CorrectQty, Toast.LENGTH_SHORT)
+							.show();
+					return;
+				}
+
+				if (dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay)
+				.getTime()) > 0) {
+
+					Toast.makeText(ctx, R.string.CorrectDate,
+					Toast.LENGTH_SHORT).show();
+
+				return;
+				}
+				
+				long maxkey = 0;
+				Iterator<String> itr2 = arcdealMap.keySet().iterator();
+				while (itr2.hasNext()) {
+					String key1 = itr2.next();
+					long k = Long.parseLong(key1);
+					if(k > maxkey)
+						maxkey = k;
+				}
+
+				Deal adeal = new Deal();
+				Iterator<String> itr1 = instrMap.keySet().iterator();
+				while (itr1.hasNext()) {
+					String key1 = itr1.next();
+					Instrument in = instrMap.get(key1);
+					if(in.symbol.equals(Common.arcfilter)) {
+
+						adeal.instrId = Long.valueOf(in.id);
+						break;
+					}
+				}
+				
+				final RadioButton bu0 = (RadioButton) dialog.findViewById(R.id.radio0);
+
+				adeal.price = price;
+				adeal.qty = qval;
+				adeal.dtime = new GregorianCalendar(mYear, mMonth, mDay).getTimeInMillis();
+				adeal.direct = bu0.isChecked()?Long.valueOf(0):Long.valueOf(1);
+				arcdealMap.put(String.valueOf(maxkey+1), adeal);
+				Common.arcActivity.refresh();
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.show();
+
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		lp.copyFrom(dialog.getWindow().getAttributes());
+		lp.width = WindowManager.LayoutParams.FILL_PARENT;
+		lp.height = WindowManager.LayoutParams.FILL_PARENT;
+		dialog.getWindow().setAttributes(lp);
+
+	}
+	
 	public static void putOrder(final Context ctx, Quote quote) {
 
 		final Instrument it = Common.selectedInstrument;// adapter.getItem(selectedRowId);

@@ -22,7 +22,7 @@ public class Deal implements Serializable, History {
 	public String id = "";
 	public Long instrId = Long.valueOf(0);
 	public Long direct = Long.valueOf(0);
-	private Double price = Double.valueOf(0);
+	public Double price = Double.valueOf(0);
 	public Long qty = Long.valueOf(0);
 	public Long status = Long.valueOf(0);
 	public Long dtime = Long.valueOf(0);
@@ -96,7 +96,10 @@ public class Deal implements Serializable, History {
 		    }
 
 	};
-
+	
+	public Deal() {
+	}
+	
 	public Deal(String i, JSONObject obj) {
 
 		this.id = i;

@@ -626,6 +626,7 @@ public Handler handler = new Handler(){
                         			if(Common.posActivity != null)
                         				Common.posActivity.refresh();
 
+                        			Common.saveAccountDetails();
                     				
 //                    				header.setVisibility(View.GONE);
                         			pb.setVisibility(View.VISIBLE);
@@ -636,7 +637,6 @@ public Handler handler = new Handler(){
                         	        if(!Common.oldName.equals(name1))
                         	        	Common.clearFavrList();
 
-                        			Common.saveAccountDetails();
                         			
                     			}
                     			else 

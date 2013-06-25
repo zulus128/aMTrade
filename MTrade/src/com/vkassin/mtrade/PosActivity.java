@@ -98,7 +98,7 @@ public class PosActivity extends Activity {
     @Override
 	public void onCreateContextMenu(ContextMenu menu, View v,ContextMenuInfo menuInfo) {  
 		
-		menu.setHeaderTitle(R.string.MenuTitle);  
+//		menu.setHeaderTitle(R.string.MenuTitle);  
 	    menu.add(0, CONTEXTMENU_GOARCHIVE, 0, R.string.MenuItemGoArchive);
 	    
 		super.onCreateContextMenu(menu, v, menuInfo);  
@@ -111,6 +111,8 @@ public class PosActivity extends Activity {
 		Log.i(TAG, "ppp = " + p.symbol);
 		
 		Common.arcfilter = p.symbol;
+		menu.setHeaderTitle(p.symbol);  
+
 	}
     
     @Override  

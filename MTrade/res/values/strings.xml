@@ -158,12 +158,16 @@
     <string name="Transit">Показать сделки</string>
     <string name="Account">Счет</string>
     <string name="ExpDate">Дата истечения</string>
-    
     <string name="KeyDialogTitle">Активизация ключа</string>
     <string name="MenuItemPort">Загрузить архив</string>
     <string name="MenuItemArcDeal">Добавить сделку вручную</string>
     <string name="MenuItemGoArchive">Открыть архив</string>
     <string name="WarButton">Реальные торги</string>
     <string name="TestButton">Тестовые торги</string>
+    <string name="ArcDealDialogTitle">Архивная сделка</string>
+    <string name="BuyButton1">Покупка</string>
+    <string name="SellButton1">Продажа</string>
+    <string name="PutArcDeal">Добавить</string>
+    <string name="DealDate">Дата сделки</string>
     
 </resources>

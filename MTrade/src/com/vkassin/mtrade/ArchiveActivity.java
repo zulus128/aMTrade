@@ -87,6 +87,7 @@ public class ArchiveActivity extends Activity{
 		switch (item.getItemId()) {
 	        case R.id.menuarcdeal: 
 	        	
+	        	Common.putArcDeal(this);
 	            break;
 	    }
 	    return true;
