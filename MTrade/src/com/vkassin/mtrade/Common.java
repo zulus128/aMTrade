@@ -397,7 +397,7 @@ public class Common {
 
 			String key1 = itr1.next();
 			Deal d = arcdealMap.get(key1);
-			Log.i(TAG, "d.instr = " + d.getInstr());
+//			Log.i(TAG, "d.instr = " + d.getInstr());
 			if(d.getInstr().equals(arcfilter))
 				res.add(d);
 		}

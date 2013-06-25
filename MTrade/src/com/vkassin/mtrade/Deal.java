@@ -106,7 +106,7 @@ public class Deal implements Serializable, History {
 
 		set(obj);
 
-		Log.i(TAG, "Deal created id:" + i);
+//		Log.i(TAG, "Deal created id:" + i);
 
 	}
 
