@@ -29,7 +29,7 @@
             <TextView
                 style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.18"
+                android:layout_weight="0.15"
                 android:gravity="center"
                 android:text="@string/TitleCode" />
 
@@ -67,7 +67,7 @@
             <TextView
                 style="@style/CodeFontP1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.12"
+                android:layout_weight="0.15"
                 android:gravity="right"
                 android:paddingRight="4dp"
                 android:text="@string/TitleIncome" />

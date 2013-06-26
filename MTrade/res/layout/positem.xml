@@ -18,7 +18,7 @@
         android:id="@+id/PosCode"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.18"
+        android:layout_weight="0.15"
         android:gravity="left" />
 
     <TextView
@@ -56,7 +56,7 @@
         android:id="@+id/PosIncome"
         style="@style/CodeFontPos"
         android:layout_gravity="center_vertical"
-        android:layout_weight="0.12"
+        android:layout_weight="0.15"
         android:gravity="right"
         android:paddingRight="4dp" />
 

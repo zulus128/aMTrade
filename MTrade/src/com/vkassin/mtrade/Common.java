@@ -167,7 +167,7 @@ public class Common {
 	public static final String LINK_TAG = "link";
 
 	private static HashMap<String, Instrument> instrMap = new HashMap<String, Instrument>();
-	private static HashMap<String, Deal> arcdealMap = new HashMap<String, Deal>();
+	public static HashMap<String, Deal> arcdealMap = new HashMap<String, Deal>();
 	private static HashMap<String, History> historyMap = new HashMap<String, History>();
 	private static HashSet<String> favrList = new HashSet<String>();
 	private static HashMap<String, String> accMap = new HashMap<String, String>();

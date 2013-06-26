@@ -3,6 +3,10 @@ package com.vkassin.mtrade;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.Iterator;
+
+import kz.gamma.tumarcsp.LibraryWrapper;
+import kz.gamma.tumarcsp.TumarCspFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +26,11 @@ public class Position implements Serializable {
 	private Double restPos = Double.valueOf(0);
 	private Double inPos = Double.valueOf(0);
 
+	private Double avg;
+	private Double income;
+	private Double incomeProc;
+	
+	
 	private static DecimalFormat twoDForm = new DecimalFormat("#0.00");
 
 	static {
@@ -32,6 +41,37 @@ public class Position implements Serializable {
 	}
 
 
+	public void calcDohod() {
+		
+		long qty = 0;
+		double val = 0;
+		double sumbuy = 0;
+		double sumsell = 0;
+		
+		Iterator<String> itr = Common.arcdealMap.keySet().iterator();
+		while (itr.hasNext()) {
+			String key = itr.next();
+			Deal d =Common.arcdealMap.get(key);
+
+				if(this.symbol.equals(d.getInstr())) {
+		
+					qty += d.qty.longValue();
+					double v =  (d.price.doubleValue() * d.qty.longValue());
+					val += v;
+					if(d.direct.intValue() == 0)
+						sumbuy += v;
+					else
+						sumsell += v;
+				}
+		}
+		
+		this.avg = (qty == 0)?0:val / qty;
+		this.income = sumsell - sumbuy;
+		this.incomeProc = (sumbuy < 0.1)?0:((sumsell * 100 / sumbuy) - 100);
+			
+
+	}
+	
 	public Position(String i, JSONObject obj) {
 		
 		this.id = i;
@@ -85,6 +125,24 @@ public class Position implements Serializable {
 	public String getInPos() {
 
 		return twoDForm.format(inPos);
+
+	}
+
+	public String getAVG() {
+
+		return twoDForm.format(avg);
+
+	}
+
+	public String getIncome() {
+
+		return twoDForm.format(income);
+
+	}
+
+	public String getIncomeProc() {
+
+		return twoDForm.format(incomeProc);
 
 	}
 
