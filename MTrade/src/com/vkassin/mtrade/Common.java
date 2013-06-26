@@ -1148,14 +1148,14 @@ public class Common {
 					return;
 				}
 
-				if (dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay)
-				.getTime()) > 0) {
-
-					Toast.makeText(ctx, R.string.CorrectDate,
-					Toast.LENGTH_SHORT).show();
-
-				return;
-				}
+//				if (dat.compareTo(new GregorianCalendar(mYear, mMonth, mDay)
+//				.getTime()) > 0) {
+//
+//					Toast.makeText(ctx, R.string.CorrectDate,
+//					Toast.LENGTH_SHORT).show();
+//
+//				return;
+//				}
 				
 				long maxkey = 0;
 				Iterator<String> itr2 = arcdealMap.keySet().iterator();
