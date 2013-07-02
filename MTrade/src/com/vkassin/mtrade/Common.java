@@ -97,7 +97,7 @@ public class Common {
 //	public final static String ip_addr = "192.168.111.19";
 //	public final static String ip_addr = "172.16.0.108";
 	public final static String ip_addr = "md.etrade.kz";
-	public final static String ip_addr_war = "mp.etrade.kz";
+	public final static String ip_addr_war = "mt.etrade.kz";
 //	public final static String ip_addr = "212.19.144.19"; //real ip
 	
 //	public final static int port_login = 9803;
