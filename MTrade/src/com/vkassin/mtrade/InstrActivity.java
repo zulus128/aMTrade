@@ -363,10 +363,13 @@ public Handler handler = new Handler(){
       msg.put("login", name);
       String md5 = Common.sign(name, password);
       msg.put("sign", md5);
-      byte[] signed = Common.signText(Common.signProfile, md5.getBytes(), true);
-      String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
-      msg.put("gostSign", gsign);
+      
+      if(Common.isSSL) {
 
+	      byte[] signed = Common.signText(Common.signProfile, md5.getBytes(), true);
+	      String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
+	      msg.put("gostSign", gsign);
+      }
       Log.i(TAG, "Login message: " + msg);
 
       }
@@ -533,7 +536,7 @@ public Handler handler = new Handler(){
 
     		if(Common.isSSL) {
     			
-    			sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr, Common.port_login_ssl);
+    			sock = (SSLSocket) (sslcontext.getSocketFactory()).createSocket(Common.ip_addr_war, Common.port_login_ssl);
     			
     			HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
     			SSLSession s = ((SSLSocket) sock).getSession();
