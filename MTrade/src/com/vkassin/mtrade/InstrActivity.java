@@ -350,7 +350,7 @@ public Handler handler = new Handler(){
           msg.put("version", Common.PROTOCOL_VERSION);
 
           String name = Common.myaccount.get("name");
-          String password = Common.myaccount.get("password");
+          String password = "";//Common.myaccount.get("password");
 
 
         if((name == null) || (password == null)) {
