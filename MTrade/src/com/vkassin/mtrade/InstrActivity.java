@@ -366,7 +366,11 @@ public Handler handler = new Handler(){
       
       if(Common.isSSL) {
 
+//          TumarCspFunctions.cpAcquireContext(Common.signProfile, 0, 0);
+          
 	      byte[] signed = Common.signText(Common.signProfile, md5.getBytes(), true);
+	      if(signed == null)
+	    	  return null;
 	      String gsign = Base64.encodeToString(signed, Base64.DEFAULT);
 	      msg.put("gostSign", gsign);
       }
@@ -530,8 +534,12 @@ public Handler handler = new Handler(){
 
     	try {
 
+    	      if(Common.isSSL) 
+    	          TumarCspFunctions.cpAcquireContext(Common.signProfile, 0, 0);
+
             JSONObject login = getLogin();
             if(login == null)
+//            if(true)
             	return false;
 
     		if(Common.isSSL) {

@@ -972,12 +972,17 @@ public class Common {
 
 	private static void keypassword (Context ctx) {
 
-		String kpass = Common.myaccount.get("keypassword");
+//		String kpass = Common.myaccount.get("keypassword");
+		String kpass = Common.myaccount.get("password");
 
 		if(Common.isSSL) {
 			if(kpass == null) {
 				
-				final Dialog dialog = new Dialog(ctx);
+				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("password"));
+				myaccount.put("password", "");
+				mainActivity.refresh();
+
+/*				final Dialog dialog = new Dialog(ctx);
 				dialog.setContentView(R.layout.key_dialog);
 				dialog.setTitle(R.string.KeyDialogTitle);
 				dialog.setCancelable(false);
@@ -1000,11 +1005,13 @@ public class Common {
 
 				});
 				dialog.show();
-
+*/
 			}
 			else {
 
-				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
+//				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
+				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("password"));
+				myaccount.put("password", "");
 				mainActivity.refresh();
 
 			}
