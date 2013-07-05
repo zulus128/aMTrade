@@ -94,15 +94,9 @@ public class Common {
 		twoDForm.setDecimalFormatSymbols(dfs);
 	}
 
-//	public final static String ip_addr = "192.168.111.19";
-//	public final static String ip_addr = "172.16.0.108";
 	public final static String ip_addr = "md.etrade.kz";
 	public final static String ip_addr_war = "md.etrade.kz";
-//	public final static String ip_addr = "212.19.144.19"; //real ip
-	
-//	public final static int port_login = 9803;
-//	public final static int port_login_ssl = 9804;
-	public final static int port_login = 9800;
+	public final static int port_login = 9802;
 	public final static int port_login_ssl = 9803;
 	
 	public final static int port_register = 9801;
@@ -210,6 +204,8 @@ public class Common {
                 LibraryWrapper.PV_TABLE);
         profile = TumarCspFunctions.cpCreateUrl(fName, "file", fName,
                 pass, path, "p12", 0xA045, 0xAA3A, hProvLocal);
+//        profile = TumarCspFunctions.cpCreateUrl(fName, "file", fName,
+//                pass, path, "p12", 0xA054, 0xA454, hProvLocal);
         TumarCspFunctions.cpReleaseContext(hProvLocal, 0);
         return profile;
     }
@@ -1009,8 +1005,14 @@ public class Common {
 			}
 			else {
 
+
 //				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("keypassword"));
 				Common.signProfile = Common.createProfile(Environment.getExternalStorageDirectory()+"/TumarCSP/", "key", Common.myaccount.get("password"));
+
+//	  	    	  TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
+//	  	          TumarCspFunctions.cpAcquireContext(Common.signProfile, TumarCspFunctions.CRYPT_NEWKEYSET, 0);
+
+				
 				myaccount.put("password", "");
 				mainActivity.refresh();
 

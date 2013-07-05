@@ -341,6 +341,7 @@ public final class R {
         public static final int Clear=0x7f050029;
         public static final int ConnectError=0x7f05008e;
         public static final int ConnectError1=0x7f05008f;
+        public static final int ConnectError2=0x7f0500ab;
         public static final int CorrectDate=0x7f05002f;
         public static final int CorrectEmail=0x7f050030;
         public static final int CorrectPassword=0x7f050031;

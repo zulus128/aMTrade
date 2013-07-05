@@ -172,5 +172,6 @@
     <string name="TitleAVG">AVG</string>
     <string name="TitleIncome">Доход</string>
     <string name="TitleIncomeProc">Доход, %</string>
+    <string name="ConnectError2">Неверный ключ или пароль</string>
 
 </resources>

@@ -350,7 +350,7 @@ public Handler handler = new Handler(){
           msg.put("version", Common.PROTOCOL_VERSION);
 
           String name = Common.myaccount.get("name");
-          String password = "";//Common.myaccount.get("password");
+          String password = Common.isSSL?"":Common.myaccount.get("password");
 
 
         if((name == null) || (password == null)) {
@@ -522,7 +522,7 @@ public Handler handler = new Handler(){
 		}
     }
     
-    public boolean refresh() {
+    public /*synchronized*/ boolean refresh() {
      	
     	Log.w(TAG, " --- Refresh!!!");
   	  
@@ -534,8 +534,15 @@ public Handler handler = new Handler(){
 
     	try {
 
-    	      if(Common.isSSL) 
+    	      if(Common.isSSL) {
+    	    	  
+
+//    	    	  TumarCspFunctions.initialize (LibraryWrapper.LIBRARY_NAME);
+
     	          TumarCspFunctions.cpAcquireContext(Common.signProfile, 0, 0);
+//	  	          TumarCspFunctions.cpAcquireContext(Common.signProfile, TumarCspFunctions.CRYPT_NEWKEYSET, 0);
+
+    	      }
 
             JSONObject login = getLogin();
             if(login == null)
@@ -910,7 +917,23 @@ public Handler handler = new Handler(){
 //    	  ce.printStackTrace();
 //    	  
 //      }
-      catch (Exception ioe) {
+        
+    	catch (kz.gamma.tumarcsp.exception.CSPException ioe) {
+
+      	  ioe.printStackTrace();
+
+      	  Toast toast = Toast.makeText(InstrActivity.this, R.string.ConnectError2, Toast.LENGTH_LONG);
+      	  toast.show();
+
+      	  stop();
+
+      	  Common.login(InstrActivity.this);
+
+      	  return false;
+
+        }
+        	
+    	catch (Exception ioe) {
     	  
     	  ioe.printStackTrace();
 
