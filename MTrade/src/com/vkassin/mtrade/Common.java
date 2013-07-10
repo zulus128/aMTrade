@@ -153,6 +153,7 @@ public class Common {
 	private static int ordernum;
 	public static Context app_ctx;
 	private static final String FLIST_FNAME = "favr_list";
+	private static final String ARCDEAL_FNAME = "arcdeals_list";
 	private static final String ACCOUNT_FNAME = "myacc";
 
 	public static final String MENU_URL = "http://www.kase.kz/ru/feed/news/kase";
@@ -661,6 +662,65 @@ public class Common {
 
 			// e.printStackTrace();
 			Log.i(TAG, "No account file " + ACCOUNT_FNAME);
+
+		} catch (StreamCorruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// return favourites;
+	}
+
+	public static void saveArcDeals() {
+
+		Log.i(TAG, "saveArcDeals()");
+		FileOutputStream fos;
+		try {
+
+			fos = app_ctx.openFileOutput(ARCDEAL_FNAME, Context.MODE_PRIVATE);
+			ObjectOutputStream os = new ObjectOutputStream(fos);
+			os.writeObject(arcdealMap);
+			os.close();
+			fos.close();
+
+		} catch (FileNotFoundException e) {
+
+			Toast.makeText(app_ctx, "Файл архивных сделок не записан " + e.toString(),
+					Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		} catch (IOException e) {
+
+			Toast.makeText(app_ctx, "Файл архивных сделок не записан: " + e.toString(),
+					Toast.LENGTH_SHORT).show();
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void loadArcDeals() {
+
+		FileInputStream fileInputStream;
+		try {
+
+			fileInputStream = app_ctx.openFileInput(ARCDEAL_FNAME);
+			ObjectInputStream oInputStream = new ObjectInputStream(
+					fileInputStream);
+			Object one = oInputStream.readObject();
+			arcdealMap = (HashMap<String, Deal>) one;
+			oInputStream.close();
+			fileInputStream.close();
+
+		} catch (FileNotFoundException e) {
+
+			// e.printStackTrace();
+			Log.i(TAG, "creates blank. no file " + ARCDEAL_FNAME);
+			arcdealMap = new HashMap<String, Deal>();
 
 		} catch (StreamCorruptedException e) {
 			// TODO Auto-generated catch block

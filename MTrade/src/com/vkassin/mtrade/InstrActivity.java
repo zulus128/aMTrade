@@ -651,6 +651,8 @@ public Handler handler = new Handler(){
                         			Common.FIRSTLOAD_FINISHED = false;
                         			Common.loadFavrList();
                         			
+                        			Common.loadArcDeals();
+                        			
                         	        String name1 = Common.myaccount.get("name");
                         	        if(!Common.oldName.equals(name1))
                         	        	Common.clearFavrList();
@@ -671,6 +673,8 @@ public Handler handler = new Handler(){
                     				sendSubscription();
                     				adapter.setItems(Common.getFavInstrs());
                     				adapter.notifyDataSetChanged();
+
+                        			Common.validatePortfel();
 
                         			
                         			onResume1();
@@ -708,7 +712,7 @@ public Handler handler = new Handler(){
                     		else
                     		if( t == Common.MSG_TYPE_ARC_DEALS) {
                     			
-            					Common.clearArcDealList();
+//            					Common.clearArcDealList();
 
                     			Iterator<String> keys = data.keys();
                     			while( keys.hasNext() ){
@@ -719,6 +723,7 @@ public Handler handler = new Handler(){
                     			}
 //                				adapter.notifyDataSetChanged();
                     			Common.validatePortfel();
+                    			Common.saveArcDeals();
                     			Common.posActivity.hideProgressBar();
 							}
                     		else
