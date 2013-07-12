@@ -1321,7 +1321,7 @@ public class Common {
 				.findViewById(R.id.buttonPriceMinus);
 		buttonpm.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
+ 
 				try {
 
 					double price = Double
