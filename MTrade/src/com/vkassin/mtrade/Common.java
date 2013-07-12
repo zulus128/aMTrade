@@ -1255,7 +1255,10 @@ public class Common {
 				adeal.qty = qval;
 				adeal.dtime = new GregorianCalendar(mYear, mMonth, mDay).getTimeInMillis();
 				adeal.direct = bu0.isChecked()?Long.valueOf(0):Long.valueOf(1);
-				arcdealMap.put(String.valueOf(maxkey+1), adeal);
+				Collection<String> lacc = Common.getAccountList();
+				adeal.account = (lacc == null)?"":lacc.iterator().next();
+ 				arcdealMap.put(String.valueOf(maxkey+1), adeal);
+				Common.saveArcDeals();
 				Common.arcActivity.refresh();
 				dialog.dismiss();
 			}
