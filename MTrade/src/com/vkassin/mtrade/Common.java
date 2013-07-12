@@ -1263,7 +1263,7 @@ public class Common {
 				dialog.dismiss();
 			}
 		});
-		
+		 
 		dialog.show();
 
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
