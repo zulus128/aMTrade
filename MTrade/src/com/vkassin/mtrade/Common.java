@@ -363,7 +363,7 @@ public class Common {
 			
 			if(!found) {
 				
-				posMap.put(String.valueOf(maxkey++), new Position(key, d.account, d.getInstr()));
+				posMap.put(String.valueOf(++maxkey), new Position(key, d.account, d.getInstr()));
 
 			}
 
