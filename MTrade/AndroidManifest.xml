@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vkassin.mtrade"
     android:versionCode="2"
-    android:versionName="2.24" >
+    android:versionName="2.25" >
 
     <uses-sdk android:minSdkVersion="8" />
 

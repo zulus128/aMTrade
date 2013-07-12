@@ -68,7 +68,7 @@ public class ArcAdapter extends ArrayAdapter<Deal> {
     		qty.setText(item.getQty());
 
     		TextView date = (TextView) convertView.findViewById(R.id.ArchiveDate);
-    		date.setText(item.getDTime());
+    		date.setText(item.getDateS());
 
 
     	}

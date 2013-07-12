@@ -197,6 +197,13 @@ public class Deal implements Serializable, History {
 
 	}
 
+	public String getDateS() {
+
+		Date d = new Date(dtime);
+		return new SimpleDateFormat("dd.MM.yyyy").format(d);
+
+	}
+
 	public Date getDTimeD() {
 		
 		return new Date(dtime);
