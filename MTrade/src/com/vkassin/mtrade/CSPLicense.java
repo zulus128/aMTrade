@@ -53,7 +53,7 @@ public class CSPLicense {
 
 	String  getLicenseCode() {
 		
-		return "9651f0911f6d7e10dce1d83a4001e12a";
+		return "3470f203891da2a4c9ba6f84b302e414";
 	}
 	
 	
@@ -75,8 +75,8 @@ public class CSPLicense {
 		if (entity != null) { 
 			String result = EntityUtils.toString(entity);   //В переменной result помещается ЛИЦЕНЗИЯ 
 			Log.i(TAG,"license = " + result);
-			boolean b = this.installLicense(result);
-			Log.i(TAG, "write to file = " + b);
+//			boolean b = this.installLicense(result);
+//			Log.i(TAG, "write to file = " + b);
 			
 		} 
 		else return false; 

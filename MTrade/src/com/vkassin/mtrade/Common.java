@@ -212,8 +212,8 @@ public class Common {
         TumarCspFunctions.cpReleaseContext(hProvLocal, 0);
         
         
-        CSPLicense lic = new CSPLicense();
-        lic.getLicense();
+//        CSPLicense lic = new CSPLicense();
+//        lic.getLicense();
         
         return profile;
     }
