@@ -95,11 +95,11 @@ public class Common {
 	}
 
 	public final static String ip_addr = "md.etrade.kz";
-//	public final static String ip_addr_war = "mp.etrade.kz";
-	public final static String ip_addr_war = "md.etrade.kz";
+	public final static String ip_addr_war = "mp.etrade.kz";
+//	public final static String ip_addr_war = "md.etrade.kz";
 	public final static int port_login = 9800;
-//	public final static int port_login_ssl = 9804;
-	public final static int port_login_ssl = 9803;
+	public final static int port_login_ssl = 9804;
+//	public final static int port_login_ssl = 9803;
 	
 	public final static int port_register = 9801;
 

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, MTradeActivity!</string>
-    <string name="app_name">MTrade v.2.26</string>
+    <string name="app_name">MTrade</string>
     <string name="RegisterStatus1">Регистрация прошла успешно!</string>
     <string name="RegisterStatus2">Не удалось зарегистрировать пользователя!</string>
     <string name="RegisterStatus3">Такой пользователь уже зарегистрирован!</string>

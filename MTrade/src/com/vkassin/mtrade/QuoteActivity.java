@@ -3,6 +3,8 @@ package com.vkassin.mtrade;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -148,7 +150,16 @@ public class QuoteActivity extends Activity {
    	
    	super.onPause();
 
-   	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
+	String s = getResources().getString(R.string.app_name);
+	PackageInfo pInfo;
+	try {
+		pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+    	s += " " + pInfo.versionName;
+	} catch (NameNotFoundException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+   	Common.tabActivity.setTitle(s);
    	
    }
 

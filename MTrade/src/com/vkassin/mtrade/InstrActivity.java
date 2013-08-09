@@ -53,6 +53,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -266,7 +267,16 @@ public Handler handler = new Handler(){
 			}
 		});
 
-       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
+    	String s = getResources().getString(R.string.app_name);
+    	PackageInfo pInfo;
+		try {
+			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+	    	s += " " + pInfo.versionName;
+		} catch (NameNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+       	Common.tabActivity.setTitle(s);
 
        	
        	InputStream caInput = null;
@@ -334,7 +344,16 @@ public Handler handler = new Handler(){
     public JSONObject getLogin() {
     	
     	
-       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name));
+    	String s = getResources().getString(R.string.app_name);
+    	PackageInfo pInfo;
+		try {
+			pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+	    	s += " " + pInfo.versionName;
+		} catch (NameNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+       	Common.tabActivity.setTitle(s);
 
 
     	if(!Common.loginFromDialog)
@@ -627,7 +646,18 @@ public Handler handler = new Handler(){
                     			if(s == 0) {
 
                     		        String name = Common.myaccount.get("name");
-                    		       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name) + " " + name);
+//                    		       	Common.tabActivity.setTitle(getResources().getString(R.string.app_name) + " " + name);
+                    		    	String ss = getResources().getString(R.string.app_name);
+                    		    	PackageInfo pInfo;
+                    				try {
+                    					pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                    			    	ss += " " + pInfo.versionName;
+                    				} catch (NameNotFoundException e1) {
+                    					// TODO Auto-generated catch block
+                    					e1.printStackTrace();
+                    				}
+                    				ss += " " + name;
+                    		       	Common.tabActivity.setTitle(ss);
 
                     				
                         			Common.clearInstrList();
